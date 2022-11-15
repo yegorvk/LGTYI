@@ -59,7 +59,7 @@
     <Canvas let:sti w={window.innerWidth} h={window.innerHeight}>
 
         <Scene {sti} let:scene id="main_scene" props={{ background: 0xedf2f7 }}>
-            
+
             <Camera {scene}></Camera>
            <!--<AmbientLight {scene} intensity={1.25} />-->
             <!--<DirectionalLight {scene} pos={[3, 3, 3]} />-->
