@@ -1,14 +1,20 @@
 {
-  "name": "create-svelte-electron-app",
-  "version": "1.2.0",
-  "description": "The boilerplate code to get started creating Cross-platform Desktop Apps with Electron and Svelte as front-end technology.",
+  "name": "lgtyi",
+  "version": "0.0.1",
+  "description": "Landscape Generator for TYI",
   "private": false,
   "license": "MIT",
   "main": "main.js",
-  "author": "Souleh Shaikh <soulehshaikh99@gmail.com>",
+  "contributors": [
+    {
+      "name": "Yegor Vaskonyan",
+      "email": "egor.vaskonyan@gmail.com",
+      "url": "https://github.com/egor-vaskon"
+    }
+  ],
   "build": {
     "icon": "public/favicon.png",
-    "productName": "Svelte and Electron App",
+    "productName": "LGTYI",
     "files": [
       "public/**/*",
       "main.js",
