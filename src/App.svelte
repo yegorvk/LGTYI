@@ -18,6 +18,7 @@
         InterleavedBuffer,
         ShaderMaterial
     } from "svelthree";
+    import Camera from "./Components/Camera.svelte"
 
     import { vShader, fShader } from './shaders/simpleShader'
 
@@ -58,9 +59,9 @@
     <Canvas let:sti w={window.innerWidth} h={window.innerHeight}>
 
         <Scene {sti} let:scene id="main_scene" props={{ background: 0xedf2f7 }}>
-
-            <PerspectiveCamera {scene} id="main_camera" pos={[0, 0, 3]} lookAt={[0, 0, 0]} />
-            <!--<AmbientLight {scene} intensity={1.25} />-->
+            
+            <Camera {scene}></Camera>
+           <!--<AmbientLight {scene} intensity={1.25} />-->
             <!--<DirectionalLight {scene} pos={[3, 3, 3]} />-->
 
             <Mesh
