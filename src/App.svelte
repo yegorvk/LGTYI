@@ -55,8 +55,8 @@
 
 </script>
 
-<main>
-    <Canvas let:sti w={window.innerWidth} h={window.innerHeight}>
+<main id="main">
+    <Canvas  let:sti w={window.innerWidth} h={window.innerHeight}>
 
         <Scene {sti} let:scene id="main_scene" props={{ background: 0xedf2f7 }}>
 

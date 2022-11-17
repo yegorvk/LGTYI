@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "electron-serve": "^1.1.0",
+    "flycontrols-three": "^1.0.2",
     "svelthree": "^0.119.0-5"
   },
   "devDependencies": {

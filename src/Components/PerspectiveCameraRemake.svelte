@@ -38,8 +38,6 @@
           (cam = new PerspectiveCamera(...config))
         : (cam = new PerspectiveCamera())
 
-    setInterval(()=>{console.log(cam)}, 1000)
-
 
 
     let camHelper: CameraHelper = undefined
