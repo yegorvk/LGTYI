@@ -1,9 +1,9 @@
 import App from './App.svelte';
 
-const app = new App({
+const app: App = new App({
 	target: document.body,
 	props: {
-		name: 'world'
+		name: 'LGTYI'
 	}
 });
 
