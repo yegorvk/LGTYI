@@ -1,8 +1,7 @@
 <script lang="ts">
     import * as THREE from 'three'
-    // import { WebGLRenderer } from 'three';
     import { onMount } from 'svelte'
-    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+    import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
     import { Chunk } from '../Terrain/Chunk'; 
     import { RenderChunk } from '../Renderer/RenderChunk'
 
@@ -21,6 +20,9 @@
             1000 // far
         )
 
+        camera.position.set(0, 0, 50)
+        camera.lookAt(0, 0, 0)
+
         const renderer = new THREE.WebGLRenderer({
             canvas: root,
             antialias: true,
@@ -36,29 +38,28 @@
             renderer.setSize( window.innerWidth, window.innerHeight);
         })
 
-        const controls = new OrbitControls(camera, renderer.domElement)
+        const clock = new THREE.Clock()
+        const camControls = new FlyControls(camera, renderer.domElement)
 
-        camera.position.set(0, 0, 50)
-        camera.lookAt(0, 0, 0)
-
-        controls.update()
+        camControls.movementSpeed *= 40
+        camControls.rollSpeed *= 100
 
         const chunk = new Chunk(100, 500)
-        const renderChunk = new RenderChunk(chunk)
 
+        const renderChunk = new RenderChunk(chunk)
         scene.add(renderChunk)
 
         const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
-
         scene.add(ambientLight)
 
         const sunLight = new THREE.DirectionalLight( 0xffffff, 0.5);
         sunLight.position.set(0, 0, 50)
-
         scene.add(sunLight)
 
         function animate() {
             requestAnimationFrame(animate)
+
+            camControls.update(clock.getDelta())
             renderer.render(scene, camera)
         }
 
