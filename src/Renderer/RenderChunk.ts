@@ -53,9 +53,7 @@ export class RenderChunk extends THREE.Object3D {
                                     new THREE.MeshPhongMaterial() :
                                     new THREE.MeshBasicMaterial()
 
-        //mat.color.set(0x00FF00)
         mat.vertexColors = true
-        mat.side = THREE.FrontSide
         
         return mat
     }
