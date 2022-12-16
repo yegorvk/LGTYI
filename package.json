@@ -36,13 +36,14 @@
   },
   "dependencies": {
     "electron-serve": "^1.1.0",
-    "three": "^0.147.0"
+    "three": "^0.146.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^23.0.5",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^10.0.1",
     "@tsconfig/svelte": "^3.0.0",
+    "@types/three": "^0.146.0",
     "concurrently": "^7.6.0",
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",

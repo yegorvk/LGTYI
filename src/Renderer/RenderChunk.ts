@@ -1,104 +1,87 @@
-import { space } from 'svelte/internal';
 import * as THREE from 'three'
-import * as noise1 from '../extern/perlin.js'
+import type { Chunk } from '../Terrain/Chunk'
 
-export class RenderChunk {
-    // chunk width and height
-    scale: number;
+export class RenderChunk extends THREE.Object3D {
+    constructor(chunk: Chunk, options: RenderChunkOptions = DefaultOptions) {
+        super()
 
-    // number of dots in each column or row 
-    dotsPerDimension: number;
+        options = this.parseOptions(options)
 
-    // terrain vertices on xy place (x-first repr, rows in the direction of x+, row major ordering, asc order)
-    // x and y in the range [-scale; scale]
-    vertices: Float32Array;
-
-    // terrain indices on xy plane
-    // suitable for rendering with GL_TRIANGLES (Mesh in three.js)
-    indices: Uint32Array;
-
-    // terrain heightmap
-    heightmap: Float32Array;
-
-    constructor(scale: number, dotsPerDimension: number) {
-        this.scale = scale
-        this.dotsPerDimension = dotsPerDimension
-
-        this.generateHeightmap()
-        this.generateVertices()
-        this.generateIndices()
+        const terrain = this.createTerrain(chunk, options)
+        super.add(terrain)
     }
 
-    private generateHeightmap() {
-        this.heightmap = new Float32Array(this.dotsPerDimension*this.dotsPerDimension)
+    private createTerrain(chunk: Chunk, options: RenderChunkOptions): THREE.Object3D {
+        const geometry = new THREE.BufferGeometry()
 
-        // Here we are refering to global object outside of this file, so
-        // your editor might highlight it as an error.
-        noise.seed()
+        const posAttr = new THREE.BufferAttribute(chunk.vertices, 3)
+        geometry.setAttribute('position', posAttr)
 
-        let yoff = 0 
+        const colorAttr = new THREE.BufferAttribute(chunk.vertexColors, 3)
+        geometry.setAttribute('color', colorAttr)
 
-        for (let i = 0; i < this.dotsPerDimension; i++) {
-            let xoff = 0
+        const indexAttr = new THREE.BufferAttribute(chunk.indices, 1)
+        geometry.setIndex(indexAttr)
 
-            for (let j = 0; j < this.dotsPerDimension; j++) {
-                const base = this.mIndex(i, j)
+        if (options.prepareForLighting)
+            geometry.computeVertexNormals()
 
-                // Here we are refering to global object outside of this file, so
-                // your editor might highlight it as an error.
-                this.heightmap[base] = noise.perlin2(xoff, yoff) * 3
+        const mat = this.createTerrainMaterial(options)
 
-                xoff += 0.1
-            }
+        const terrain = new THREE.Mesh(geometry, mat)
 
-            yoff += 0.1
+        if (options.useWireframe) {
+            const wireframeGeometry = new THREE.WireframeGeometry(geometry)
+
+            const wireframeMat = new THREE.LineBasicMaterial({ 
+                color: options.wireframeColor,
+                linewidth: options.wireframeLineWidth,
+                opacity: options.wireframeOpacity,
+                depthTest: true,
+                transparent: true
+            })
+
+            const wireframe = new THREE.LineSegments(wireframeGeometry, wireframeMat)
+            terrain.add(wireframe)
         }
 
-        /*for (let i = 0; i < this.dotsPerDimension; i++) {
-            for (let j = 0; j < this.dotsPerDimension; j++) {
-                const base = this.mIndex(i, j)
-                this.heightmap[base] = 0
-            }
-        }*/
+        return terrain
     }
 
-    private generateVertices() {
-        this.vertices = new Float32Array(3*this.dotsPerDimension*this.dotsPerDimension)
+    private createTerrainMaterial(options: RenderChunkOptions): THREE.Material {
+        const mat = options.prepareForLighting ? 
+                                    new THREE.MeshPhongMaterial() :
+                                    new THREE.MeshBasicMaterial()
+
+        //mat.color.set(0x00FF00)
+        mat.vertexColors = true
+        mat.side = THREE.FrontSide
         
-        const spaceBetweenDots = this.scale / (this.dotsPerDimension - 1)
-        const offset = this.scale / 2;
+        return mat
+    }
 
-        for (let i = 0; i < this.dotsPerDimension; i++) {
-            for (let j = 0; j < this.dotsPerDimension; j++) {
-                const base = this.mIndex(i, j)
-
-                this.vertices[3*base] = spaceBetweenDots * j - offset
-                this.vertices[3*base+1] = spaceBetweenDots * i - offset
-                this.vertices[3*base+2] = this.heightmap[base]
-            }
+    private parseOptions(options: RenderChunkOptions): RenderChunkOptions {
+        for (const key in options) {
+            if (options[key] === undefined)
+                options[key] = DefaultOptions[key]
         }
+
+        return options
     }
+}
 
-    private generateIndices() {
-        const triangleCount = 2 * this.dotsPerDimension * this.dotsPerDimension
-        this.indices = new Uint32Array(3 * triangleCount)
+export interface RenderChunkOptions {
+    useWireframe?: boolean;
+    wireframeColor?: number;
+    wireframeOpacity?: number;
+    wireframeLineWidth?: number;
+    prepareForLighting?: boolean;
+}
 
-        for (let i = 0; i < this.dotsPerDimension - 1; i++) {
-            for (let j = 0; j < this.dotsPerDimension - 1; j++) {
-                const base = this.mIndex(i, j)
-
-                this.indices[3*(2*base)] = base
-                this.indices[3*(2*base)+1] = base + 1
-                this.indices[3*(2*base)+2] = base + this.dotsPerDimension
-
-                this.indices[3*(2*base+1)] = base + this.dotsPerDimension
-                this.indices[3*(2*base+1)+1] = base + 1;
-                this.indices[3*(2*base+1)+2] = base + this.dotsPerDimension + 1
-            }
-        }
-    }
-
-    private mIndex(i: number, j: number): number {
-        return i * this.dotsPerDimension + j
-    }
+const DefaultOptions: RenderChunkOptions = {
+    useWireframe: true,
+    wireframeColor: 0xFFFFFF,
+    wireframeOpacity: 0.15,
+    wireframeLineWidth: 1.3,
+    prepareForLighting: true
 }

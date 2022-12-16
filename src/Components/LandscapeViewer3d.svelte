@@ -1,8 +1,10 @@
 <script lang="ts">
     import * as THREE from 'three'
+    // import { WebGLRenderer } from 'three';
     import { onMount } from 'svelte'
-    import { RenderChunk } from '../Renderer/RenderChunk';
-    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls' 
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+    import { Chunk } from '../Terrain/Chunk'; 
+    import { RenderChunk } from '../Renderer/RenderChunk'
 
     let root: Element;
 
@@ -11,6 +13,7 @@
         const rootHeight = root.clientHeight
         
         const scene = new THREE.Scene()
+
         const camera = new THREE.PerspectiveCamera(
             75, // fov
             rootWidth / rootHeight, // aspect ratio
@@ -19,13 +22,12 @@
         )
 
         const renderer = new THREE.WebGLRenderer({
+            canvas: root,
             antialias: true,
             alpha: true
         });
 
         renderer.setSize(rootWidth, rootHeight)
-
-        root.appendChild(renderer.domElement)
 
         const controls = new OrbitControls(camera, renderer.domElement)
 
@@ -34,38 +36,19 @@
 
         controls.update()
 
-        const chunk = new RenderChunk(100, 500)
+        const chunk = new Chunk(100, 500)
+        const renderChunk = new RenderChunk(chunk)
 
-        const terrainGeometry = new THREE.BufferGeometry()
+        scene.add(renderChunk)
 
-        const posAttr = new THREE.BufferAttribute(chunk.vertices, 3)
-        terrainGeometry.setAttribute('position', posAttr)
+        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
 
-        const indexAttr = new THREE.BufferAttribute(chunk.indices, 1)
-        terrainGeometry.setIndex(indexAttr)
+        scene.add(ambientLight)
 
-        const terrainWireframe = new THREE.WireframeGeometry(terrainGeometry)
+        const sunLight = new THREE.DirectionalLight( 0xffffff, 0.5);
+        sunLight.position.set(0, 0, 50)
 
-        const lineMaterial = new THREE.LineBasicMaterial({ 
-            color: 0xffffff,
-            linewidth: 1.3
-        })
-
-        const meshMaterial = new THREE.MeshBasicMaterial({
-            color: 0x000000
-        })
-
-        const line = new THREE.LineSegments(terrainWireframe, lineMaterial)
-        const mesh = new THREE.Mesh(terrainGeometry, meshMaterial)
-
-        line.material.depthTest = true
-        mesh.material.depthTest = true
-
-        mesh.renderOrder = 1
-        line.renderOrder = 2
-
-        scene.add(mesh)
-        scene.add(line)
+        scene.add(sunLight)
 
         function animate() {
             requestAnimationFrame(animate)
@@ -76,7 +59,7 @@
     })
 </script>
 
-<main id="landscape_viewer3d" bind:this={root}/>
+<canvas id="landscape_viewer3d" bind:this={root}/>
 
 <style>
 
