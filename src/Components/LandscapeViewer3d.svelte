@@ -3,7 +3,10 @@
     import { onMount } from 'svelte'
     import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
     import { Chunk } from '../Terrain/Chunk'; 
+    import { Heightmap } from '../Terrain/Heightmap';
     import { RenderChunk } from '../Renderer/RenderChunk'
+    import { Terrain } from '../Terrain/Terrain';
+    import { RenderTerrain } from '../Renderer/RenderTerrain';
 
     let root: Element;
 
@@ -44,12 +47,21 @@
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const chunk = new Chunk(100, 500)
+        const heightmap = Heightmap.generate(1000, 0.2)
+        const terrain = new Terrain(200, heightmap, 1000)
 
-        const renderChunk = new RenderChunk(chunk)
-        scene.add(renderChunk)
+        const renderTerrain = new RenderTerrain(terrain)
+        scene.add(renderTerrain)
 
-        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
+        /*const chunk = new Chunk(200, heightmap)
+        const renderChunk = new RenderChunk(
+            new THREE.Vector3(0, 0, 0),
+            chunk
+        )
+
+        scene.add(renderChunk)*/
+
+        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.0)
         scene.add(ambientLight)
 
         const sunLight = new THREE.DirectionalLight( 0xffffff, 0.5);

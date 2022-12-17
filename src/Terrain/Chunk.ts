@@ -1,18 +1,16 @@
-import * as THREE from 'three'
-import * as _noise from '../extern/perlin.js'
+import type { Heightmap } from './Heightmap'
 
 export class Chunk {
     // chunk width and height
-    scale: number;
+    readonly scale: number;
 
-    // number of dots in each column or row 
-    dotsPerDimension: number;
+    // number of vertices in each column or row 
+    readonly size: number;
 
-    // terrain vertices on xy place (x-first repr, rows in the direction of x+, row major ordering, asc order)
-    // x and y in the range [-scale; scale]
+    // terrain vertices on xy place (row-major, rows along x axis)
+    // all values in [-scale; scale]
     vertices: Float32Array;
 
-    // colors of vertices
     vertexColors: Float32Array;
 
     // terrain indices on xy plane
@@ -20,76 +18,51 @@ export class Chunk {
     indices: Uint32Array;
 
     // terrain heightmap
-    heightmap: Float32Array;
+    heightmap: Heightmap;
 
-    constructor(scale: number, dotsPerDimension: number) {
+    constructor(scale: number, heightmap: Heightmap) {
         this.scale = scale
-        this.dotsPerDimension = dotsPerDimension
+        this.size = heightmap.size
+        this.heightmap = heightmap
 
-        this.generateHeightmap()
-        this.generateVertexColors()
         this.generateVertices()
+        this.generateVertexColors()
         this.generateIndices()
     }
 
-    private generateHeightmap() {
-        this.heightmap = new Float32Array(this.dotsPerDimension*this.dotsPerDimension)
-
-        this.seedNoise()
-
-        const roughness = 0.03
-
-        let yoff = 0
-
-        for (let i = 0; i < this.dotsPerDimension; i++) {
-            let xoff = 0
-
-            for (let j = 0; j < this.dotsPerDimension; j++) {
-                const base = this.mIndex(i, j)
-
-                // Here we are refering to global object outside of this file, so
-                // your editor might highlight it as an error.
-                this.heightmap[base] = this.noise(xoff, yoff)
-
-                xoff += roughness
-            }
-
-            yoff += roughness
-        }
-
-        /*for (let i = 0; i < this.dotsPerDimension; i++) {
-            for (let j = 0; j < this.dotsPerDimension; j++) {
-                const base = this.mIndex(i, j)
-                this.heightmap[base] = 0
-            }
-        }*/
-    }
-
     private generateVertices() {
-        this.vertices = new Float32Array(3*this.dotsPerDimension*this.dotsPerDimension)
+        this.vertices = new Float32Array(3*this.size*this.size)
         
-        const spaceBetweenDots = this.scale / (this.dotsPerDimension - 1)
+        const spaceBetweenVertices = this.scale / (this.size - 1)
         const offset = this.scale / 2;
 
-        for (let i = 0; i < this.dotsPerDimension; i++) {
-            for (let j = 0; j < this.dotsPerDimension; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
                 const base = this.mIndex(i, j)
+                const hBase = this.mIndex(
+                    this.heightmap.offsetY + i,
+                    this.heightmap.offsetX + j
+                )
 
-                this.vertices[3*base] = spaceBetweenDots * j - offset
-                this.vertices[3*base+1] = spaceBetweenDots * i - offset
-                this.vertices[3*base+2] = this.heightmap[base] * 8
+                this.vertices[3*base] = spaceBetweenVertices * j - offset
+                this.vertices[3*base+1] = spaceBetweenVertices * i - offset
+                this.vertices[3*base+2] = this.heightmap.data[hBase] * 8
             }
         }
     }
 
     private generateVertexColors() {
-        this.vertexColors = new Float32Array(3*this.dotsPerDimension*this.dotsPerDimension)
+        this.vertexColors = new Float32Array(3*this.size*this.size)
 
-        for (let i = 0; i < this.dotsPerDimension; i++) {
-            for (let j = 0; j < this.dotsPerDimension; j++) {
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
                 const base = this.mIndex(i, j)
+                const hBase = this.mIndex(
+                    this.heightmap.offsetY + i,
+                    this.heightmap.offsetX + j
+                )
 
-                if (this.heightmap[base] < 0.1) {
+                if (this.heightmap.data[hBase] < 0.1) {
                     this.vertexColors[3*base] = 0.0
                     this.vertexColors[3*base+1] = 1.0
                     this.vertexColors[3*base+2] = 0.0
@@ -103,37 +76,25 @@ export class Chunk {
     }
 
     private generateIndices() {
-        const triangleCount = 2 * this.dotsPerDimension * this.dotsPerDimension
+        const triangleCount = 2 * this.size * this.size
         this.indices = new Uint32Array(3 * triangleCount)
 
-        for (let i = 0; i < this.dotsPerDimension - 1; i++) {
-            for (let j = 0; j < this.dotsPerDimension - 1; j++) {
+        for (let i = 0; i < this.size - 1; i++) {
+            for (let j = 0; j < this.size - 1; j++) {
                 const base = this.mIndex(i, j)
 
                 this.indices[3*(2*base)] = base
                 this.indices[3*(2*base)+1] = base + 1
-                this.indices[3*(2*base)+2] = base + this.dotsPerDimension
+                this.indices[3*(2*base)+2] = base + this.size
 
-                this.indices[3*(2*base+1)] = base + this.dotsPerDimension
+                this.indices[3*(2*base+1)] = base + this.size
                 this.indices[3*(2*base+1)+1] = base + 1;
-                this.indices[3*(2*base+1)+2] = base + this.dotsPerDimension + 1
+                this.indices[3*(2*base+1)+2] = base + this.size + 1
             }
         }
     }
 
     private mIndex(i: number, j: number): number {
-        return i * this.dotsPerDimension + j
-    }
-
-    private seedNoise() {
-        // Here we are refering to global object outside of this file, so
-        // your editor might highlight it as an error.
-        noise.seed()
-    }
-
-    private noise(x: number, y: number): number {
-        // Here we are refering to global object outside of this file, so
-        // your editor might highlight it as an error.
-        return noise.perlin2(x, y)
+        return i * this.size + j
     }
 }

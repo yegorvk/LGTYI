@@ -1,17 +1,19 @@
 import * as THREE from 'three'
+import { applyDefaults } from '../Defaults'
 import type { Chunk } from '../Terrain/Chunk'
+import  { type RenderOptions, DefaultRenderOptions } from './RenderOptions'
 
 export class RenderChunk extends THREE.Object3D {
-    constructor(chunk: Chunk, options: RenderChunkOptions = DefaultOptions) {
+    constructor(offset: THREE.Vector3, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
         super()
 
-        options = this.parseOptions(options)
+        applyDefaults(options, DefaultRenderOptions)
 
-        const terrain = this.createTerrain(chunk, options)
+        const terrain = this.createTerrain(offset, chunk, options)
         super.add(terrain)
     }
 
-    private createTerrain(chunk: Chunk, options: RenderChunkOptions): THREE.Object3D {
+    private createTerrain(offset: THREE.Vector3, chunk: Chunk, options: RenderOptions): THREE.Object3D {
         const geometry = new THREE.BufferGeometry()
 
         const posAttr = new THREE.BufferAttribute(chunk.vertices, 3)
@@ -29,6 +31,7 @@ export class RenderChunk extends THREE.Object3D {
         const mat = this.createTerrainMaterial(options)
 
         const terrain = new THREE.Mesh(geometry, mat)
+        terrain.position.add(offset)
 
         if (options.useWireframe) {
             const wireframeGeometry = new THREE.WireframeGeometry(geometry)
@@ -48,7 +51,7 @@ export class RenderChunk extends THREE.Object3D {
         return terrain
     }
 
-    private createTerrainMaterial(options: RenderChunkOptions): THREE.Material {
+    private createTerrainMaterial(options: RenderOptions): THREE.Material {
         const mat = options.prepareForLighting ? 
                                     new THREE.MeshPhongMaterial() :
                                     new THREE.MeshBasicMaterial()
@@ -57,29 +60,4 @@ export class RenderChunk extends THREE.Object3D {
         
         return mat
     }
-
-    private parseOptions(options: RenderChunkOptions): RenderChunkOptions {
-        for (const key in options) {
-            if (options[key] === undefined)
-                options[key] = DefaultOptions[key]
-        }
-
-        return options
-    }
-}
-
-export interface RenderChunkOptions {
-    useWireframe?: boolean;
-    wireframeColor?: number;
-    wireframeOpacity?: number;
-    wireframeLineWidth?: number;
-    prepareForLighting?: boolean;
-}
-
-const DefaultOptions: RenderChunkOptions = {
-    useWireframe: true,
-    wireframeColor: 0xFFFFFF,
-    wireframeOpacity: 0.15,
-    wireframeLineWidth: 1.3,
-    prepareForLighting: true
 }
