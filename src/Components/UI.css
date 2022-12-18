@@ -1,14 +1,100 @@
 .main_panel{
     position: absolute;
-    left: 10px;
     top: 10px;
+    left: -240px;
+    background: #666666;
+    transition: left 400ms;
+    width: 300px;
+    height: 600px;
+    max-height: 600px;
+    padding: 58px 10px;
+    padding-bottom: 10px;
+    border-radius: 6px;
+
+}
+.content{
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: auto;
+    overflow-y: scroll;
+}
+
+.closeup{
+    border-radius: 10px;
+    outline: inherit;
+    top: 10px;
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    background: #999999;
+    transition: left 400ms;
+    left: 250px;
+}
+.opened_panel > .closeup{
+    left: 10px;
 }
 .opened_panel{
-    background: #666666;
-    width: 40px;
-    height: 100px;
+    left: 10px;
+}
+
+.burger {
+    position: relative;
+    transform: translateY(2px);
+}
+
+.burger_or .burger {
+    transform: translateY(0);
+}
+
+.burger::after, .burger, .burger::before {
+    content: '';
+    width: 24px;
+    border-radius: 4px;
+    transition: transform .6s ease-in-out, margin .6s ease-in-out;
+}
+
+.burger::after, .burger::before {
+    display: block !important;
+    height: 4px;
+    background: #fff;
 
 }
-.closed_panel{
 
+.burger::after {
+    transform: rotate(45deg) translateY(-3px) translateX(-3px);
+    margin-top: 0;
+}
+
+.burger::before {
+    transform: rotate(-45deg);
+}
+
+.burger_or .burger::after {
+    margin-top: 4px;
+    transform: none;
+}
+
+.burger_or .burger::before {
+    transform: none;
+}
+
+.menu-but{
+    border: solid 2px white;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    min-height: 44px;
+    padding: 0 6rem;
+    background: #999999;
+    color: white;
+    font-size: 23px;
+    transition: all 320ms;
+    width: 100%;
+    height: 60px;
+    z-index: 100;
+    text-align: center;
 }
