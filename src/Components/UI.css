@@ -115,7 +115,7 @@
     cursor: pointer;
     outline: none;
 }
-.menu-but:focus{
+.menu-but:focus {
     border:#cecece 2px solid;
     display: flex;
     align-items: center;
