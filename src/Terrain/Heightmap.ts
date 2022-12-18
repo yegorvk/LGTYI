@@ -9,14 +9,17 @@ export class Heightmap {
     // heightmap data (row-major order)
     data: Float32Array;
 
-    static generate(size: number, roughness: number): Heightmap {
+    static generate(
+        size: number,
+        maxAltitude: number,
+        roughness: number,
+        levelOfDetail: number
+    ): Heightmap {
         const heightmap = Heightmap.flat(size)
         const noiseGenerator = new PerlinNoise()
 
         // adjust roughness
-
-        roughness /= 5
-        //roughness *= (1000 / size)
+        roughness /= 5.6
 
         let noiseY = 0
 
@@ -25,12 +28,47 @@ export class Heightmap {
 
             for (let j = 0; j < heightmap.size; j++) {
                 const base = i*heightmap.size+j
-                heightmap.data[base] = noiseGenerator.perlin2(noiseX, noiseY)
+                heightmap.data[base] = noiseGenerator.perlin2(noiseX, noiseY) * maxAltitude
 
                 noiseX += roughness
             }
 
             noiseY += roughness
+        }
+
+        return heightmap
+    }
+
+    static generateMultipass(
+        size: number,
+        maxAltitude: number,
+        roughness: number,
+        levelOfDetail: number
+    ): Heightmap {
+        const heightmap = Heightmap.flat(size, 0)
+        const noiseGenerator = new PerlinNoise()
+
+        // adjust roughness
+        roughness /= 5.6
+
+        for (let pass = 0; pass < levelOfDetail; pass++) {
+            let noiseY = 0
+
+            for (let i = 0; i < heightmap.size; i++) {
+                let noiseX = 0
+
+                for (let j = 0; j < heightmap.size; j++) {
+                    const base = i*heightmap.size+j
+                    heightmap.data[base] += noiseGenerator.perlin2(noiseX, noiseY) * maxAltitude
+
+                    noiseX += roughness
+                }
+
+                noiseY += roughness
+            }
+
+            roughness *= 3
+            maxAltitude *= 0.3
         }
 
         return heightmap

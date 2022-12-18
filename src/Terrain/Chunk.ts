@@ -46,7 +46,7 @@ export class Chunk {
 
                 this.vertices[3*base] = spaceBetweenVertices * j - offset
                 this.vertices[3*base+1] = spaceBetweenVertices * i - offset
-                this.vertices[3*base+2] = this.heightmap.data[hBase] * 20
+                this.vertices[3*base+2] = this.heightmap.data[hBase]
             }
         }
     }
