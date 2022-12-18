@@ -6,23 +6,13 @@
     import { Heightmap } from '../Terrain/Heightmap';
     import { RenderChunk } from '../Renderer/RenderChunk'
     import { Terrain } from '../Terrain/Terrain';
-    import { RenderTerrain } from '../Renderer/RenderTerrain'; 
+    import { RenderTerrain } from '../Renderer/RenderTerrain';
+    import { DefaultGeneratorOptions, type GeneratorOptions } from '../Terrain/GeneratorOptions';
 
     let root: Element;
 
     // terrain generation options
-
-    // terrain size
-    export let size: number = 500;
-
-    // max terrain altitude
-    export let maxAltitude: number = 20;
-
-    // terrain roughness coefficient (0; 1]
-    export let roughness: number = 0.5;
-
-    // terrain level of detail (e.g. small hills)
-    export let levelOfDetail: number = 6;
+    export let generatorOptions: GeneratorOptions = DefaultGeneratorOptions
 
     onMount(() => {
         const rootWidth = root.clientWidth
@@ -63,9 +53,11 @@
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const heightmap = Heightmap.generateMultipass(size, maxAltitude, roughness, levelOfDetail)
+        console.log(generatorOptions)
 
-        const chunk = new Chunk(size, heightmap)
+        const heightmap = Heightmap.generate(generatorOptions)
+
+        const chunk = new Chunk(generatorOptions.size, heightmap)
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),
             chunk

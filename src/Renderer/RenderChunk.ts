@@ -53,7 +53,7 @@ export class RenderChunk extends THREE.Object3D {
 
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
         const mat = options.prepareForLighting ? 
-                                    new THREE.MeshPhongMaterial() :
+                                    new THREE.MeshLambertMaterial() :
                                     new THREE.MeshBasicMaterial()
 
         mat.vertexColors = true
