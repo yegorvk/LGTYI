@@ -14,7 +14,7 @@ export class Terrain {
         this.scale = scale
         this.chunkSize = chunkSize
 
-        this.chunkGridSize = (heightmap.size - 0) / (chunkSize - 0)
+        this.chunkGridSize = (heightmap.size - 1) / (chunkSize - 1)
         this.chunkScale = this.scale / this.chunkGridSize
 
         this.chunks = new Array(this.chunkGridSize*this.chunkGridSize)
@@ -24,8 +24,8 @@ export class Terrain {
                 const base = i*this.chunkGridSize+j
                 const chunkHeightmap = heightmap.subMap(
                     chunkSize,
-                    Math.max(0, j*chunkSize-1),
-                    Math.max(0, i*chunkSize-1)
+                    j*chunkSize,
+                    i*chunkSize
                 )
 
                 this.chunks[base] = new Chunk(this.chunkScale, chunkHeightmap)

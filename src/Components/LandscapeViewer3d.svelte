@@ -47,19 +47,19 @@
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const heightmap = Heightmap.generate(1000, 0.2)
-        const terrain = new Terrain(200, heightmap, 1000)
+        const heightmap = Heightmap.generate(500, 0.2)
+        /*const terrain = new Terrain(200, heightmap, 500 - 1)
 
         const renderTerrain = new RenderTerrain(terrain)
-        scene.add(renderTerrain)
+        scene.add(renderTerrain)*/
 
-        /*const chunk = new Chunk(200, heightmap)
+        const chunk = new Chunk(500, heightmap)
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),
             chunk
         )
 
-        scene.add(renderChunk)*/
+        scene.add(renderChunk)
 
         const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.0)
         scene.add(ambientLight)
