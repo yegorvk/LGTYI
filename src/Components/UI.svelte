@@ -1,5 +1,6 @@
 <script lang="ts">
  import "./UI.css";
+ import "./Range.css";
  import Param from "./Param.svelte";
  export let value:number = 0;
  let visible: boolean = true;
@@ -15,37 +16,37 @@
     </button>
     <div class="content">
         <Param>
-            <h3>placeholder: {value}</h3>
-            <input type="range" bind:value={value} max="10" min="0">
+            <span>placeholder: {value}</span>
+            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
         </Param>
         <Param>
-            <h3>placeholder: {value}</h3>
-            <input type="range" bind:value={value} max="10" min="0">
+            <span>placeholder: {value}</span>
+            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
         </Param>
         <Param>
-            <h3>placeholder: {value}</h3>
-            <input type="range" bind:value={value} max="10" min="0">
+            <span>placeholder: {value}</span>
+            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
         </Param>
         <Param>
-            <h3>placeholder: {value}</h3>
-            <input type="range" bind:value={value} max="10" min="0">
+            <span>placeholder: {value}</span>
+            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
         </Param>
         <Param>
-            <h3>placeholder: {value}</h3>
-            <input type="range" bind:value={value} max="10" min="0">
+            <span>placeholder: {value}</span>
+            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
         </Param>
         <Param>
-            <h3>placeholder: {value}</h3>
-            <input type="range" bind:value={value} max="10" min="0">
+            <span>placeholder: {value}</span>
+            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
         </Param>
         <button class="menu-but">
-            Generate
+            <span>Generate</span>
         </button>
         <button class="menu-but">
-            Import
+            <span>Import</span>
         </button>
         <button class="menu-but">
-            Export
+            <span>Export</span>
         </button>
     </div>
 </div>

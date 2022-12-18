@@ -1,7 +1,14 @@
 .parameter{
-    width: 93%;
+    width: 100%;
     background: #999999;
-    height: 100px;
     border-radius: 10px;
-    padding: 10px;
+    padding: 1px;
+    margin: 0 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    font-family: Comfortaa, cursive;
+
+    font-size: 20px;
 }
