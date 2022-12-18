@@ -14,7 +14,9 @@ export class Heightmap {
         const noiseGenerator = new PerlinNoise()
 
         // adjust roughness
+
         roughness /= 5
+        //roughness *= (1000 / size)
 
         let noiseY = 0
 

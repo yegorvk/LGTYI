@@ -44,10 +44,13 @@
         const clock = new THREE.Clock()
         const camControls = new FlyControls(camera, renderer.domElement)
 
+        camControls.dragToLook = true
+
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const heightmap = Heightmap.generate(500, 0.2)
+        const heightmap = Heightmap.generate(500, 0.3)
+        
         /*const terrain = new Terrain(200, heightmap, 500 - 1)
 
         const renderTerrain = new RenderTerrain(terrain)
