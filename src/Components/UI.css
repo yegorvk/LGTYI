@@ -115,6 +115,23 @@
     cursor: pointer;
     outline: none;
 }
+.menu-but:focus{
+    border:#cecece 2px solid;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    min-height: 44px;
+    padding: 0 2rem;
+    background: #999999;
+    color: white;
+    font-size: 23px;
+    transition: all 320ms;
+    width: 100%;
+    height: 60px;
+    z-index: 100;
+    text-align: center;
+    outline: none;
+}
 /* width */
 ::-webkit-scrollbar {
     width: 3px;
