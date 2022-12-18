@@ -49,14 +49,14 @@
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const heightmap = Heightmap.generate(500, 0.3)
+        const heightmap = Heightmap.generate(1000, 0.3)
         
         /*const terrain = new Terrain(200, heightmap, 500 - 1)
 
         const renderTerrain = new RenderTerrain(terrain)
         scene.add(renderTerrain)*/
 
-        const chunk = new Chunk(500, heightmap)
+        const chunk = new Chunk(1000, heightmap)
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),
             chunk
@@ -72,13 +72,20 @@
         scene.add(sunLight)
 
         function animate() {
-            requestAnimationFrame(animate)
-
-            camControls.update(clock.getDelta())
             renderer.render(scene, camera)
         }
 
+        function update() {
+            camControls.update(clock.getDelta())
+            requestAnimationFrame(update)
+        }
+
+        update()
         animate()
+
+        camControls.addEventListener('change', () => {
+            animate()
+        })
     })
 </script>
 
