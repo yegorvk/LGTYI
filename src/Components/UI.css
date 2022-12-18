@@ -2,7 +2,7 @@
     position: absolute;
     top: 10px;
     left: -260px;
-    background: #666666;
+    background: none;
     transition: all 400ms;
     width: 300px;
     height: 58px;
@@ -10,6 +10,7 @@
     padding: 58px 10px;
     padding-bottom: 10px;
     border-radius: 6px;
+
 
 }
 
@@ -42,12 +43,13 @@
     position: absolute;
     background: #999999;
     transition: left 400ms;
-    left: 270px;
+    left: 280px;
 }
 .opened_panel > .closeup{
     left: 10px;
 }
 .opened_panel{
+    background: #666666;
     left: 10px;
 }
 
