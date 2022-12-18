@@ -69,7 +69,7 @@
         scene.add(ambientLight)
 
         const sunLight = new THREE.DirectionalLight( 0xffffff, 0.7);
-        sunLight.position.set(0, 0, 50)
+        sunLight.position.set(0, 0, 200)
         scene.add(sunLight)
 
         function animate() {

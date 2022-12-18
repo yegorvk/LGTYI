@@ -41,7 +41,7 @@
             <input class="basic-range" 
                    type="range" 
                    bind:value={maxAltitude} 
-                   max="1000" 
+                   max="50" 
                    min="10">
         </Param>
 

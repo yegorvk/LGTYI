@@ -1,4 +1,5 @@
 import type { Heightmap } from './Heightmap'
+import { colorGrayScaleFromAltitude, colorRGBFromAltitude, rgb } from './PointColor';
 
 export class Chunk {
     // chunk width and height
@@ -62,15 +63,17 @@ export class Chunk {
                     this.heightmap.offsetX + j
                 )
 
-                if (this.heightmap.data[hBase] < 0.1) {
-                    this.vertexColors[3*base] = 0.0
-                    this.vertexColors[3*base+1] = 1.0
-                    this.vertexColors[3*base+2] = 0.0
-                } else {
-                    this.vertexColors[3*base] = 1.0
-                    this.vertexColors[3*base+1] = 1.0
-                    this.vertexColors[3*base+2] = 1.0
-                }
+                const colorRGB = colorRGBFromAltitude(this.heightmap.data[hBase])
+
+                this.vertexColors[3*base] = ((colorRGB >> 16) & 0xFF) / 255
+                this.vertexColors[3*base+1] = ((colorRGB >> 8) & 0xFF) / 255
+                this.vertexColors[3*base+2] = (colorRGB & 0xFF) / 255
+
+                /*const colorGrayScale = colorGrayScaleFromAltitude(this.heightmap.data[hBase]) / 255
+                console.log(colorGrayScale)
+
+                for (let k = 0; k < 3; k++)
+                    this.vertexColors[3*base+k] = colorGrayScale*/
              }
         }        
     }
