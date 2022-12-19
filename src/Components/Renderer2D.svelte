@@ -7,6 +7,7 @@
 
     let canvas: HTMLCanvasElement;
     export let data: Heightmap;
+    export let d2Scale: number = 5;
     onMount(()=>{
         let context: CanvasRenderingContext2D = canvas.getContext('2d');
         for (let i=0; i < data.size; i++){
@@ -24,8 +25,8 @@
 
 <canvas
         bind:this={canvas}
-        width={data.size*5}
-        height={data.size*5}
+        width={data.size*d2Scale}
+        height={data.size*d2Scale}
 >
 
 </canvas>
