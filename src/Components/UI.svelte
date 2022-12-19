@@ -4,10 +4,10 @@
  import Param from "./Param.svelte";
  import { DefaultGeneratorOptions, type GeneratorOptions } from "../Terrain/GeneratorOptions";
 
- //export let value: number = 0;
+
 
  //let options = DefaultGeneratorOptions
-
+ export let is2D: boolean = false;
  export let generate: (optinons: GeneratorOptions) => void = undefined;
 
  let size: number = DefaultGeneratorOptions.size;
@@ -16,6 +16,10 @@
  let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
 
  let visible: boolean = false;
+ function dimSwitch(){
+     is2D = !is2D;
+     is2D = is2D;
+ }
  function menuSwitch(){
      visible = !visible;
      visible = visible;
@@ -62,33 +66,15 @@
                    max="50" 
                    min="1">
         </Param>
+        <Param>
+            <span>2D</span>
+            <input class="basic-check"
+                   type="checkbox"
+                   on:change = {dimSwitch}
+            >
+        </Param>
 
-        <!--<Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>-->
-
-        <button class="menu-but"  
+        <button class="menu-but"  disabled={is2D}
                 on:click={
                     () => {
                         generate(

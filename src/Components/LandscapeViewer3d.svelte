@@ -11,6 +11,7 @@
 
     let root: Element;
 
+    export let heightmap: Heightmap;
     // terrain generation options
     export let generatorOptions: GeneratorOptions = DefaultGeneratorOptions
 
@@ -55,7 +56,7 @@
 
         console.log(generatorOptions)
 
-        const heightmap = Heightmap.generate(generatorOptions)
+        heightmap = Heightmap.generate(generatorOptions)
 
         const chunk = new Chunk(generatorOptions.size, heightmap)
         const renderChunk = new RenderChunk(

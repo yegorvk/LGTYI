@@ -8,7 +8,7 @@ export class Chunk {
     // number of vertices in each column or row 
     readonly size: number;
 
-    // terrain vertices on xy place (row-major, rows along x axis)
+    // terrain vertices on xy place (row-major, rows along x-axis)
     // all values in [-scale; scale]
     vertices: Float32Array;
 
@@ -99,4 +99,6 @@ export class Chunk {
     private mIndex(i: number, j: number): number {
         return i * this.size + j
     }
+
+
 }
