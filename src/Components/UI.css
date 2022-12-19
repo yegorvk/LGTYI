@@ -109,6 +109,9 @@
     transition: all 320ms;
     outline: none;
 }
+.menu-but:disabled{
+    color: #666666;
+}
 .menu-but:hover {
     background: #18656e;
     cursor: pointer;
