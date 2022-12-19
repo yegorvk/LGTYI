@@ -8,7 +8,7 @@ export function colorRGBFromAltitude(alt: number, maxAlt: number = 50): number {
 }
 
 export function colorGrayScaleFromAltitude(alt: number, maxAlt: number = 50): number {
-    return Math.min(255, Math.round(((alt / maxAlt) * 255)))
+    return Math.min(1.0, (alt / maxAlt))
 }
 
 export function rgb(r: number, g: number, b: number): number {
