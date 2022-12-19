@@ -1,62 +1,70 @@
-.basic-range:disabled{
-    opacity:0.5;
-}
 .basic-range {
     appearance: none;
     -webkit-appearance: none;
-    border: 0;
-    background: #4676D7;
-    background: none;
-    margin: 5px 0;
+    -moz-appearance: none;
     width: 60%;
+    margin: 5px 0;
     transition: opacity 400ms;
+    background: none;
+    border: 2px solid #999999;
+    border-radius: 8px;
 }
 .basic-range:focus {
     outline: none;
+    border: 2px dashed #cecece;
+    border-radius: 8px;
 }
+.basic-range:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
 .basic-range::-webkit-slider-runnable-track {
     width: 100%;
     height: 4px;
-    cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
     background: #3071a9;
-    border-radius: 1px;
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
     border: 0.2px solid #010101;
+    border-radius: 1px;
+}
+.basic-range:not([disabled]):hover::-webkit-slider-runnable-track {
+    cursor: pointer;
 }
 .basic-range::-webkit-slider-thumb {
-    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 16px;
+    -webkit-appearance: none;
     width: 16px;
+    height: 16px;
+    margin-top: -7px;
+    border: 1px solid #000000;
     border-radius: 3px;
     background: #ffffff;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -7px;
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
 }
-.basic-range:focus::-webkit-slider-runnable-track {
-    background: #367ebd;
+.basic-range:not([disabled]):hover::-webkit-slider-thumb {
+    cursor: pointer;
 }
 
 .basic-range::-moz-range-track {
     width: 100%;
     height: 4px;
-    cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
     background: #3071a9;
-    border-radius: 1px;
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
     border: 0.2px solid #010101;
+    border-radius: 1px;
+}
+.basic-range:not([disabled]):hover::-moz-range-track {
+    cursor: pointer;
 }
 .basic-range::-moz-range-thumb {
-    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 16px;
+    -moz-appearance: none;
     width: 16px;
+    height: 16px;
+    margin-top: -7px;
+    border: 1px solid #000000;
     border-radius: 3px;
     background: #ffffff;
-    cursor: pointer;
-    margin-top: -7px;
+    box-shadow: 1px 1px 1px #000000, 0 0 1px #0d0d0d;
 }
-.basic-range:focus::-moz-range-thumb {
-    background: #367ebd;
+.basic-range:not([disabled]):hover::-moz-range-thumb {
+    cursor: pointer;
 }

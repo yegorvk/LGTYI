@@ -1,4 +1,4 @@
-.parameter{
+.parameter {
     width: 100%;
     background: #999999;
     border-radius: 10px;
@@ -9,6 +9,5 @@
     gap: 4px;
     align-items: center;
     font-family: Comfortaa, cursive;
-
     font-size: 20px;
 }

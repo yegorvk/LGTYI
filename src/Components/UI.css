@@ -94,9 +94,14 @@
 
 .menu-but {
     display: flex;
-    align-items: center;
+    width: 100%;
+    height: 60px;
     min-height: 44px;
     padding: 0 2rem;
+    outline: none;
+    align-items: center;
+    transition: all 320ms;
+    z-index: 100;
     background: #999999;
     border: 2px solid #cecece;
     border-radius: 8px;
@@ -104,30 +109,25 @@
     text-align: center;
     font-family: Comfortaa, cursive;
     font-size: 23px;
-    width: 100%;
-    height: 60px;
-    z-index: 100;
-    transition: all 320ms;
+}
+.menu-but:not([disabled]):hover {
     outline: none;
-}
-.menu-but:disabled{
-    color: #666666;
-}
-.menu-but:hover {
     background: #18656e;
     cursor: pointer;
-    outline: none;
 }
-.menu-but:focus {
+.menu-but:not([disabled]):focus {
+    outline: none;
     border: 2px dashed #cecece;
     border-radius: 8px;
-    outline: none;
 }
-/*Is ignored! Why?*/
-.menu-but:active {
+.menu-but:not([disabled]):active {
+    outline: none;
     background: #999999;
     cursor: pointer;
-    outline: none;
+}
+.menu-but:disabled {
+    cursor: default;
+    color: #666666;
 }
 
 /* width */

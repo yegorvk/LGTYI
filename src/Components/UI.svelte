@@ -67,12 +67,12 @@
                    max="50" 
                    min="1">
         </Param>
+
         <Param>
             <span>2D</span>
             <input class="basic-check"
                    type="checkbox"
-                   on:change = {dimSwitch}
-            >
+                   on:change = {dimSwitch}>
             <span>2D View Scale: {d2VScale}</span>
             <input class="basic-range"
                    type="range"
@@ -82,7 +82,7 @@
                    disabled={is2D}>
         </Param>
 
-        <button class="menu-but"  disabled={is2D}
+        <button class="menu-but" disabled={is2D}
                 on:click={
                     () => {
                         generate(
