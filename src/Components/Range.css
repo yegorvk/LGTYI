@@ -1,4 +1,6 @@
-
+.basic-range:disabled{
+    opacity:0.5;
+}
 .basic-range {
     appearance: none;
     -webkit-appearance: none;
@@ -7,6 +9,7 @@
     background: none;
     margin: 5px 0;
     width: 60%;
+    transition: opacity 400ms;
 }
 .basic-range:focus {
     outline: none;
