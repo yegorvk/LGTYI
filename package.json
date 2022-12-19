@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "electron-serve": "^1.1.0",
+    "svelte-gestures": "^1.4.1",
     "three": "^0.146.0"
   },
   "devDependencies": {

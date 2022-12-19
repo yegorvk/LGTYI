@@ -9,6 +9,7 @@
     max-height: 58px;
     padding: 58px 10px 10px;
     border-radius: 6px;
+    z-index: 9999;
 }
 
 .opened_panel > .content {
