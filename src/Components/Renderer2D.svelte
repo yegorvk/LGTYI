@@ -1,9 +1,9 @@
 <script lang="ts">
 
-    import {Heightmap} from "../Terrain/Heightmap";
+    import type {Heightmap} from "../Terrain/Heightmap";
     import {DefaultGeneratorOptions} from "../Terrain/GeneratorOptions";
     import {onMount} from "svelte";
-    import {colorGrayScaleFromAltitude} from "../Terrain/PointColor";
+    import {colorGrayScaleFromAltitude, rgbFromGrayScale} from "../Terrain/PointColor";
 
     let canvas: HTMLCanvasElement;
     export let data: Heightmap;
@@ -13,9 +13,10 @@
         for (let i=0; i < data.size; i++){
             for (let j = 0; j < data.size; j++){
                 let id = j + i * data.size;
-                let alpha = colorGrayScaleFromAltitude(data.data[id]);
-                context.fillStyle = `rgba(0, 0, 0, ${alpha})`;
-                context.fillRect(i*d2Scale, j*d2Scale, d2Scale, d2Scale);
+                let grayscale = colorGrayScaleFromAltitude(data.data[id]);
+                let rgb = rgbFromGrayScale(grayscale)
+                context.fillStyle = `#${rgb.toString(16)}`;
+                context.fillRect(i*5, j*5, 5, 5);
             }
         }
     })
