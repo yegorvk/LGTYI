@@ -9,6 +9,7 @@
  //let options = DefaultGeneratorOptions
  export let is2D: boolean = false;
  export let generate: (optinons: GeneratorOptions) => void = undefined;
+ export let d2VScale: number = 5;
 
  let size: number = DefaultGeneratorOptions.size;
  let maxAltitude: number = DefaultGeneratorOptions.maxAltitude;
@@ -72,6 +73,13 @@
                    type="checkbox"
                    on:change = {dimSwitch}
             >
+            <span>2D View Scale: {d2VScale}</span>
+            <input class="basic-range"
+                   type="range"
+                   bind:value={d2VScale}
+                   max="20"
+                   min="1"
+                   disabled={is2D}>
         </Param>
 
         <button class="menu-but"  disabled={is2D}

@@ -8,6 +8,7 @@
     let trigger: boolean;
     let is2DView:boolean = false;
     let HeightMap: Heightmap;
+    let d2VScale: number;
     const generate = (options: GeneratorOptions) => {
         generatorOptions = options
         trigger = !trigger
@@ -15,14 +16,14 @@
 </script>
 
 <main id="app_content">
-    <UI {generate} bind:is2D = {is2DView}/>
+    <UI {generate} bind:d2VScale={d2VScale} bind:is2D = {is2DView}/>
     {#if !is2DView}
     {#key trigger}
     <LandScapeViewer3d {generatorOptions} bind:heightmap = {HeightMap}/>
     {/key}
     {:else}
         <div class="d2-cont">
-            <Renderer2D data={HeightMap}></Renderer2D>
+            <Renderer2D d2Scale={d2VScale} data={HeightMap}></Renderer2D>
         </div>
     {/if}
 </main>
