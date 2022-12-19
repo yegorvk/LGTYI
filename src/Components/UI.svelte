@@ -63,31 +63,6 @@
                    min="1">
         </Param>
 
-        <!--<Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>
-        <Param>
-            <span>placeholder: {value}</span>
-            <input class="basic-range" type="range" bind:value={value} max="10" min="0">
-        </Param>-->
-
         <button class="menu-but"  
                 on:click={
                     () => {

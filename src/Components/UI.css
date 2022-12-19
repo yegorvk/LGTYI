@@ -1,4 +1,4 @@
-.main_panel{
+.main_panel {
     position: absolute;
     top: 10px;
     left: -260px;
@@ -7,19 +7,18 @@
     width: 300px;
     height: 58px;
     max-height: 58px;
-    padding: 58px 10px;
-    padding-bottom: 10px;
+    padding: 58px 10px 10px;
     border-radius: 6px;
 }
 
 .opened_panel > .content {
     opacity: 1;
 }
-.opened_panel{
+.opened_panel {
     height: 60%;
     max-height: 60%;
 }
-.content{
+.content {
     transition: opacity 400ms;
     opacity: 0;
     width: 100%;
@@ -33,7 +32,7 @@
     overflow-x: hidden;
 }
 
-.closeup{
+.closeup {
     border-radius: 10px;
     outline: inherit;
     top: 10px;
@@ -44,10 +43,10 @@
     transition: left 400ms;
     left: 280px;
 }
-.opened_panel > .closeup{
+.opened_panel > .closeup {
     left: 10px;
 }
-.opened_panel{
+.opened_panel {
     background: #666666;
     left: 10px;
 }
@@ -72,7 +71,6 @@
     display: block !important;
     height: 4px;
     background: #fff;
-
 }
 
 .burger::after {
@@ -93,21 +91,22 @@
     transform: none;
 }
 
-.menu-but{
-    border:#cecece 2px solid;
+.menu-but {
     display: flex;
     align-items: center;
-    border-radius: 8px;
     min-height: 44px;
     padding: 0 2rem;
     background: #999999;
-    color: white;
+    border: 2px solid #cecece;
+    border-radius: 8px;
+    color: #333333;
+    text-align: center;
+    font-family: Comfortaa, cursive;
     font-size: 23px;
-    transition: all 320ms;
     width: 100%;
     height: 60px;
     z-index: 100;
-    text-align: center;
+    transition: all 320ms;
     outline: none;
 }
 .menu-but:hover {
@@ -116,22 +115,17 @@
     outline: none;
 }
 .menu-but:focus {
-    border:#cecece 2px solid;
-    display: flex;
-    align-items: center;
+    border: 2px dashed #cecece;
     border-radius: 8px;
-    min-height: 44px;
-    padding: 0 2rem;
-    background: #999999;
-    color: white;
-    font-size: 23px;
-    transition: all 320ms;
-    width: 100%;
-    height: 60px;
-    z-index: 100;
-    text-align: center;
     outline: none;
 }
+/*Is ignored! Why?*/
+.menu-but:active {
+    background: #999999;
+    cursor: pointer;
+    outline: none;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 3px;
@@ -139,7 +133,6 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-
     border-radius: 3px;
 }
 
