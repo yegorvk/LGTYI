@@ -8,7 +8,7 @@
 
  //let options = DefaultGeneratorOptions
  export let is2D: boolean = false;
- export let generate: (optinons: GeneratorOptions) => void = undefined;
+ export let generate: (options: GeneratorOptions) => void = undefined;
  export let d2VScale: number = 5;
 
  let size: number = DefaultGeneratorOptions.size;
