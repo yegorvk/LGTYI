@@ -1,8 +1,9 @@
-<script lang="ts">
+<script lang="ts" xmlns="http://www.w3.org/1999/html">
  import "./UI.css";
  import "./Range.css";
  import Param from "./Param.svelte";
  import { DefaultGeneratorOptions, type GeneratorOptions } from "../Terrain/GeneratorOptions";
+ import {createEventDispatcher} from "svelte";
 
 
 
@@ -11,12 +12,17 @@
  export let generate: (options: GeneratorOptions) => void = undefined;
  export let d2VScale: number = 5;
 
+ let dispatcher = createEventDispatcher();
+
  let size: number = DefaultGeneratorOptions.size;
  let maxAltitude: number = DefaultGeneratorOptions.maxAltitude;
  let roughnessCoefficient: number = DefaultGeneratorOptions.roughnessCoefficient * 100;
  let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
 
  let visible: boolean = false;
+ function Export(){
+     dispatcher('export_map');
+ }
  function dimSwitch(){
      is2D = !is2D;
      is2D = is2D;
@@ -98,11 +104,12 @@
             <span>Generate</span>
         </button>
 
-        <button class="menu-but">
-            <span>Import</span>
-        </button>
+        <input class="menu-but" type="file" placeholder="Import">
 
-        <button class="menu-but">
+
+
+        <button class="menu-but"
+            on:click={Export}>
             <span>Export</span>
         </button>
     </div>

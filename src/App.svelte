@@ -4,6 +4,7 @@
     import { DefaultGeneratorOptions, type GeneratorOptions } from './Terrain/GeneratorOptions';
     import Renderer2D from "./Components/Renderer2D.svelte";
     import {Heightmap} from "./Terrain/Heightmap";
+    import {exportMap} from "./Terrain/Exporter";
 
     let generatorOptions = DefaultGeneratorOptions
     let trigger: boolean;
@@ -15,11 +16,13 @@
         trigger = !trigger
     }
 
-
+    function exp(){
+        exportMap(Heightmap)
+    }
 </script>
 
 <main id="app_content">
-    <UI {generate} bind:d2VScale={d2VScale} bind:is2D = {is2DView}/>
+    <UI {generate} bind:d2VScale={d2VScale} bind:is2D = {is2DView} on:export_map={exp}/>
     {#if !is2DView}
     {#key trigger}
     <LandScapeViewer3d {generatorOptions} bind:heightmap = {HeightMap}/>
