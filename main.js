@@ -4,6 +4,7 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const serve = require('electron-serve');
 const loadURL = serve({ directory: 'public' });
+require('@electron/remote/main').initialize();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -20,13 +21,14 @@ function createWindow() {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
             preload: path.join(__dirname, 'preload.js'),
-            // enableRemoteModule: true,
-            // contextIsolation: false
         },
         icon: path.join(__dirname, 'public/favicon.png'),
         show: false
     });
+    require("@electron/remote/main").enable(mainWindow.webContents);
 
     // This block of code is intended for development purpose only.
     // Delete this entire block of code when you are ready to package the application.

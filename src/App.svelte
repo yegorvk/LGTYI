@@ -14,10 +14,11 @@
         heightmap = Heightmap.generate(options)
         trigger = !trigger
     }
+    let test;
 </script>
 
 <main id="app_content">
-    <UI {generate} bind:d2VScale={d2VScale} bind:is2D={is2DView} on:export_map={() => {}}/>
+    <UI {generate} bind:d2VScale={d2VScale} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap, test)}}/>
     {#if !is2DView}
         {#key trigger}
             <LandScapeViewer3d {heightmap}/>
