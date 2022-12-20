@@ -1,9 +1,7 @@
 <script lang="ts">
     import type {Heightmap} from "../Terrain/Heightmap";
-    import {DefaultGeneratorOptions} from "../Terrain/GeneratorOptions";
     import {onMount} from "svelte";
     import {colorGrayScaleFromAltitude, rgbFromGrayScale} from "../Terrain/PointColor";
-
 
     let canvas: HTMLCanvasElement;
     export let data: Heightmap;
@@ -43,7 +41,3 @@
 >
 
 </canvas>
-<style>
-
-
-</style>

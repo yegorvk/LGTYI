@@ -1,13 +1,10 @@
 <script lang="ts" xmlns="http://www.w3.org/1999/html">
  import "./UI.css";
  import "./Range.css";
- import Param from "./Param.svelte";
- import { DefaultGeneratorOptions, type GeneratorOptions } from "../Terrain/GeneratorOptions";
+ import Param from "./Param/Param.svelte";
+ import { DefaultGeneratorOptions, type GeneratorOptions } from "../../Terrain/GeneratorOptions";
  import {createEventDispatcher} from "svelte";
 
-
-
- //let options = DefaultGeneratorOptions
  export let is2D: boolean = false;
  export let generate: (options: GeneratorOptions) => void = undefined;
  export let d2VScale: number = 5;
@@ -23,6 +20,7 @@
  let main_visible: boolean = false;
  let gen_visible: boolean = false;
  let imp_visible: boolean = false;
+
  function Export(){
      dispatcher('export_map');
  }
@@ -52,7 +50,7 @@
                 <span>2D ⟷ 3D</span>
             </button>
 
-            <button class="menu-but" disabled={is2D}
+            <button class="menu-but"
                     on:click={
                     () => {
                         main_visible = false;
@@ -129,7 +127,7 @@
             </Param>
 
             <button class="menu-but"
-                    on:click={
+                on:click={
                     () => {
                         generate(
                             {

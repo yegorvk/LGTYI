@@ -7,13 +7,9 @@
     import { RenderChunk } from '../Renderer/RenderChunk'
     import { Terrain } from '../Terrain/Terrain';
     import { RenderTerrain } from '../Renderer/RenderTerrain';
-    import { DefaultGeneratorOptions, type GeneratorOptions } from '../Terrain/GeneratorOptions';
 
     let root: Element;
-
-    export let heightmap: Heightmap;
-    // terrain generation options
-    export let generatorOptions: GeneratorOptions = DefaultGeneratorOptions
+    export let heightmap = Heightmap.flat(100, 0)
 
     onMount(() => {
         const rootWidth = root.clientWidth
@@ -54,11 +50,7 @@
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        console.log(generatorOptions)
-
-        heightmap = Heightmap.generate(generatorOptions)
-
-        const chunk = new Chunk(generatorOptions.size, heightmap)
+        const chunk = new Chunk(heightmap.size, heightmap)
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),
             chunk
