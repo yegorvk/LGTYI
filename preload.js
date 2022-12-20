@@ -1,1 +1,2 @@
-console.log('Hello from preload.js file!');
+const { remote } = require('electron');
+window.remote = remote;
