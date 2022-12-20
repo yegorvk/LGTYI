@@ -54,7 +54,7 @@ export class Heightmap {
         return new Heightmap(size, data)
     }
 
-    private constructor(
+    constructor(
         size: number,
         data: Float32Array,
         offsetX: number = 0,

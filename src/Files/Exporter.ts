@@ -1,9 +1,8 @@
-import type {Heightmap} from "./Heightmap";
+import type {Heightmap} from "../Terrain/Heightmap";
 const remote = require('@electron/remote');
 
 export async function exportMap(heightMap: Heightmap) {
         const fs = window.require('fs');
-        const path = window.require('path');
         // Use the electron dialog module to prompt the user for a file path
         const {filePath} = await remote.dialog.showSaveDialog({
             filters: [{name: 'JSON Files', extensions: ['json']}]
