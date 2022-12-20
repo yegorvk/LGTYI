@@ -10,25 +10,20 @@
     let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
-    
+
     const generate = (options: GeneratorOptions) => {
         heightmap = Heightmap.generate(options)
         trigger = !trigger
     }
 
-    async function ImportMap(){
+    async function ImportMap() {
         heightmap = await importMap();
-        heightmap = heightmap
+        heightmap = heightmap;
     }
 </script>
 
 <main id="app_content">
-    <UI {generate} bind:d2VScale={d2VScale} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap)}} on:import_map={()=>{ImportMap()}}/>
-
-</script>
-
-<main id="app_content">
-    <UI {generate} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap)}}/>
+    <UI {generate} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap)}} on:import_map={()=>{ImportMap()}}/>
 
     {#if !is2DView}
         {#key trigger}
