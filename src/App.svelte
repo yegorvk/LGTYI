@@ -15,16 +15,18 @@
         heightmap = Heightmap.generate(options)
         trigger = !trigger
     }
-
+    let invisible = false;
     async function ImportMap() {
+        invisible = true;
         heightmap = await importMap();
         heightmap = heightmap;
+        invisible = false;
     }
 </script>
 
 <main id="app_content">
     <UI {generate} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap)}} on:import_map={()=>{ImportMap()}}/>
-
+    {#if !invisible}
     {#if !is2DView}
         {#key trigger}
             <LandScapeViewer3d {heightmap}/>
@@ -35,6 +37,7 @@
                 <Renderer2D data={heightmap}></Renderer2D>
             {/key}
         </div>
+    {/if}
     {/if}
 </main>
 

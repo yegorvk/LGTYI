@@ -11,25 +11,33 @@ export async function importMap() {
     }
     const fs = window.require('fs');
     // Use the electron dialog module to prompt the user for a file path
-    const {filePath} = await remote.dialog.showOpenDialog({
-        filters: [{name: 'JSON Files', extensions: ['json']}]
+    const {filePaths} = await remote.dialog.showOpenDialog({
+        filters: [{name: 'JSON Files', extensions: ['json']}],
+        properties: ['openFile']
     });
-
     // Exit the function if the user cancels the save dialog
-    if (!filePath) return;
-
+    if (!filePaths) return;
     // Use the electron fs module to write an empty string to the specified file
-    fs.readFile(filePath, (error, data) => {
-        if (error) {
-            // Handle the error
-            console.error(error);
-        } else {
-            let Data: readData = JSON.parse(data);
-            if (Data.offsetX === undefined || Data.offsetY === undefined || Data.size === undefined || Data.data === undefined || Data.data.length !== Data.size*Data.size) {
-                throw new Error("Invalid file format");
+    try {
+        let file = await fs.promises.readFile(filePaths[0],'utf8');
+
+        let Data: readData = JSON.parse(file);
+
+        if (!(Data.offsetX === undefined || Data.offsetY === undefined || Data.size === undefined || Data.data === undefined )) {
+            let arr = new Float32Array(Data.size*Data.size);
+            let i = 0;
+            for(let key of Object.values(Data.data)) {
+                arr[i] = key;
+                i++;
             }
+            Data.data = arr;
             return new Heightmap(Data.size, Data.data, Data.offsetX, Data.offsetY);
+        }else {
+            throw new Error('Invalid Data');
         }
-    });
+
+    }catch (err){
+       throw new Error(err);
+    }
 
 }
