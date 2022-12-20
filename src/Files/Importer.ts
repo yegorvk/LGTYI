@@ -1,13 +1,14 @@
 import {Heightmap} from "../Terrain/Heightmap";
-
 const remote = require('@electron/remote');
-interface readData{
-    size: number,
-    data: Float32Array,
-    offsetX: number,
-    offsetY: number
-}
+
+
 export async function importMap() {
+    interface readData{
+        size: number,
+        data: Float32Array,
+        offsetX: number,
+        offsetY: number
+    }
     const fs = window.require('fs');
     // Use the electron dialog module to prompt the user for a file path
     const {filePath} = await remote.dialog.showOpenDialog({

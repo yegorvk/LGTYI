@@ -23,6 +23,9 @@
  function Export(){
      dispatcher('export_map');
  }
+ function Import(){
+     dispatcher('import_map');
+ }
 
  function dimSwitch(){
      is2D = !is2D;
@@ -64,14 +67,7 @@
             </button>
 
             <button class="menu-but"
-                    on:click={
-                    () => {
-                        main_visible = false;
-                        main_visible = main_visible;
-                        imp_visible = true;
-                        imp_visible = imp_visible;
-                    }
-                }>
+                    on:click={Import}>
                 <span>Import...</span>
             </button>
 
@@ -132,10 +128,6 @@
                 }>
                 <span>Generate</span>
             </button>
-        </div>
-        <div class:hidden={!imp_visible}>
-            <span>Please select a file:</span>
-            <input type="file"/>
         </div>
     </div>
 </div>
