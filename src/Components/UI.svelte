@@ -20,6 +20,9 @@
  let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
 
  let visible: boolean = false;
+ let main_visible: boolean = false;
+ let gen_visible: boolean = false;
+ let imp_visible: boolean = false;
  function Export(){
      dispatcher('export_map');
  }
@@ -30,6 +33,12 @@
  function menuSwitch(){
      visible = !visible;
      visible = visible;
+     main_visible = visible;
+     main_visible = main_visible;
+     gen_visible = false;
+     gen_visible = gen_visible;
+     imp_visible = false;
+     imp_visible = imp_visible;
  }
 </script>
 
@@ -38,58 +47,89 @@
         <div class="burger"></div>
     </button>
     <div class="content">
-        <Param>
-            <span>size: {size}</span>
-            <input class="basic-range" 
-                   type="range" 
-                   bind:value={size} 
-                   max="1000" 
-                   min="10">
-        </Param>
+        <div class:hidden={!main_visible}>
+            <button class="menu-but" on:click={dimSwitch}>
+                <span>2D ⟷ 3D</span>
+            </button>
 
-        <Param>
-            <span>max altitude: {maxAltitude}</span>
-            <input class="basic-range" 
-                   type="range" 
-                   bind:value={maxAltitude} 
-                   max="50" 
-                   min="10">
-        </Param>
+            <button class="menu-but" disabled={is2D}
+                    on:click={
+                    () => {
+                        main_visible = false;
+                        main_visible = main_visible;
+                        gen_visible = true;
+                        gen_visible = gen_visible;
+                    }
+                }>
+                <span>Generate...</span>
+            </button>
 
-        <Param>
-            <span>roughness: {roughnessCoefficient}</span>
-            <input class="basic-range" 
-                   type="range" 
-                   bind:value={roughnessCoefficient} 
-                   max="100" 
-                   min="1">
-        </Param>
+            <button class="menu-but"
+                    on:click={
+                    () => {
+                        main_visible = false;
+                        main_visible = main_visible;
+                        imp_visible = true;
+                        imp_visible = imp_visible;
+                    }
+                }>
+                <span>Import...</span>
+            </button>
 
-        <Param>
-            <span>level of detail: {levelOfDetail}</span>
-            <input class="basic-range" 
-                   type="range" 
-                   bind:value={levelOfDetail} 
-                   max="50" 
-                   min="1">
-        </Param>
+            <button class="menu-but"
+                    on:click={Export}>
+                <span>Export</span>
+            </button>
+        </div>
+        <div class:hidden={!gen_visible}>
+            <Param>
+                <span>size: {size}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={size}
+                       max="1000"
+                       min="10">
+            </Param>
 
-        <Param>
-            <span>2D</span>
-            <input class="basic-check"
-                   type="checkbox"
-                   on:change = {dimSwitch}>
-            <span>2D View Scale: {d2VScale}</span>
-            <input class="basic-range"
-                   type="range"
-                   bind:value={d2VScale}
-                   max="20"
-                   min="1"
-                   disabled={is2D}>
-        </Param>
+            <Param>
+                <span>max altitude: {maxAltitude}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={maxAltitude}
+                       max="50"
+                       min="10">
+            </Param>
 
-        <button class="menu-but" disabled={is2D}
-                on:click={
+            <Param>
+                <span>roughness: {roughnessCoefficient}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={roughnessCoefficient}
+                       max="100"
+                       min="1">
+            </Param>
+
+            <Param>
+                <span>level of detail: {levelOfDetail}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={levelOfDetail}
+                       max="50"
+                       min="1">
+            </Param>
+
+            <Param>
+                <span>2D View Scale: {d2VScale}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={d2VScale}
+                       max="20"
+                       min="1"
+                       disabled={is2D}>
+            </Param>
+
+            <button class="menu-but"
+                    on:click={
                     () => {
                         generate(
                             {
@@ -101,16 +141,12 @@
                         )
                     }
                 }>
-            <span>Generate</span>
-        </button>
-
-        <input class="menu-but" type="file" placeholder="Import">
-
-
-
-        <button class="menu-but"
-            on:click={Export}>
-            <span>Export</span>
-        </button>
+                <span>Generate</span>
+            </button>
+        </div>
+        <div class:hidden={!imp_visible}>
+            <span>Please select a file:</span>
+            <input type="file"/>
+        </div>
     </div>
 </div>

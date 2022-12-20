@@ -3,10 +3,10 @@
     background: #999999;
     border-radius: 10px;
     padding: 1px;
-    margin: 0 1px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
     align-items: center;
     font-family: Comfortaa, cursive;
     font-size: 20px;

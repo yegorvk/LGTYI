@@ -2,55 +2,53 @@
     position: absolute;
     top: 10px;
     left: -260px;
-    background: none;
-    transition: all 400ms;
     width: 300px;
-    height: 58px;
-    max-height: 58px;
+    max-height: 90vh;
     padding: 58px 10px 10px;
-    border-radius: 6px;
+    transition: all 400ms;
     z-index: 9999;
+    background: none;
+    border-radius: 6px;
 }
 
-.opened_panel > .content {
-    opacity: 1;
-}
 .opened_panel {
-    height: 60%;
-    max-height: 60%;
+    left: 10px;
+    max-height: 90vh;
+    background: #666666;
 }
+
 .content {
-    transition: opacity 400ms;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
+    height: 100%;
+    max-height: 90vh;
+    opacity: 0;
+    transition: opacity 400ms;
     scroll-behavior: auto;
     overflow-y: scroll;
     overflow-x: hidden;
 }
+.opened_panel > .content {
+    opacity: 1;
+}
 
 .closeup {
-    border-radius: 10px;
-    outline: inherit;
+    position: absolute;
     top: 10px;
+    left: 280px;
     width: 38px;
     height: 38px;
-    position: absolute;
-    background: #999999;
+    outline: inherit;
     transition: left 400ms;
-    left: 280px;
+    background: #999999;
+    border-radius: 10px;
 }
 .opened_panel > .closeup {
     left: 10px;
 }
-.opened_panel {
-    background: #666666;
-    left: 10px;
-}
+
 
 .burger {
     position: relative;
@@ -75,8 +73,8 @@
 }
 
 .burger::after {
-    transform: rotate(45deg) translateY(-3px) translateX(-3px);
     margin-top: 0;
+    transform: rotate(45deg) translateY(-3px) translateX(-3px);
 }
 
 .burger::before {
@@ -98,6 +96,8 @@
     height: 60px;
     min-height: 44px;
     padding: 0 2rem;
+    margin-top: 8px;
+    margin-bottom: 8px;
     outline: none;
     align-items: center;
     transition: all 320ms;
@@ -144,4 +144,16 @@
 ::-webkit-scrollbar-thumb {
     background: #999999;
     border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    border:none;
 }
