@@ -1,8 +1,9 @@
 <script lang="ts">
     import type {Heightmap} from "../Terrain/Heightmap";
-    import * as THREE from 'three'
     import {onMount} from "svelte";
-    import {colorGrayScaleFromAltitude, rgbFromGrayScale} from "../Terrain/PointColor";
+    import {colorGrayScaleFromAltitude, colorRGBFromAltitude} from "../Terrain/PointColor";
+
+    export let useColors = true;
 
     let canvas: HTMLCanvasElement;
     let canvasContext = null
@@ -17,13 +18,20 @@
 
     for (let i = 0; i < data.size; i++) {
         for (let j = 0; j < data.size; j++) {
-            const grayscale = colorGrayScaleFromAltitude(
-                data.data[i*data.size+j]
-            )
-
             const base = 4*(i*data.size+j)
- 
-            pixels[base] = pixels[base+1] = pixels[base+2] = grayscale 
+            const alt = data.data[(i+data.offsetY)*data.size+(j+data.offsetX)]
+
+            if (useColors) {
+                const color = colorRGBFromAltitude(alt)
+
+                pixels[base] = (color >> 16) & 0xFF;
+                pixels[base+1] = (color >> 8) & 0xFF;
+                pixels[base+2] = color & 0xFF;
+            } else {
+                const grayscale = colorGrayScaleFromAltitude(alt)
+                pixels[base] = pixels[base+1] = pixels[base+2] = grayscale 
+            }
+
             pixels[base+3] = 255
         }
     }

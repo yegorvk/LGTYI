@@ -1,5 +1,5 @@
 import type { Heightmap } from './Heightmap'
-import { colorGrayScaleFromAltitude, colorRGBFromAltitude, rgb, rgbFromGrayScale } from './PointColor';
+import { colorGrayScaleFromAltitude, colorRGBFromAltitude, rgbFromGrayScale } from './PointColor';
 
 export class Chunk {
     // chunk width and height
