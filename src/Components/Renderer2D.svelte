@@ -4,13 +4,10 @@
     import {onMount} from "svelte";
     import {colorGrayScaleFromAltitude, rgbFromGrayScale} from "../Terrain/PointColor";
 
-    // bindings
     let canvas: HTMLCanvasElement;
-
     let canvasContext = null
 
     export let data: Heightmap;
-    export let d2Scale: number = 5;
 
     let scale = 1.0;
     let offsetX = 0;

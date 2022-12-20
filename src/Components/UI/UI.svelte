@@ -6,8 +6,7 @@
  import {createEventDispatcher} from "svelte";
 
  export let is2D: boolean = false;
- export let generate: (options: GeneratorOptions) => void = undefined;
- export let d2VScale: number = 5;
+ export let generate: (options: GeneratorOptions) => void = null;
 
  let dispatcher = createEventDispatcher();
 
@@ -24,10 +23,12 @@
  function Export(){
      dispatcher('export_map');
  }
+
  function dimSwitch(){
      is2D = !is2D;
      is2D = is2D;
  }
+
  function menuSwitch(){
      visible = !visible;
      visible = visible;
@@ -114,16 +115,6 @@
                        bind:value={levelOfDetail}
                        max="50"
                        min="1">
-            </Param>
-
-            <Param>
-                <span>2D View Scale: {d2VScale}</span>
-                <input class="basic-range"
-                       type="range"
-                       bind:value={d2VScale}
-                       max="20"
-                       min="1"
-                       disabled={is2D}>
             </Param>
 
             <button class="menu-but"
