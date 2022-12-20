@@ -9,16 +9,15 @@
     let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
-    let d2VScale: number;
+    
     const generate = (options: GeneratorOptions) => {
         heightmap = Heightmap.generate(options)
         trigger = !trigger
     }
-    let test;
 </script>
 
 <main id="app_content">
-    <UI {generate} bind:d2VScale={d2VScale} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap, test)}}/>
+    <UI {generate} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap)}}/>
     {#if !is2DView}
         {#key trigger}
             <LandScapeViewer3d {heightmap}/>
@@ -26,7 +25,7 @@
     {:else}
         <div class="d2-cont">
             {#key trigger}
-                <Renderer2D d2Scale={d2VScale} data={heightmap}></Renderer2D>
+                <Renderer2D data={heightmap}></Renderer2D>
             {/key}
         </div>
     {/if}
