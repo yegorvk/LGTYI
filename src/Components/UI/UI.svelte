@@ -159,7 +159,8 @@
                 <span>Export</span>
             </button>
             <button class="menu-but"
-                    on:click={ImageExport}>
+                    on:click={ImageExport}
+                    disabled={!is2D}>
                 <span>Export as Image</span>
             </button>
 

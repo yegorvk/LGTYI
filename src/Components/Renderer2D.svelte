@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {Heightmap} from "../Terrain/Heightmap";
-    import {onDestroy, onMount} from "svelte";
+    import {createEventDispatcher, onDestroy, onMount} from "svelte";
     import {colorGrayScaleFromAltitude, colorRGBFromAltitude} from "../Terrain/PointColor";
 
     export let useColors = true;
@@ -14,7 +14,7 @@
     let offsetX = 0;
     let offsetY = 0;
 
-    let pixels = new Uint8ClampedArray(4*data.width*data.height)
+    export let pixels = new Uint8ClampedArray(4*data.width*data.height)
 
     for (let i = 0; i < data.height; i++) {
         for (let j = 0; j < data.width; j++) {
@@ -35,6 +35,8 @@
             pixels[base+3] = 255
         }
     }
+    pixels = pixels;
+    let dispatcher = createEventDispatcher();
 
     let imgData = new ImageData(pixels, data.width, data.height)
     let imgBmp: ImageBitmap = null
@@ -84,6 +86,7 @@
     }
 
     onMount(() => {
+        dispatcher("pixels", {pixels: pixels});
         canvasContext = canvas.getContext('2d');
 
         canvas.onwheel = (event: WheelEvent) => {
@@ -155,7 +158,7 @@
                 pointerDown = false
             }
         }
-
+        pixels = pixels;
         draw(canvasContext)
     });
 

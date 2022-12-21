@@ -38,6 +38,7 @@
     "@electron/remote": "^2.0.9",
     "electron-serve": "^1.1.0",
     "exceljs": "^4.3.0",
+    "jimp": "^0.16.2",
     "svelte-gestures": "^1.4.1",
     "three": "^0.146.0"
   },

@@ -12,7 +12,7 @@
         setTimeout(() => {
             visible = false;
             visible = visible
-        }, 3000);
+        }, 5000);
     }
 </script>
 

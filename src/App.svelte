@@ -12,6 +12,7 @@
     import ExcelExport from "./Files/ExcelExporter";
     import {DefaultRenderSettings} from "./Renderer/RenderSettings";
     import type {RenderSettings} from "./Renderer/RenderSettings"
+    import {ImageExport} from "./Files/ImageExporter";
     let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
@@ -72,9 +73,8 @@
     }
     function SettingsChange(e){
         renderSettings=e.detail.render;
-
         invisible = true;
-        setTimeout(()=>{invisible=false; notify("Successfully", false);}, 1000);
+        setTimeout(()=>{invisible=false; notify("Successfully", false);}, 50);
     }
     function ExportMap(e){
         exportMap(heightmap, e.detail.genOpt,is2DView).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
@@ -82,8 +82,12 @@
     function ExcelExportMap(){
         ExcelExport(heightmap).then(()=>{notify("Successfully exported!", false);}).catch(err=>{notify(err, true)});
     }
+    function ImageExportMap(){
+        ImageExport(pixels, heightmap).then(()=>{notify("Successfully exported to image!", false);}).catch(err=>{notify(err, true)});
+    }
     let setGenData;
     let notify: (text:string, err:boolean)=>{};
+    let pixels: Uint8ClampedArray;
 </script>
 
 <main id="app_content">
@@ -102,7 +106,8 @@
         on:add_map={addMap}
         on:substr_map={substrMap}
         on:excel_export_map={ExcelExportMap}
-        on:settings_save={SettingsChange}/>
+        on:settings_save={SettingsChange}
+        on:image_export_map ={ImageExportMap}/>
     {#if !invisible}
     {#if !is2DView}
         {#key trigger}
@@ -111,7 +116,7 @@
     {:else}
         <div class="d2-cont">
             {#key trigger}
-                <Renderer2D useColors={useColors2d} data={heightmap}></Renderer2D>
+                <Renderer2D on:pixels={(e)=>{pixels = e.detail.pixels}} useColors={useColors2d} data={heightmap}></Renderer2D>
             {/key}
         </div>
     {/if}
