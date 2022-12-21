@@ -28,6 +28,7 @@
     let minAltitude: number = DefaultGeneratorOptions.minAltitude;
     let roughnessCoefficient: number = DefaultGeneratorOptions.roughnessCoefficient * 100;
     let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
+    
     //render settings
     let isLighting: string = DefaultRenderSettings.lighting as string;
     let isWireframe: string = DefaultRenderSettings.wireframe as string;

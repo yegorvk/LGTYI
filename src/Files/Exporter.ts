@@ -17,9 +17,13 @@ export async function exportMap(heightMap: Heightmap, genOptions: GeneratorOptio
         genOptions: genOptions,
         viewMode: is2d,
     };
+
     // Use the electron dialog module to prompt the user for a file path
     const {filePath} = await remote.dialog.showSaveDialog({
-        filters: [{name: 'LGTYI Files', extensions: ['lgtyi']}]
+        filters: [
+            { name: 'LGTYI Files', extensions: ['lgtyi'] },
+        ],
+        defaultPath: "project.lgtyi"
     });
 
     // Exit the function if the user cancels the save dialog
