@@ -27,6 +27,12 @@
  function Import(){
      dispatcher('import_map');
  }
+ function Add(){
+     dispatcher('add_map');
+ }
+ function Substr(){
+     dispatcher('substr_map');
+ }
 
  function dimSwitch(){
      is2D = !is2D;
@@ -75,6 +81,14 @@
             <button class="menu-but"
                     on:click={Export}>
                 <span>Export</span>
+            </button>
+            <button class="menu-but"
+                    on:click={Add}>
+                <span>Add</span>
+            </button>
+            <button class="menu-but"
+                    on:click={Substr}>
+                <span>Subtract</span>
             </button>
         </div>
         <div class:hidden={!gen_visible}>
