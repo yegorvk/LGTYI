@@ -12,8 +12,7 @@
     import ExcelExport from "./Files/ExcelExporter";
     import {DefaultRenderSettings} from "./Renderer/RenderSettings";
     import type {RenderSettings} from "./Renderer/RenderSettings"
-
-    let trigger: boolean = false;
+    let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
     let renderSettings: RenderSettings = DefaultRenderSettings;
@@ -39,8 +38,6 @@
             notify("Successfully opened!", false);
             heightmap = heightmap;
             invisible = false;
-
-            trigger = !trigger;
         }catch (err){
             invisible = false;
             notify(err, true);
@@ -73,7 +70,9 @@
     }
     function SettingsChange(e){
         renderSettings=e.detail.render;
-        trigger = !trigger;
+
+        invisible = true;
+        setTimeout(()=>{invisible=false; notify("Successfully saved!", false);}, 1000);
     }
     function ExportMap(e){
         exportMap(heightmap, e.detail.genOpt,is2DView).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
@@ -116,6 +115,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+
     }
 
     .d2-cont {

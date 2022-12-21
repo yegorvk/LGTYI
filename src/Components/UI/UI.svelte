@@ -11,7 +11,6 @@
     export let generate: (options: GeneratorOptions) => void = null;
 
     let dispatcher = createEventDispatcher();
-
     export let setGeneratorData = (genData: GeneratorOptions) => {
         seed = genData.seed;
         width = genData.width;
@@ -21,7 +20,6 @@
         roughnessCoefficient = genData.roughnessCoefficient;
         levelOfDetail = genData.levelOfDetail;
     };
-
     //gen options
     let seed: number = 0;
     let width: number = DefaultGeneratorOptions.width;
@@ -31,8 +29,10 @@
     let roughnessCoefficient: number = DefaultGeneratorOptions.roughnessCoefficient * 100;
     let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
     
-    let renderMode: string = "gradient";
-    
+    //render settings
+    let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
+    let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
+    let mode = 1
     //panels visibility
     let visible: boolean = false;
     let main_visible: boolean = false;
@@ -77,21 +77,14 @@
 
     function SettingsSwitch(){
         settins_visible = !settins_visible;
-        if (settins_visible===false) {
-            let renderSettings = Object.assign({}, DefaultRenderSettings);
-
-            switch (renderMode) {
-                case "gradient":
-                    break;
-                case "wireframe":
-                    renderSettings.gradient = false;
-                    renderSettings.lighting = false;
-                    renderSettings.wireframe = true;
-                    renderSettings.wireframeOpacity = 0.2;
-                    renderSettings.wireframeLineWidth = 2;
-                    break;
+        if(settins_visible===false){
+            const renderSettings: RenderSettings={
+                wireframe: mode == 1,
+                gradient: mode == 2,
+                lighting: mode == 3,
+                wireframeOpacity: wireframeOpacity,
+                wireframeLineWidth: wireframeLineWidth
             }
-
             dispatcher('settings_save', { render: renderSettings});
         }
     }
@@ -214,8 +207,7 @@
                 <Param>
                     <label for="seed">seed: {(seed === 0) ? "random" : seed.toString()}</label>
                     <input class="basic-text"
-                           type="number"
-                           min="0"
+                           type="text"
                            bind:value={seed}
                            id="seed"
                     />
@@ -232,7 +224,7 @@
                                 minAltitude: minAltitude,
                                 roughnessCoefficient: roughnessCoefficient / 100,
                                 levelOfDetail: levelOfDetail,
-                                seed: (seed === 0) ? Math.random() : seed
+                                seed: seed
                             }
                         )
                     }
@@ -242,7 +234,7 @@
             </div>
         {:else}
             <div>
-                <!--<Param>
+                <Param>
                     <span>Wireframe opacity: {wireframeOpacity}</span>
                     <input class="basic-range"
                            type="range"
@@ -258,22 +250,9 @@
                            bind:value={wireframeLineWidth}
                            max="10"
                            min="1">
-                </Param>-->
-
+                </Param>
                 <Param>
-                    <h3>Render mode: </h3>
-
-                    <select name="render modes" bind:value={renderMode} id="render_mode">
-                        <option id="wirefram_opt" value="wireframe">
-                            <span>Wireframe</span>
-                        </option>
-
-                        <option id="gradient_opt" value="gradient">
-                            <span>Gradient</span>
-                        </option>
-                    </select>
-
-                    <!--<h3>Mode</h3>
+                    <h3>Mode</h3>
                     <span>Lighting:</span>
                     <input
                            type="radio"
@@ -294,9 +273,8 @@
                            type="radio"
                            value={3}
                            bind:group={mode}
-                    >-->
+                    >
                 </Param>
-
                 <button class="menu-but"
                         on:click={SettingsSwitch}>
                     <span>Save</span>

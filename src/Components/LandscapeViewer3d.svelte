@@ -7,11 +7,11 @@
     import { RenderChunk } from '../Renderer/RenderChunk'
     import { Terrain } from '../Terrain/Terrain';
     import { RenderTerrain } from '../Renderer/RenderTerrain';
-    import type { RenderSettings } from '../Renderer/RenderSettings';
+    import { DefaultRenderSettings, type RenderSettings } from '../Renderer/RenderSettings';
 
     let root: Element;
     export let heightmap: Heightmap;
-    export let renderSettings: RenderSettings;
+    export let renderSettings: RenderSettings = DefaultRenderSettings;
 
     onMount(() => {
         const rootWidth = root.clientWidth
@@ -53,6 +53,8 @@
         camControls.rollSpeed *= 100
 
         const chunk = new Chunk(1, heightmap, renderSettings.gradient)
+
+        console.log(chunk)
 
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),

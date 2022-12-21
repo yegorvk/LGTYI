@@ -28,7 +28,6 @@ function createWindow() {
         icon: path.join(__dirname, 'public/favicon.png'),
         show: false
     });
-
     mainWindow.setMenu(null)
     require("@electron/remote/main").enable(mainWindow.webContents);
 
