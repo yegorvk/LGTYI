@@ -7,6 +7,7 @@
     import {exportMap} from "./Files/Exporter";
     import {importMap} from "./Files/Importer";
     import Notification from "./Components/Notification/Notification.svelte";
+    import AddMap from "./Files/Adder";
 
     let trigger: boolean;
     let is2DView: boolean = false;
@@ -30,6 +31,19 @@
         }
 
     }
+    async function addMap() {
+        invisible = true;
+        try {
+            heightmap = await AddMap(heightmap);
+            notify("Successfully added!", false);
+            heightmap = heightmap;
+            invisible = false;
+        }catch (err){
+            invisible = false;
+            notify(err, true);
+        }
+
+    }
     function ExportMap(){
         exportMap(heightmap).then(()=>{notify("Successfully exported!", false);}).catch(err=>{notify(err, true)});
     }
@@ -38,7 +52,7 @@
 
 <main id="app_content">
     <Notification bind:notify={notify}></Notification>
-    <UI {generate} bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap}/>
+    <UI {generate} bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap} on:add_map={addMap}/>
     {#if !invisible}
     {#if !is2DView}
         {#key trigger}
