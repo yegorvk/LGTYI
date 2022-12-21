@@ -4,6 +4,7 @@
     let visible = false;
     let err = false;
     let spanText = "nothing bad here";
+
     export let notify = (text: string, isErr: boolean): void => {
         visible = true;
         err = isErr;
