@@ -10,6 +10,7 @@
 
  let dispatcher = createEventDispatcher();
 
+ let seed: number = 0;
  let width: number = DefaultGeneratorOptions.width;
  let height: number = DefaultGeneratorOptions.height;
  let maxAltitude: number = DefaultGeneratorOptions.maxAltitude;
@@ -94,6 +95,15 @@
         </div>
         <div class:hidden={!gen_visible}>
             <Param>
+                <span>seed: {(seed === 0) ? "random" : seed.toString()}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={seed}
+                       max="65535"
+                       min="1">
+            </Param>
+
+            <Param>
                 <span>width: {width}</span>
                 <input class="basic-range"
                        type="range"
@@ -157,7 +167,8 @@
                                 maxAltitude: maxAltitude,
                                 minAltitude: minAltitude,
                                 roughnessCoefficient: roughnessCoefficient / 100,
-                                levelOfDetail: levelOfDetail
+                                levelOfDetail: levelOfDetail,
+                                seed: seed
                             }
                         )
                     }

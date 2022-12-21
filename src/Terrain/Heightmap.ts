@@ -18,7 +18,7 @@ export class Heightmap {
         applyDefaults(options, DefaultGeneratorOptions)
         
         const heightmap = Heightmap.flat(options.width, options.height, 0)
-        const noiseGenerator = new PerlinNoise()
+        const noiseGenerator = new PerlinNoise(options.seed)
 
         let roughness = options.roughnessCoefficient / 5.6
         let maxAlt = (options.maxAltitude - options.minAltitude)

@@ -5,6 +5,7 @@ export interface GeneratorOptions {
     minAltitude: number;
     roughnessCoefficient: number;
     levelOfDetail: number;
+    seed: number;
 }
 
 export const DefaultGeneratorOptions: GeneratorOptions = {
@@ -13,5 +14,6 @@ export const DefaultGeneratorOptions: GeneratorOptions = {
     maxAltitude: 35,
     minAltitude: 10,
     roughnessCoefficient: 0.5,
-    levelOfDetail: 6
+    levelOfDetail: 6,
+    seed: 0
 }

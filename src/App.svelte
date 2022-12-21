@@ -16,8 +16,13 @@
 
     const generate = (options: GeneratorOptions) => {
         heightmap = Heightmap.generate(options)
+
+        if (options.seed === 0)
+            options.seed = Math.round(Math.random() * 65536)
+
         trigger = !trigger
     }
+
     let invisible = false;
     async function ImportMap() {
         invisible = true;
@@ -30,7 +35,6 @@
             invisible = false;
             notify(err, true);
         }
-
     }
     async function addMap() {
         invisible = true;
@@ -39,7 +43,7 @@
             notify("Successfully added!", false);
             heightmap = heightmap;
             invisible = false;
-        }catch (err){
+        } catch (err){
             invisible = false;
             notify(err, true);
         }
