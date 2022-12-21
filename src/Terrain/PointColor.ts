@@ -1,3 +1,4 @@
+import { number } from "yargs";
 
 export function colorRGBFromAltitude(
     alt: number,
@@ -45,6 +46,16 @@ export function colorGrayScaleFromAltitude(
     minAlt: number = -50
 ): number {
     return Math.min(255, Math.round((((alt - minAlt) / (maxAlt - minAlt)) * 255)))
+}
+
+/** @argument grayscale grayscale value (from 0 to 255) */
+export function altitudeFromGrayscale(
+    grayscale: number,
+    maxAlt: number = 50,
+    minAlt: number = -50
+) {
+    const altRel = (grayscale / 255) * (maxAlt - minAlt)
+    return minAlt + altRel;
 }
 
 export function rgbFromGrayScale(grayScale: number): number {
