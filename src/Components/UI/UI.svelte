@@ -106,8 +106,7 @@
                 <input class="basic-range"
                        type="text"
                        bind:value={seed}
-                       max="65535"
-                       min="1">
+                       >
             </Param>
 
             <Param>
