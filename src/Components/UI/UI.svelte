@@ -121,15 +121,6 @@
         </div>
         <div class:hidden={!gen_visible}>
             <Param>
-                <label for="seed">seed: {(seed === 0) ? "random" : seed.toString()}</label>
-                <input class="basic-text"
-                       type="text"
-                       bind:value={seed}
-                       id="seed"
-                       />
-            </Param>
-
-            <Param>
                 <span>width: {width}</span>
                 <input class="basic-range"
                        type="range"
@@ -181,6 +172,15 @@
                        bind:value={levelOfDetail}
                        max="50"
                        min="1">
+            </Param>
+
+            <Param>
+                <label for="seed">seed: {(seed === 0) ? "random" : seed.toString()}</label>
+                <input class="basic-text"
+                       type="text"
+                       bind:value={seed}
+                       id="seed"
+                />
             </Param>
 
             <button class="menu-but"
