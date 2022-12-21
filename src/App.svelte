@@ -16,10 +16,12 @@
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
 
     const generate = (options: GeneratorOptions) => {
-        heightmap = Heightmap.generate(options)
-
         if (options.seed === 0)
             options.seed = Math.round(Math.random() * 65536)
+        
+        heightmap = Heightmap.generate(options)
+
+
 
         trigger = !trigger
     }
