@@ -110,6 +110,11 @@
     font-family: Comfortaa, cursive;
     font-size: 23px;
 }
+
+.small-menu-but {
+    transform: scale(0.8);
+}
+
 .menu-but:not([disabled]):hover {
     outline: none;
     background: #18656e;

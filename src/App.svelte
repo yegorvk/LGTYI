@@ -17,6 +17,8 @@
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
     let renderSettings: RenderSettings = DefaultRenderSettings;
 
+    let useColors2d: boolean = false;
+
     const generate = (options: GeneratorOptions) => {
         if (options.seed === 0)
             options.seed = Math.round(Math.random() * 65536)
@@ -89,6 +91,12 @@
     <UI {generate}
         bind:setGeneratorData={setGenData}
         bind:is2D={is2DView}
+        on:settings_save_2d={(e) => {
+            useColors2d = e.detail.useColors;
+
+            if (is2DView)
+                trigger = !trigger;
+        }}
         on:export_map={ExportMap}
         on:import_map={ImportMap}
         on:add_map={addMap}
@@ -103,7 +111,7 @@
     {:else}
         <div class="d2-cont">
             {#key trigger}
-                <Renderer2D data={heightmap}></Renderer2D>
+                <Renderer2D useColors={useColors2d} data={heightmap}></Renderer2D>
             {/key}
         </div>
     {/if}

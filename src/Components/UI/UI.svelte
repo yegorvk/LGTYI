@@ -32,12 +32,14 @@
     //render settings
     let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
     let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
-    let mode = ["1"]
+    let mode = ["1", "2", "3"]
     //panels visibility
     let visible: boolean = false;
     let main_visible: boolean = false;
     let gen_visible: boolean = false;
     let settings_visible: boolean = false;
+
+    let useColorsfor2D = false;
 
     function Export() {
         dispatcher('export_map', {
@@ -79,13 +81,14 @@
             const renderSettings: RenderSettings = {
                 wireframe: mode.includes("2"),
                 gradient: mode.includes("3"),
-                lighting: mode.includes("1"),
+                lighting: mode.includes("1") && mode.includes("3"),
                 wireframeOpacity: wireframeOpacity,
                 wireframeLineWidth: wireframeLineWidth
             }
             dispatcher('settings_save', { render: renderSettings});
         }
     }
+    
     function menuSwitch() {
         visible = !visible;
         visible = visible;
@@ -98,6 +101,11 @@
             settings_visible = settings_visible;
             settingsSave();
         }
+    }
+
+    function d2SettingsSwitch() {
+        useColorsfor2D = !useColorsfor2D;
+        dispatcher('settings_save_2d', { useColors: useColorsfor2D });
     }
 </script>
 
@@ -279,7 +287,13 @@
                 />
             </Param>
             <Param>
-                <h3>Mode</h3>
+                <h3>2D settings</h3>
+                <button id="d2_render_mode_switch" class="small-menu-but menu-but" 
+                        on:click={d2SettingsSwitch}>
+                    <span>Grayscale ⟷ Color</span>
+                </button>
+
+                <h3>3D settings</h3>
                 <label for="modeLightning">Lighting:</label>
                 <input id="modeLightning"
                        type=checkbox
