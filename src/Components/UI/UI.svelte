@@ -10,6 +10,7 @@
 
  let dispatcher = createEventDispatcher();
 
+ //gen options
  let seed: number = 0;
  let width: number = DefaultGeneratorOptions.width;
  let height: number = DefaultGeneratorOptions.height;
@@ -24,7 +25,17 @@
  let imp_visible: boolean = false;
 
  function Export(){
-     dispatcher('export_map');
+     dispatcher('export_map', {
+         genOpt: {
+             seed: seed,
+             width: width,
+             height: height,
+             maxAltitude: maxAltitude,
+             minAltitude: minAltitude,
+             levelOfDetail: levelOfDetail,
+             roughnessCoefficient: roughnessCoefficient,
+         }
+     });
  }
  function Import(){
      dispatcher('import_map');

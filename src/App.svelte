@@ -61,11 +61,11 @@
             notify(err, true);
         }
     }
-    function ExportMap(){
-        exportMap(heightmap).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
+    function ExportMap(e){
+        exportMap(heightmap, e.detail.genOpt,is2DView).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
     }
     function ExcelExportMap(){
-        exportMap(heightmap).then(()=>{notify("Successfully exported!", false);}).catch(err=>{notify(err, true)});
+
     }
 
     let notify: (text:string, err:boolean)=>{};
