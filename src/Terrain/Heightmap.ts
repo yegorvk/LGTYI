@@ -20,7 +20,7 @@ export class Heightmap {
         const noiseGenerator = new PerlinNoise()
 
         let roughness = options.roughnessCoefficient / 5.6
-        let maxAlt = options.maxAltitude
+        let maxAlt = (options.maxAltitude - options.minAltitude)
 
         for (let pass = 0; pass < options.levelOfDetail; pass++) {
             let noiseY = 0
@@ -30,7 +30,9 @@ export class Heightmap {
 
                 for (let j = 0; j < heightmap.size; j++) {
                     const base = i*heightmap.size+j
-                    heightmap.data[base] += noiseGenerator.perlin2(noiseX, noiseY) * maxAlt
+                    const delta = noiseGenerator.perlin2(noiseX, noiseY)
+
+                    heightmap.data[base] += 0.01 + (maxAlt / 2) * (delta + 1)
 
                     noiseX += roughness
                 }
@@ -40,6 +42,10 @@ export class Heightmap {
 
             roughness *= 3
             maxAlt *= 0.3
+        }
+
+        for (let i = 0; i < heightmap.data.length; i++) {
+            heightmap.data[i] += options.minAltitude;
         }
 
         return heightmap

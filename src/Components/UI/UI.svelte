@@ -12,6 +12,7 @@
 
  let size: number = DefaultGeneratorOptions.size;
  let maxAltitude: number = DefaultGeneratorOptions.maxAltitude;
+ let minAltitude: number = DefaultGeneratorOptions.minAltitude;
  let roughnessCoefficient: number = DefaultGeneratorOptions.roughnessCoefficient * 100;
  let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
 
@@ -92,7 +93,16 @@
                        type="range"
                        bind:value={maxAltitude}
                        max="50"
-                       min="10">
+                       min="-50">
+            </Param>
+
+            <Param>
+                <span>min altitude: {minAltitude}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={minAltitude}
+                       max="50"
+                       min="-50">
             </Param>
 
             <Param>
@@ -120,6 +130,7 @@
                             {
                                 size: size,
                                 maxAltitude: maxAltitude,
+                                minAltitude: minAltitude,
                                 roughnessCoefficient: roughnessCoefficient / 100,
                                 levelOfDetail: levelOfDetail
                             }
