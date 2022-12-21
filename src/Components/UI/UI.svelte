@@ -9,7 +9,15 @@
  export let generate: (options: GeneratorOptions) => void = null;
 
  let dispatcher = createEventDispatcher();
-
+ export let setGeneratorData = (genData: GeneratorOptions)=>{
+     seed = genData.seed;
+     width = genData.width;
+     height = genData.height;
+     maxAltitude = genData.maxAltitude;
+     minAltitude = genData.minAltitude;
+     roughnessCoefficient = genData.roughnessCoefficient;
+     levelOfDetail = genData.levelOfDetail;
+ };
  //gen options
  let seed: number = 0;
  let width: number = DefaultGeneratorOptions.width;

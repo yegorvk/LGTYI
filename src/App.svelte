@@ -27,7 +27,12 @@
     async function ImportMap() {
         invisible = true;
         try {
-            heightmap = await importMap();
+            let data = await importMap();
+            is2DView = data.viewMode;
+            is2DView = is2DView;
+            setGenData(data.genOptions);
+
+            heightmap = data.heightMap as Heightmap;
             notify("Successfully opened!", false);
             heightmap = heightmap;
             invisible = false;
@@ -67,13 +72,13 @@
     function ExcelExportMap(){
 
     }
-
+    let setGenData;
     let notify: (text:string, err:boolean)=>{};
 </script>
 
 <main id="app_content">
     <Notification bind:notify={notify}></Notification>
-    <UI {generate} bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap} on:add_map={addMap} on:substr_map={substrMap} on:excel_export_map={ExcelExportMap}/>
+    <UI {generate} bind:setGeneratorData={setGenData}  bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap} on:add_map={addMap} on:substr_map={substrMap} on:excel_export_map={ExcelExportMap}/>
     {#if !invisible}
     {#if !is2DView}
         {#key trigger}
