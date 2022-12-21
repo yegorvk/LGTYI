@@ -76,12 +76,12 @@
 
             <button class="menu-but"
                     on:click={Import}>
-                <span>Import...</span>
+                <span>Open</span>
             </button>
 
             <button class="menu-but"
                     on:click={Export}>
-                <span>Export</span>
+                <span>Save</span>
             </button>
             <button class="menu-but"
                     on:click={Add}>
