@@ -8,18 +8,19 @@ export default async function AddMap(heightMap: Heightmap): Promise<Heightmap> {
     } catch (err) {
         throw  new Error(err);
     }
-    let dif = (Math.max(heightMap.size, importedHeightmap.size) - Math.min(heightMap.size, importedHeightmap.size)) / 2;
-    if (heightMap.size < importedHeightmap.size) {
-        for (let i = 0; i < heightMap.size; i++) {
-            for (let j = 0; j < heightMap.size; j++) {
-                importedHeightmap.data[j + dif + dif * importedHeightmap.size + i * (heightMap.size + 2 * dif)] += heightMap.data[j];
+    let difWidth = (Math.max(heightMap.width, importedHeightmap.width) - Math.min(heightMap.width, importedHeightmap.width)) / 2;
+    let difHeight = (Math.max(heightMap.height, importedHeightmap.height) - Math.min(heightMap.height, importedHeightmap.height)) / 2;
+    if (heightMap.width < importedHeightmap.width) {
+        for (let i = 0; i < heightMap.height; i++) {
+            for (let j = 0; j < heightMap.width; j++) {
+                importedHeightmap.data[j + difWidth + difHeight * importedHeightmap.width + i * (heightMap.width + 2 * difWidth)] += heightMap.data[j + heightMap.width*i];
             }
         }
         return importedHeightmap;
     } else {
-        for (let i = 0; i < importedHeightmap.size; i++) {
-            for (let j = 0; j < importedHeightmap.size; j++) {
-                heightMap.data[j + dif + dif * heightMap.size + i * (importedHeightmap.size + 2 * dif)] += importedHeightmap.data[j];
+        for (let i = 0; i < heightMap.height; i++) {
+            for (let j = 0; j < heightMap.width; j++) {
+                heightMap.data[j + difWidth + difHeight * heightMap.width + i * (importedHeightmap.width + 2 * difWidth)] += importedHeightmap.data[j + importedHeightmap.width*i];
             }
         }
         return heightMap;
