@@ -72,7 +72,7 @@
         renderSettings=e.detail.render;
 
         invisible = true;
-        setTimeout(()=>{invisible=false; notify("Successfully saved!", false);}, 1000);
+        setTimeout(()=>{invisible=false; notify("Successfully", false);}, 1000);
     }
     function ExportMap(e){
         exportMap(heightmap, e.detail.genOpt,is2DView).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});

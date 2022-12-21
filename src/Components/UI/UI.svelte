@@ -31,7 +31,7 @@
     //render settings
     let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
     let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
-    let mode = 1
+    let mode = ["1"]
     //panels visibility
     let visible: boolean = false;
     let main_visible: boolean = false;
@@ -76,9 +76,9 @@
     function settingsSave() {
         if (settings_visible === false) {
             const renderSettings: RenderSettings = {
-                wireframe: mode == 1,
-                gradient: mode == 2,
-                lighting: mode == 3,
+                wireframe: mode.includes("2"),
+                gradient: mode.includes("3"),
+                lighting: mode.includes("1"),
                 wireframeOpacity: wireframeOpacity,
                 wireframeLineWidth: wireframeLineWidth
             }
@@ -280,22 +280,22 @@
                 <h3>Mode</h3>
                 <label for="modeLightning">Lighting:</label>
                 <input id="modeLightning"
-                       type="radio"
-                       value={1}
+                       type=checkbox
+                       value={"1"}
                        bind:group={mode}
                 />
 
                 <label for="modeWireframe">Wireframe:</label>
                 <input id="modeWireframe"
-                       type="radio"
-                       value={2}
+                       type=checkbox
+                       value={"2"}
                        bind:group={mode}
                 />
 
                 <label for="modeGradient">Gradient:</label>
                 <input id="modeGradient"
-                       type="radio"
-                       value={3}
+                       type=checkbox
+                       value={"3"}
                        bind:group={mode}
                 />
             </Param>
