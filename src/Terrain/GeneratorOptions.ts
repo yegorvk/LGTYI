@@ -9,11 +9,11 @@ export interface GeneratorOptions {
 }
 
 export const DefaultGeneratorOptions: GeneratorOptions = {
-    width: 200,
-    height: 100,
-    maxAltitude: 35,
-    minAltitude: 10,
-    roughnessCoefficient: 0.5,
+    width: 500,
+    height: 500,
+    maxAltitude: 50,
+    minAltitude: -50,
+    roughnessCoefficient: 0.09,
     levelOfDetail: 6,
     seed: 0
 }
