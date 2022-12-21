@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { applyDefaults } from '../Defaults'
 import type { Chunk } from '../Terrain/Chunk'
 import  { type RenderOptions, DefaultRenderOptions } from './RenderOptions'
+import { Color } from 'three'
 
 export class RenderChunk extends THREE.Object3D {
     constructor(offset: THREE.Vector3, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
@@ -19,8 +20,10 @@ export class RenderChunk extends THREE.Object3D {
         const posAttr = new THREE.BufferAttribute(chunk.vertices, 3)
         geometry.setAttribute('position', posAttr)
 
-        const colorAttr = new THREE.BufferAttribute(chunk.vertexColors, 3)
-        geometry.setAttribute('color', colorAttr)
+        if (chunk.useVertexColors) {
+            const colorAttr = new THREE.BufferAttribute(chunk.vertexColors, 3)
+            geometry.setAttribute('color', colorAttr)
+        }
 
         const indexAttr = new THREE.BufferAttribute(chunk.indices, 1)
         geometry.setIndex(indexAttr)
@@ -56,7 +59,10 @@ export class RenderChunk extends THREE.Object3D {
                                     new THREE.MeshLambertMaterial() :
                                     new THREE.MeshBasicMaterial()
 
-        mat.vertexColors = true
+        if (options.vertexColors)
+            mat.vertexColors = true
+        else
+            mat.color.set(0x000000)
         
         return mat
     }
