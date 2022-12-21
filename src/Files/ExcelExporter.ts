@@ -17,7 +17,7 @@ export default async function ExcelExport(heightMap: Heightmap) {
         let columnArr : any[] = [];
         columnArr.push("Coordinate")
         for (let i = 1; i < heightMap.width; i++) {
-            columnArr.push(i);
+            columnArr.push(i-1);
         }
         sheet.addRow(columnArr);
         columnArr = [];

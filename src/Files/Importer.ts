@@ -9,7 +9,7 @@ export async function importMap(): Promise<SaveData> {
     const fs = window.require('fs');
     // Use the electron dialog module to prompt the user for a file path
     const {filePaths} = await remote.dialog.showOpenDialog({
-        filters: [{name: 'JSON Files', extensions: ['json']}],
+        filters: [{name: 'LGTYI Files', extensions: ['lgtyi']}],
         properties: ['openFile']
     });
     // Exit the function if the user cancels the save dialog

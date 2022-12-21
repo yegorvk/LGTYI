@@ -19,7 +19,7 @@ export async function exportMap(heightMap: Heightmap, genOptions: GeneratorOptio
     };
     // Use the electron dialog module to prompt the user for a file path
     const {filePath} = await remote.dialog.showSaveDialog({
-        filters: [{name: 'JSON Files', extensions: ['json']}]
+        filters: [{name: 'LGTYI Files', extensions: ['lgtyi']}]
     });
 
     // Exit the function if the user cancels the save dialog
