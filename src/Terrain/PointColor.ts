@@ -1,28 +1,39 @@
 
-export function colorRGBFromAltitude(alt: number, smooth: boolean = false, maxAlt: number = 50): number {
+export function colorRGBFromAltitude(
+    alt: number,
+    smooth: boolean = true,
+    maxAlt: number = 50,
+    minAlt: number = -50
+): number {
+    // get rid of negative values
+    maxAlt -= minAlt;
+    alt -= minAlt;
+
     const alts = [
         0,
-        0.6*maxAlt,
+        0.4*maxAlt,
         0.7*maxAlt,
+        0.9*maxAlt,
         maxAlt
     ]
 
     const colors = [
         0x004225,
+        0x3CB043,
         0xAAFF00,
         0xFF0000,
         0x231709
     ]
 
     if (smooth) {
-        for (let i = 1; i < 4; i++) {
+        for (let i = 1; i < 5; i++) {
             if (alt <= alts[i]) {
                 const a = (alt - alts[i-1]) / (alts[i] - alts[i-1])
                 return lerp_color(colors[i-1], colors[i], a)
             }
         }
     } else {
-        for (let i = 0; i < 4; i++)
+        for (let i = 0; i < 5; i++)
             if (alt <= alts[i])
                 return colors[i];
     }
