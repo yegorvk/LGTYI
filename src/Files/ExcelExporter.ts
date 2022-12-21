@@ -9,19 +9,28 @@ export default async function ExcelExport(heightMap: Heightmap) {
         if (!filePath) {
             throw new Error('No file selected');
         }
+
         const fs = window.require('fs');
         const ExcelJS = window.require('exceljs');
         const workbook = new ExcelJS.Workbook();
-        const sheet = workbook.addWorksheet('My Sheet');
-        let columnArr : number[] = [];
-        for (let i = 0; i < heightMap.height; i){
+        const sheet = workbook.addWorksheet('Coords');
+        let columnArr : any[] = [];
+        columnArr.push("Coordinate")
+        for (let i = 1; i < heightMap.width; i++) {
+            columnArr.push(i);
+        }
+        sheet.addRow(columnArr);
+        columnArr = [];
+        for (let i = 0; i < heightMap.height; i++){
+            columnArr.push(i);
             for (let j = 0; j < heightMap.width; j++) {
                 columnArr.push(heightMap.data[j + i * heightMap.width]);
             }
             sheet.addRow(columnArr);
             columnArr = [];
         }
-        return;
+
+
         await workbook.xlsx.writeFile(filePath);
 
     } catch (err){
