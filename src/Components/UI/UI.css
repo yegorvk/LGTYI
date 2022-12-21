@@ -2,7 +2,7 @@
     position: absolute;
     top: 10px;
     left: -260px;
-    width: 250px;
+    width: 300px;
     max-height: 90vh;
     padding: 58px 10px 10px;
     transition: all 400ms;
@@ -109,10 +109,6 @@
     text-align: center;
     font-family: Comfortaa, cursive;
     font-size: 23px;
-}
-
-.small-menu-but {
-    transform: scale(0.8);
 }
 
 .menu-but:not([disabled]):hover {

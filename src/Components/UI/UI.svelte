@@ -37,6 +37,7 @@
     let visible: boolean = false;
     let main_visible: boolean = false;
     let gen_visible: boolean = false;
+    let operations_visible: boolean = false;
     let settings_visible: boolean = false;
 
     let useColorsfor2D = false;
@@ -102,6 +103,8 @@
         main_visible = main_visible;
         gen_visible = false;
         gen_visible = gen_visible;
+        operations_visible = false;
+        operations_visible = operations_visible;
         if (settings_visible) {
             settings_visible = false;
             settings_visible = settings_visible;
@@ -121,10 +124,6 @@
     </button>
     <div class="content">
         <div class:hidden={!main_visible}>
-            <button class="menu-but" on:click={dimSwitch}>
-                <span>2D ⟷ 3D</span>
-            </button>
-
             <button class="menu-but"
                     on:click={
                     () => {
@@ -148,27 +147,15 @@
             </button>
 
             <button class="menu-but"
-                    on:click={Add}>
-                <span>Add...</span>
-            </button>
-
-            <button class="menu-but"
-                    on:click={Substr}>
-                <span>Subtract...</span>
-            </button>
-
-            <button class="menu-but"
-                    on:click={ExcelExport}>
-                <span>Export</span>
-            </button>
-            <button class="menu-but"
-                    on:click={ImageExport}
-                    disabled={!is2D}>
-                <span>Export as Image</span>
-            </button>
-            <button class="menu-but"
-                    on:click={ImageImport}>
-                <span>Import From Image</span>
+                    on:click={
+                    () => {
+                        main_visible = false;
+                        main_visible = main_visible;
+                        operations_visible = true;
+                        operations_visible = operations_visible;
+                    }
+                }>
+                <span>Operations</span>
             </button>
 
             <button class="menu-but"
@@ -183,6 +170,7 @@
                 <span>Settings</span>
             </button>
         </div>
+
         <div class:hidden={!gen_visible}>
             <Param>
                 <label for="width">width: {width}</label>
@@ -279,57 +267,93 @@
                 <span>Generate</span>
             </button>
         </div>
+
+        <div class:hidden={!operations_visible}>
+            <button class="menu-but"
+                    on:click={Add}>
+                <span>Add...</span>
+            </button>
+
+            <button class="menu-but"
+                    on:click={Substr}>
+                <span>Subtract...</span>
+            </button>
+
+            <button class="menu-but"
+                    on:click={ExcelExport}>
+                <span>Export</span>
+            </button>
+
+            <button class="menu-but"
+                    on:click={ImageExport}
+                    class:hidden={!is2D}>
+                <span>Export as Image</span>
+            </button>
+
+            <button class="menu-but"
+                    on:click={ImageImport}>
+                <span>Import from Image...</span>
+            </button>
+        </div>
+
         <div class:hidden={!settings_visible}>
-            <Param>
-                <label for="wireframeOpacity">Wireframe opacity: {wireframeOpacity}</label>
-                <input id="wireframeOpacity"
-                       class="basic-range"
-                       type="range"
-                       bind:value={wireframeOpacity}
-                       max="1"
-                       min="0"
-                       step="0.05"
-                />
-            </Param>
-            <Param>
-                <label for="wireframeLineWidth">Wireframe Sickness: {wireframeLineWidth}</label>
-                <input id="wireframeLineWidth"
-                       class="basic-range"
-                       type="range"
-                       bind:value={wireframeLineWidth}
-                       max="10"
-                       min="1"
-                />
-            </Param>
-            <Param>
-                <h3>2D settings</h3>
-                <button id="d2_render_mode_switch" class="small-menu-but menu-but" 
+            <button class="menu-but" on:click={dimSwitch}>
+                <span>2D ⟷ 3D</span>
+            </button>
+
+            <div class:hidden={!is2D}>
+                <button class="menu-but"
                         on:click={d2SettingsSwitch}>
                     <span>Grayscale ⟷ Color</span>
                 </button>
+            </div>
 
-                <h3>3D settings</h3>
-                <label for="modeLightning">Lighting:</label>
-                <input id="modeLightning"
-                       type=checkbox
-                       value={"1"}
-                       bind:group={mode}
-                />
+            <div class:hidden={is2D}>
+                <Param>
+                    <label for="wireframeOpacity">Wireframe opacity: {wireframeOpacity}</label>
+                    <input id="wireframeOpacity"
+                           class="basic-range"
+                           type="range"
+                           bind:value={wireframeOpacity}
+                           max="1"
+                           min="0"
+                           step="0.05"
+                    />
+                </Param>
+                <Param>
+                    <label for="wireframeLineWidth">Wireframe Sickness: {wireframeLineWidth}</label>
+                    <input id="wireframeLineWidth"
+                           class="basic-range"
+                           type="range"
+                           bind:value={wireframeLineWidth}
+                           max="10"
+                           min="1"
+                    />
+                </Param>
+                <Param>
+                    <label for="modeLightning">Lighting:</label>
+                    <input id="modeLightning"
+                           type=checkbox
+                           value={"1"}
+                           bind:group={mode}
+                    />
 
-                <label for="modeWireframe">Wireframe:</label>
-                <input id="modeWireframe"
-                       type=checkbox
-                       value={"2"}
-                       bind:group={mode}
-                />
+                    <label for="modeWireframe">Wireframe:</label>
+                    <input id="modeWireframe"
+                           type=checkbox
+                           value={"2"}
+                           bind:group={mode}
+                    />
 
-                <label for="modeGradient">Gradient:</label>
-                <input id="modeGradient"
-                       type=checkbox
-                       value={"3"}
-                       bind:group={mode}
-                />
-            </Param>
+                    <label for="modeGradient">Gradient:</label>
+                    <input id="modeGradient"
+                           type=checkbox
+                           value={"3"}
+                           bind:group={mode}
+                    />
+                </Param>
+            </div>
+
             <button class="menu-but" on:click={menuSwitch}>
                 <span>Save</span>
             </button>
