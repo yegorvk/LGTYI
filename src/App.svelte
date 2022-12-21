@@ -23,7 +23,7 @@
         invisible = true;
         try {
             heightmap = await importMap();
-            notify("Successfully imported!", false);
+            notify("Successfully opened!", false);
             heightmap = heightmap;
             invisible = false;
         }catch (err){
@@ -58,14 +58,18 @@
         }
     }
     function ExportMap(){
+        exportMap(heightmap).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
+    }
+    function ExcelExportMap(){
         exportMap(heightmap).then(()=>{notify("Successfully exported!", false);}).catch(err=>{notify(err, true)});
     }
+
     let notify: (text:string, err:boolean)=>{};
 </script>
 
 <main id="app_content">
     <Notification bind:notify={notify}></Notification>
-    <UI {generate} bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap} on:add_map={addMap} on:substr_map={substrMap}/>
+    <UI {generate} bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap} on:add_map={addMap} on:substr_map={substrMap} on:excel_export_map={ExcelExportMap}/>
     {#if !invisible}
     {#if !is2DView}
         {#key trigger}
