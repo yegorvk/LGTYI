@@ -3,13 +3,13 @@
     import { onMount } from 'svelte'
     import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
     import { Chunk } from '../Terrain/Chunk'; 
-    import { Heightmap } from '../Terrain/Heightmap';
+    import type { Heightmap } from '../Terrain/Heightmap';
     import { RenderChunk } from '../Renderer/RenderChunk'
     import { Terrain } from '../Terrain/Terrain';
     import { RenderTerrain } from '../Renderer/RenderTerrain';
 
     let root: Element;
-    export let heightmap = Heightmap.flat(100, 0)
+    export let heightmap: Heightmap;
 
     onMount(() => {
         const rootWidth = root.clientWidth
@@ -50,7 +50,7 @@
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const chunk = new Chunk(heightmap.size, heightmap)
+        const chunk = new Chunk(1, heightmap)
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),
             chunk

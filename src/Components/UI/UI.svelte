@@ -10,7 +10,8 @@
 
  let dispatcher = createEventDispatcher();
 
- let size: number = DefaultGeneratorOptions.size;
+ let width: number = DefaultGeneratorOptions.width;
+ let height: number = DefaultGeneratorOptions.height;
  let maxAltitude: number = DefaultGeneratorOptions.maxAltitude;
  let minAltitude: number = DefaultGeneratorOptions.minAltitude;
  let roughnessCoefficient: number = DefaultGeneratorOptions.roughnessCoefficient * 100;
@@ -79,10 +80,19 @@
         </div>
         <div class:hidden={!gen_visible}>
             <Param>
-                <span>size: {size}</span>
+                <span>width: {width}</span>
                 <input class="basic-range"
                        type="range"
-                       bind:value={size}
+                       bind:value={width}
+                       max="1000"
+                       min="10">
+            </Param>
+
+            <Param>
+                <span>height: {height}</span>
+                <input class="basic-range"
+                       type="range"
+                       bind:value={height}
                        max="1000"
                        min="10">
             </Param>
@@ -128,7 +138,8 @@
                     () => {
                         generate(
                             {
-                                size: size,
+                                width: width,
+                                height: height,
                                 maxAltitude: maxAltitude,
                                 minAltitude: minAltitude,
                                 roughnessCoefficient: roughnessCoefficient / 100,

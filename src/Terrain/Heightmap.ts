@@ -3,7 +3,8 @@ import { PerlinNoise } from "../PerlinNoise/PerlinNoise";
 import { DefaultGeneratorOptions, type GeneratorOptions } from "./GeneratorOptions";
 
 export class Heightmap {
-    size: number;
+    width: number;
+    height: number;
 
     offsetX: number;
     offsetY: number;
@@ -16,7 +17,7 @@ export class Heightmap {
     ): Heightmap {
         applyDefaults(options, DefaultGeneratorOptions)
         
-        const heightmap = Heightmap.flat(options.size, 0)
+        const heightmap = Heightmap.flat(options.width, options.height, 0)
         const noiseGenerator = new PerlinNoise()
 
         let roughness = options.roughnessCoefficient / 5.6
@@ -25,11 +26,11 @@ export class Heightmap {
         for (let pass = 0; pass < options.levelOfDetail; pass++) {
             let noiseY = 0
 
-            for (let i = 0; i < heightmap.size; i++) {
+            for (let i = 0; i < heightmap.height; i++) {
                 let noiseX = 0
 
-                for (let j = 0; j < heightmap.size; j++) {
-                    const base = i*heightmap.size+j
+                for (let j = 0; j < heightmap.width; j++) {
+                    const base = i*heightmap.width+j
                     const delta = noiseGenerator.perlin2(noiseX, noiseY)
 
                     heightmap.data[base] += 0.01 + (maxAlt / 2) * (delta + 1)
@@ -51,30 +52,36 @@ export class Heightmap {
         return heightmap
     }
 
-    static flat(size: number, fillValue?: number) {
-        const data = new Float32Array(size*size)
+    static flat(width: number, height: number, fillValue: number = 0) {
+        const data = new Float32Array(width*height)
 
-        if (fillValue !== undefined)
+        if (fillValue !== 0)
             data.fill(fillValue)
 
-        return new Heightmap(size, data)
+        return new Heightmap(width, height, data)
     }
 
     constructor(
-        size: number,
+        width: number,
+        height: number,
         data: Float32Array,
         offsetX: number = 0,
         offsetY: number = 0
     ) {
-        this.size = size
+        this.width = width;
+        this.height = height;
         this.data = data
         this.offsetX = offsetX;
         this.offsetY = offsetY;
     }
 
-    subMap(size: number, offsetX: number, offsetY: number): Heightmap {
+    subMap(width: number, height: number, offsetX: number, offsetY: number): Heightmap {
+        if (width > this.width - offsetX || height > this.height - offsetY)
+            throw new Error()
+        
         return new Heightmap(
-            size,
+            width,
+            height,
             this.data,
             this.offsetX + offsetX,
             this.offsetY + offsetY

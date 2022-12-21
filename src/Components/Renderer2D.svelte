@@ -14,12 +14,12 @@
     let offsetX = 0;
     let offsetY = 0;
 
-    const pixels = new Uint8ClampedArray(4*data.size*data.size)
+    const pixels = new Uint8ClampedArray(4*data.width*data.height)
 
-    for (let i = 0; i < data.size; i++) {
-        for (let j = 0; j < data.size; j++) {
-            const base = 4*(i*data.size+j)
-            const alt = data.data[(i+data.offsetY)*data.size+(j+data.offsetX)]
+    for (let i = 0; i < data.height; i++) {
+        for (let j = 0; j < data.width; j++) {
+            const base = 4*(i*data.width+j)
+            const alt = data.data[(i+data.offsetY)*data.width+(j+data.offsetX)]
 
             if (useColors) {
                 const color = colorRGBFromAltitude(alt)
@@ -36,7 +36,7 @@
         }
     }
 
-    const imgData = new ImageData(pixels, data.size, data.size)
+    const imgData = new ImageData(pixels, data.width, data.height)
     let imgBmp: ImageBitmap = null
     
     createImageBitmap(
@@ -107,7 +107,12 @@
 
         function resizeCanvas() {
             canvas.height = window.innerHeight - 8;
-            canvas.width = canvas.height;
+            canvas.width = canvas.height * (data.width / data.height);
+
+            if (canvas.width > window.innerWidth) {
+                canvas.width = window.innerWidth - 8;
+                canvas.height = canvas.width * (data.height / data.width);
+            }
         }
 
         window.onresize = () => {
