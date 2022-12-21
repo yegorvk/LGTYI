@@ -34,7 +34,7 @@
     let isGradient: string = DefaultRenderSettings.gradient as string;
     let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
     let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
-
+    //panels visibility
     let visible: boolean = false;
     let main_visible: boolean = false;
     let gen_visible: boolean = false;
