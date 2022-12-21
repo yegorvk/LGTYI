@@ -70,6 +70,9 @@
     function ExcelExport() {
         dispatcher('excel_export_map')
     }
+    function ImageExport() {
+        dispatcher('image_export_map')
+    }
 
     function dimSwitch() {
         is2D = !is2D;
@@ -154,6 +157,10 @@
             <button class="menu-but"
                     on:click={ExcelExport}>
                 <span>Export</span>
+            </button>
+            <button class="menu-but"
+                    on:click={ImageExport}>
+                <span>Export as Image</span>
             </button>
 
             <button class="menu-but"
