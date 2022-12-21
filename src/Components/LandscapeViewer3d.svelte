@@ -7,9 +7,12 @@
     import { RenderChunk } from '../Renderer/RenderChunk'
     import { Terrain } from '../Terrain/Terrain';
     import { RenderTerrain } from '../Renderer/RenderTerrain';
+    import { DefaultRenderSettings, type RenderSettings } from '../Renderer/RenderSettings';
 
     let root: Element;
+
     export let heightmap: Heightmap;
+    export let renderSettings: RenderSettings = DefaultRenderSettings;
 
     onMount(() => {
         const rootWidth = root.clientWidth
@@ -50,20 +53,30 @@
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const chunk = new Chunk(1, heightmap)
+        const chunk = new Chunk(1, heightmap, renderSettings.gradient)
+
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),
-            chunk
+            chunk,
+            {
+                useWireframe: renderSettings.wireframe,
+                wireframeLineWidth: renderSettings.wireframeLineWidth,
+                wireframeOpacity: renderSettings.wireframeOpacity,
+                prepareForLighting: renderSettings.lighting,
+                vertexColors: renderSettings.gradient
+            }
         )
 
         scene.add(renderChunk)
 
-        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
-        scene.add(ambientLight)
+        if (renderSettings.lighting) {
+            const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
+            scene.add(ambientLight)
 
-        const sunLight = new THREE.DirectionalLight( 0xffffff, 0.7);
-        sunLight.position.set(0, 0, 200)
-        scene.add(sunLight)
+            const sunLight = new THREE.DirectionalLight( 0xffffff, 0.7);
+            sunLight.position.set(0, 0, 200)
+            scene.add(sunLight)
+        }
 
         function animate() {
             renderer.render(scene, camera)

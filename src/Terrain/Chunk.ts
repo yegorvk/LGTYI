@@ -11,6 +11,8 @@ export class Chunk {
     // number of vertices in each column
     readonly height: number;
 
+    readonly useVertexColors: boolean;
+
     // terrain vertices on xy place (row-major, rows along x-axis)
     // all values in [-scale; scale]
     vertices: Float32Array;
@@ -24,15 +26,17 @@ export class Chunk {
     // terrain heightmap
     heightmap: Heightmap;
 
-    constructor(scale: number, heightmap: Heightmap) {
+    constructor(scale: number, heightmap: Heightmap, useVertexColors: boolean) {
         this.scale = scale
         this.width = heightmap.width;
         this.height = heightmap.height;
         this.heightmap = heightmap;
 
-        this.generateVertices()
-        this.generateVertexColors()
+        this.generateVertices()        
         this.generateIndices()
+
+        if (useVertexColors)
+            this.generateVertexColors()
     }
 
     private generateVertices() {

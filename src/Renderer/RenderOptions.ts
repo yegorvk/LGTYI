@@ -4,6 +4,7 @@ export interface RenderOptions {
     wireframeOpacity?: number;
     wireframeLineWidth?: number;
     prepareForLighting?: boolean;
+    vertexColors?: boolean;
 }
 
 export const DefaultRenderOptions: RenderOptions = {
@@ -11,5 +12,6 @@ export const DefaultRenderOptions: RenderOptions = {
     wireframeOpacity: 0.15,
     wireframeColor: 0xFFFFFF,
     wireframeLineWidth: 1.3,
-    prepareForLighting: true
+    prepareForLighting: true,
+    vertexColors: true
 }
