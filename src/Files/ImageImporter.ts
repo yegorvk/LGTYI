@@ -1,4 +1,5 @@
 import {Heightmap} from "../Terrain/Heightmap";
+import {altitudeFromGrayscale} from "../Terrain/PointColor";
 
 const remote = require('@electron/remote');
 
@@ -22,8 +23,8 @@ export async function ImageImport(): Promise<Heightmap> {
         promise = Jimp.read(filePaths[0]).then(img => {
             let arr = new Float32Array(img.bitmap.width * img.bitmap.height);
             img.scan(0, 0, img.bitmap.width, img.bitmap.height, function(x, y, idx) {
-                const alpha = this.bitmap.data[idx + 3];
-                arr[y * img.bitmap.width + x] = (alpha-122.5)/5;
+                const red = this.bitmap.data[idx + 0];
+                arr[y * img.bitmap.width + x] = altitudeFromGrayscale(red);
             });
 
 

@@ -1,4 +1,4 @@
-import { number } from "yargs";
+
 
 export function colorRGBFromAltitude(
     alt: number,
