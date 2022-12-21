@@ -1,0 +1,28 @@
+.notify-wind{
+    height: 70px;
+    background: #999999;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -90px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:5px;
+    color: green;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Calibri;
+    transition: bottom 400ms;
+}
+.notify-wind>img{
+    width: 40px;
+    height: 40px;
+    object-fit: scale-down;
+}
+.visible_notify{
+    bottom: 10px;
+}
+.err>span{
+    color: red;
+}

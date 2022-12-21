@@ -6,6 +6,7 @@
     import {Heightmap} from "./Terrain/Heightmap";
     import {exportMap} from "./Files/Exporter";
     import {importMap} from "./Files/Importer";
+    import Notification from "./Components/Notification/Notification.svelte";
 
     let trigger: boolean;
     let is2DView: boolean = false;
@@ -22,10 +23,16 @@
         heightmap = heightmap;
         invisible = false;
     }
+    function ExportMap(){
+        notify("Succesfully", false);
+        exportMap(heightmap)
+    }
+    let notify: (text:string, err:boolean)=>{};
 </script>
 
 <main id="app_content">
-    <UI {generate} bind:is2D={is2DView} on:export_map={() => {exportMap(heightmap)}} on:import_map={()=>{ImportMap()}}/>
+    <Notification bind:notify={notify}></Notification>
+    <UI {generate} bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap}/>
     {#if !invisible}
     {#if !is2DView}
         {#key trigger}
@@ -46,6 +53,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+
     }
 
     .d2-cont {
