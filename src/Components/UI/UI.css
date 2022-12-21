@@ -157,3 +157,25 @@ input {
     background: none;
     border:none;
 }
+
+.basic-text {
+    width: 80%;
+    height: 30px;
+    margin: 5px 0;
+    outline: none;
+    border: 2px solid #999999;
+    border-radius: 8px;
+    color: #333333;
+    text-align: center;
+    font-family: Comfortaa, cursive;
+    font-size: 23px;
+}
+.basic-text:focus {
+    outline: none;
+    border: 2px dashed #cecece;
+    border-radius: 8px;
+}
+.basic-text:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
