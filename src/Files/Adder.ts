@@ -4,7 +4,8 @@ import {importMap} from "./Importer";
 export default async function AddMap(heightMap: Heightmap): Promise<Heightmap> {
     let importedHeightmap;
     try {
-        importedHeightmap = await importMap()
+        let data = await importMap();
+        importedHeightmap = data.heightMap as Heightmap;
     } catch (err) {
         throw  new Error(err);
     }
