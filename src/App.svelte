@@ -9,6 +9,7 @@
     import Notification from "./Components/Notification/Notification.svelte";
     import AddMap from "./Files/Adder";
     import SubtructMap from "./Files/Subtructer";
+    import ExcelExport from "./Files/ExcelExporter";
 
     let trigger: boolean;
     let is2DView: boolean = false;
@@ -70,7 +71,7 @@
         exportMap(heightmap, e.detail.genOpt,is2DView).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
     }
     function ExcelExportMap(){
-
+        ExcelExport(heightmap).then(()=>{notify("Successfully exported!", false);}).catch(err=>{notify(err, true)});
     }
     let setGenData;
     let notify: (text:string, err:boolean)=>{};
