@@ -55,6 +55,8 @@
 
         const chunk = new Chunk(1, heightmap, renderSettings.gradient)
 
+        console.log(chunk)
+
         const renderChunk = new RenderChunk(
             new THREE.Vector3(0, 0, 0),
             chunk,

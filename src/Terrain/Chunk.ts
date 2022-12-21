@@ -31,6 +31,7 @@ export class Chunk {
         this.width = heightmap.width;
         this.height = heightmap.height;
         this.heightmap = heightmap;
+        this.useVertexColors = useVertexColors;
 
         this.generateVertices()        
         this.generateIndices()
