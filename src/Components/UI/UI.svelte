@@ -80,7 +80,7 @@
 
             <button class="menu-but"
                     on:click={Import}>
-                <span>Open</span>
+                <span>Open...</span>
             </button>
 
             <button class="menu-but"
@@ -89,11 +89,11 @@
             </button>
             <button class="menu-but"
                     on:click={Add}>
-                <span>Add</span>
+                <span>Add...</span>
             </button>
             <button class="menu-but"
                     on:click={Substr}>
-                <span>Subtract</span>
+                <span>Subtract...</span>
             </button>
             <button class="menu-but"
                     on:click={ExcelExport}>
