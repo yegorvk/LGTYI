@@ -30,12 +30,10 @@
     let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
     
     //render settings
-    let isLighting: string = DefaultRenderSettings.lighting as string;
-    let isWireframe: string = DefaultRenderSettings.wireframe as string;
-    let isGradient: string = DefaultRenderSettings.gradient as string;
     let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
     let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
-
+    let mode = 1
+    //panels visibility
     let visible: boolean = false;
     let main_visible: boolean = false;
     let gen_visible: boolean = false;
@@ -81,9 +79,9 @@
         settins_visible = !settins_visible;
         if(settins_visible===false){
             const renderSettings: RenderSettings={
-                wireframe: Boolean(isWireframe),
-                gradient: Boolean(isGradient),
-                lighting: Boolean(isLighting),
+                wireframe: mode == 1,
+                gradient: mode == 2,
+                lighting: mode == 3,
                 wireframeOpacity: wireframeOpacity,
                 wireframeLineWidth: wireframeLineWidth
             }
@@ -254,24 +252,27 @@
                            min="1">
                 </Param>
                 <Param>
+                    <h3>Mode</h3>
                     <span>Lighting:</span>
                     <input
-                           type="checkbox"
-                           bind:value={isLighting}
+                           type="radio"
+                           value={1}
+                           bind:group={mode}
                     >
-                </Param>
-                <Param>
+
                     <span>Wireframe:</span>
                     <input
-                           type="checkbox"
-                           bind:value={isWireframe}
+                           type="radio"
+                           value={2}
+                           bind:group={mode}
                     >
-                </Param>
-                <Param>
+
+
                     <span>Gradient:</span>
                     <input
-                           type="checkbox"
-                           bind:value={isGradient}
+                           type="radio"
+                           value={3}
+                           bind:group={mode}
                     >
                 </Param>
                 <button class="menu-but"
