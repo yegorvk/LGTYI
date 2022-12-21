@@ -13,6 +13,7 @@
     import {DefaultRenderSettings} from "./Renderer/RenderSettings";
     import type {RenderSettings} from "./Renderer/RenderSettings"
     import {ImageExport} from "./Files/ImageExporter";
+    import {ImageImport} from "./Files/ImageImporter";
     let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
@@ -85,6 +86,19 @@
     function ImageExportMap(){
         ImageExport(pixels, heightmap).then(()=>{notify("Successfully exported to image!", false);}).catch(err=>{notify(err, true)});
     }
+    async function ImportImageMap(){
+        invisible = true;
+        try {
+            let newMap = await ImageImport();
+            notify("Successfully Imported", false);
+            heightmap = newMap;
+            heightmap = heightmap;
+            invisible = false;
+        }catch (e){
+            invisible = false;
+            notify(e, true);
+        }
+    }
     let setGenData;
     let notify: (text:string, err:boolean)=>{};
     let pixels: Uint8ClampedArray;
@@ -107,7 +121,8 @@
         on:substr_map={substrMap}
         on:excel_export_map={ExcelExportMap}
         on:settings_save={SettingsChange}
-        on:image_export_map ={ImageExportMap}/>
+        on:image_export_map ={ImageExportMap}
+        on:image_import_map = {ImportImageMap}/>
     {#if !invisible}
     {#if !is2DView}
         {#key trigger}

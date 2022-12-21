@@ -68,10 +68,13 @@
     }
 
     function ExcelExport() {
-        dispatcher('excel_export_map')
+        dispatcher('excel_export_map');
     }
     function ImageExport() {
-        dispatcher('image_export_map')
+        dispatcher('image_export_map');
+    }
+    function ImageImport(){
+        dispatcher('image_import_map');
     }
 
     function dimSwitch() {
@@ -162,6 +165,10 @@
                     on:click={ImageExport}
                     disabled={!is2D}>
                 <span>Export as Image</span>
+            </button>
+            <button class="menu-but"
+                    on:click={ImageImport}>
+                <span>Import From Image</span>
             </button>
 
             <button class="menu-but"

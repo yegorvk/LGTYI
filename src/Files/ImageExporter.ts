@@ -3,7 +3,7 @@ import type {Heightmap} from "../Terrain/Heightmap";
 const remote = require('@electron/remote');
 
 export async function ImageExport(pixels: Uint8ClampedArray, heightMap: Heightmap) {
-    const fs = window.require('fs');
+
     const Jimp = window.require('jimp');
 
 

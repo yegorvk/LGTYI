@@ -11,7 +11,6 @@ export async function importMap(): Promise<SaveData> {
     const {filePaths} = await remote.dialog.showOpenDialog({
         filters: [
             { name: 'LGTYI Files', extensions: ['lgtyi'] },
-            { name: 'All Files', extensions: ['*'] }
         ],
         properties: ['openFile']
     });
