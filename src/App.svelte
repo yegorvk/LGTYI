@@ -19,13 +19,19 @@
     let invisible = false;
     async function ImportMap() {
         invisible = true;
-        heightmap = await importMap();
-        heightmap = heightmap;
-        invisible = false;
+        try {
+            heightmap = await importMap();
+            notify("Successfully imported!", false);
+            heightmap = heightmap;
+            invisible = false;
+        }catch (err){
+            invisible = false;
+            notify(err, true);
+        }
+
     }
     function ExportMap(){
-        notify("Succesfully", false);
-        exportMap(heightmap)
+        exportMap(heightmap).then(()=>{notify("Successfully exported!", false);}).catch(err=>{notify(err, true)});
     }
     let notify: (text:string, err:boolean)=>{};
 </script>

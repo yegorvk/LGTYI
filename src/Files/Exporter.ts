@@ -9,16 +9,16 @@ export async function exportMap(heightMap: Heightmap) {
         });
 
         // Exit the function if the user cancels the save dialog
-        if (!filePath) return;
+        if (!filePath) throw new Error('No file selected');
 
         // Use the electron fs module to write an empty string to the specified file
         fs.writeFile(filePath, JSON.stringify(heightMap, null, 2), 'utf8', (error) => {
             if (error) {
                 // Handle the error
-                console.error(error);
+                throw new Error(error);
             } else {
                 // The file was saved successfully
-                console.log(`Saved empty text file to ${filePath}`);
+                return;
             }
         });
 
