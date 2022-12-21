@@ -35,6 +35,9 @@
  function Substr(){
      dispatcher('substr_map');
  }
+ function ExcelExport(){
+     dispatcher('excel_export_map')
+ }
 
  function dimSwitch(){
      is2D = !is2D;
@@ -77,12 +80,12 @@
 
             <button class="menu-but"
                     on:click={Import}>
-                <span>Import...</span>
+                <span>Open</span>
             </button>
 
             <button class="menu-but"
                     on:click={Export}>
-                <span>Export</span>
+                <span>Save</span>
             </button>
             <button class="menu-but"
                     on:click={Add}>
@@ -91,6 +94,10 @@
             <button class="menu-but"
                     on:click={Substr}>
                 <span>Subtract</span>
+            </button>
+            <button class="menu-but"
+                    on:click={ExcelExport}>
+                <span>Export</span>
             </button>
         </div>
         <div class:hidden={!gen_visible}>
