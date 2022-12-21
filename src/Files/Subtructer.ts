@@ -21,7 +21,7 @@ export default async function SubtructMap(heightMap: Heightmap): Promise<Heightm
     } else {
         for (let i = 0; i < importedHeightmap.height; i++) {
             for (let j = 0; j < importedHeightmap.width; j++) {
-                heightMap.data[j + difWidth + difHeight * heightMap.width + i * (importedHeightmap.width + 2 * difWidth)] -= importedHeightmap.data[j + importedHeightmap.width*i];
+                heightMap.data[j + difWidth + difHeight * heightMap.width + i * heightMap.width ] -= importedHeightmap.data[j + importedHeightmap.width*i];
             }
         }
         return heightMap;
