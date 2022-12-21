@@ -2,6 +2,7 @@
     import * as THREE from 'three'
     import { onDestroy, onMount } from 'svelte'
     import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
+    import { CustomFlyControls } from '../CustomFlyControls'
     import { Chunk } from '../Terrain/Chunk'; 
     import type { Heightmap } from '../Terrain/Heightmap';
     import { RenderChunk } from '../Renderer/RenderChunk'
