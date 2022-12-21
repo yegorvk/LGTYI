@@ -10,7 +10,6 @@
     import { DefaultRenderSettings, type RenderSettings } from '../Renderer/RenderSettings';
 
     let root: Element;
-
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
 

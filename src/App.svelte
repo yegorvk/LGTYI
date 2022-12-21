@@ -10,19 +10,18 @@
     import AddMap from "./Files/Adder";
     import SubtructMap from "./Files/Subtructer";
     import ExcelExport from "./Files/ExcelExporter";
-
+    import {DefaultRenderSettings} from "./Renderer/RenderSettings";
+    import type {RenderSettings} from "./Renderer/RenderSettings"
     let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
+    let renderSettings: RenderSettings = DefaultRenderSettings;
 
     const generate = (options: GeneratorOptions) => {
         if (options.seed === 0)
             options.seed = Math.round(Math.random() * 65536)
-        
+
         heightmap = Heightmap.generate(options)
-
-
-
         trigger = !trigger
     }
 
@@ -69,6 +68,12 @@
             notify(err, true);
         }
     }
+    function SettingsChange(e){
+        renderSettings=e.detail.render;
+
+        invisible = true;
+        setTimeout(()=>{invisible=false; notify("Successfully saved!", false);}, 1000);
+    }
     function ExportMap(e){
         exportMap(heightmap, e.detail.genOpt,is2DView).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
     }
@@ -81,11 +86,19 @@
 
 <main id="app_content">
     <Notification bind:notify={notify}></Notification>
-    <UI {generate} bind:setGeneratorData={setGenData}  bind:is2D={is2DView} on:export_map={ExportMap} on:import_map={ImportMap} on:add_map={addMap} on:substr_map={substrMap} on:excel_export_map={ExcelExportMap}/>
+    <UI {generate}
+        bind:setGeneratorData={setGenData}
+        bind:is2D={is2DView}
+        on:export_map={ExportMap}
+        on:import_map={ImportMap}
+        on:add_map={addMap}
+        on:substr_map={substrMap}
+        on:excel_export_map={ExcelExportMap}
+        on:settings_save={SettingsChange}/>
     {#if !invisible}
     {#if !is2DView}
         {#key trigger}
-            <LandScapeViewer3d {heightmap}/>
+            <LandScapeViewer3d {renderSettings} {heightmap}/>
         {/key}
     {:else}
         <div class="d2-cont">
