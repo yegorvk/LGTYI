@@ -228,10 +228,11 @@
             </Param>
 
             <Param>
-                <label for="seed">seed: {(seed === 0) ? "random" : seed.toString()}</label>
+                <label for="seed">seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
                 <input id="seed"
                        class="basic-text"
-                       type="text"
+                       type="number"
+                       min="0"
                        bind:value={seed}
                 />
             </Param>
@@ -247,7 +248,7 @@
                                 minAltitude: minAltitude,
                                 roughnessCoefficient: roughnessCoefficient / 100,
                                 levelOfDetail: levelOfDetail,
-                                seed: seed
+                                seed: ((seed === null) ? 0 : seed)
                             }
                         )
                     }

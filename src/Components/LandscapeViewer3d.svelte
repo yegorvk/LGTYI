@@ -1,6 +1,6 @@
 <script lang="ts">
     import * as THREE from 'three'
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
     import { FlyControls } from 'three/examples/jsm/controls/FlyControls'
     import { Chunk } from '../Terrain/Chunk'; 
     import type { Heightmap } from '../Terrain/Heightmap';
@@ -13,13 +13,57 @@
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
 
+    let renderer: THREE.WebGLRenderer = null;
+    let camControls: FlyControls = null;
+    let camControlsChangeEventListener: () => any = null;
+    let windowResizeEventListener: () => any = null;
+
+    let clock = new THREE.Clock()
+
+    let scene = new THREE.Scene()
+    let camera: THREE.PerspectiveCamera = null;
+
+    let chunk = new Chunk(1, heightmap, renderSettings.gradient)
+
+    let renderChunk = new RenderChunk(
+        new THREE.Vector3(0, 0, 0),
+        chunk,
+        {
+            useWireframe: renderSettings.wireframe,
+            wireframeLineWidth: renderSettings.wireframeLineWidth,
+            wireframeOpacity: renderSettings.wireframeOpacity,
+            prepareForLighting: renderSettings.lighting,
+            vertexColors: renderSettings.gradient
+        }
+    )
+
+    scene.add(renderChunk)
+
+    if (renderSettings.lighting) {
+        const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
+        scene.add(ambientLight)
+
+        const sunLight = new THREE.DirectionalLight( 0xffffff, 0.7);
+        sunLight.position.set(0, 0, 200)
+        scene.add(sunLight)
+    }
+
+    function animate() {
+            if (renderer === null) return;
+            renderer.render(scene, camera)
+        }
+
+    function update() {
+        if (camControls === null) return;
+        camControls.update(clock.getDelta())
+        requestAnimationFrame(update)
+    }
+
     onMount(() => {
         const rootWidth = root.clientWidth
         const rootHeight = root.clientHeight
-        
-        const scene = new THREE.Scene()
 
-        const camera = new THREE.PerspectiveCamera(
+        camera = new THREE.PerspectiveCamera(
             75, // fov
             rootWidth / rootHeight, // aspect ratio
             0.1, // near
@@ -29,7 +73,10 @@
         camera.position.set(0, 0, 50)
         camera.lookAt(0, 0, 0)
 
-        const renderer = new THREE.WebGLRenderer({
+        if (renderer !== null)
+            renderer.dispose()
+
+        renderer = new THREE.WebGLRenderer({
             canvas: root,
             antialias: true,
             alpha: true
@@ -37,63 +84,53 @@
 
         renderer.setSize(rootWidth, rootHeight)
 
-        window.addEventListener('resize', () => {
+        windowResizeEventListener = () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
 
             renderer.setSize( window.innerWidth, window.innerHeight);
-        })
+        }
 
-        const clock = new THREE.Clock()
-        const camControls = new FlyControls(camera, renderer.domElement)
+        window.addEventListener('resize', windowResizeEventListener)
 
+        if (camControls !== null)
+            camControls.dispose()
+
+        camControls = new FlyControls(camera, renderer.domElement)
         camControls.dragToLook = true
 
         camControls.movementSpeed *= 40
         camControls.rollSpeed *= 100
 
-        const chunk = new Chunk(1, heightmap, renderSettings.gradient)
-
-        console.log(chunk)
-
-        const renderChunk = new RenderChunk(
-            new THREE.Vector3(0, 0, 0),
-            chunk,
-            {
-                useWireframe: renderSettings.wireframe,
-                wireframeLineWidth: renderSettings.wireframeLineWidth,
-                wireframeOpacity: renderSettings.wireframeOpacity,
-                prepareForLighting: renderSettings.lighting,
-                vertexColors: renderSettings.gradient
-            }
-        )
-
-        scene.add(renderChunk)
-
-        if (renderSettings.lighting) {
-            const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
-            scene.add(ambientLight)
-
-            const sunLight = new THREE.DirectionalLight( 0xffffff, 0.7);
-            sunLight.position.set(0, 0, 200)
-            scene.add(sunLight)
-        }
-
-        function animate() {
-            renderer.render(scene, camera)
-        }
-
-        function update() {
-            camControls.update(clock.getDelta())
-            requestAnimationFrame(update)
-        }
-
         update()
         animate()
 
-        camControls.addEventListener('change', () => {
+        camControlsChangeEventListener = () => {
             animate()
-        })
+        }
+
+        camControls.addEventListener('change', camControlsChangeEventListener)
+    })
+
+    onDestroy(() => {
+        if (renderer !== null) {
+            renderer.dispose()
+            renderer = null
+        }
+
+        if (camControls !== null) {
+            camControls.removeEventListener('change', camControlsChangeEventListener)
+            camControlsChangeEventListener = null;
+            camControls.dispose()
+            camControls = null
+        }
+
+        window.removeEventListener('resize', windowResizeEventListener)
+        windowResizeEventListener = null;
+
+        clock.stop();
+
+        clock = scene = camera = chunk = renderChunk = null;
     })
 </script>
 

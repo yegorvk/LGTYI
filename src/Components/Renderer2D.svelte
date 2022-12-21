@@ -1,6 +1,6 @@
 <script lang="ts">
     import type {Heightmap} from "../Terrain/Heightmap";
-    import {onMount} from "svelte";
+    import {onDestroy, onMount} from "svelte";
     import {colorGrayScaleFromAltitude, colorRGBFromAltitude} from "../Terrain/PointColor";
 
     export let useColors = true;
@@ -14,7 +14,7 @@
     let offsetX = 0;
     let offsetY = 0;
 
-    const pixels = new Uint8ClampedArray(4*data.width*data.height)
+    let pixels = new Uint8ClampedArray(4*data.width*data.height)
 
     for (let i = 0; i < data.height; i++) {
         for (let j = 0; j < data.width; j++) {
@@ -36,7 +36,7 @@
         }
     }
 
-    const imgData = new ImageData(pixels, data.width, data.height)
+    let imgData = new ImageData(pixels, data.width, data.height)
     let imgBmp: ImageBitmap = null
     
     createImageBitmap(
@@ -158,6 +158,11 @@
 
         draw(canvasContext)
     });
+
+    onDestroy(() => {
+        pixels = imgData = null
+        imgBmp.close()
+    })
 
     const remote = require('@electron/remote');
     const {Menu} = remote.require('electron');
