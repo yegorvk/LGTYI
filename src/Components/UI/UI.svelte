@@ -32,13 +32,12 @@
     //render settings
     let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
     let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
-    let mode = 1
+    let mode = ["1"]
     //panels visibility
     let visible: boolean = false;
     let main_visible: boolean = false;
     let gen_visible: boolean = false;
-    let imp_visible: boolean = false;
-    let settins_visible: boolean = false;
+    let settings_visible: boolean = false;
 
     function Export() {
         dispatcher('export_map', {
@@ -75,13 +74,12 @@
         is2D = is2D;
     }
 
-    function SettingsSwitch(){
-        settins_visible = !settins_visible;
-        if(settins_visible===false){
-            const renderSettings: RenderSettings={
-                wireframe: mode == 1,
-                gradient: mode == 2,
-                lighting: mode == 3,
+    function settingsSave() {
+        if (settings_visible === false) {
+            const renderSettings: RenderSettings = {
+                wireframe: mode.includes("2"),
+                gradient: mode.includes("3"),
+                lighting: mode.includes("1"),
                 wireframeOpacity: wireframeOpacity,
                 wireframeLineWidth: wireframeLineWidth
             }
@@ -95,8 +93,11 @@
         main_visible = main_visible;
         gen_visible = false;
         gen_visible = gen_visible;
-        imp_visible = false;
-        imp_visible = imp_visible;
+        if (settings_visible) {
+            settings_visible = false;
+            settings_visible = settings_visible;
+            settingsSave();
+        }
     }
 </script>
 
@@ -105,14 +106,13 @@
         <div class="burger"></div>
     </button>
     <div class="content">
-        {#if !settins_visible}
-            <div class:hidden={!main_visible}>
-                <button class="menu-but" on:click={dimSwitch}>
-                    <span>2D ⟷ 3D</span>
-                </button>
+        <div class:hidden={!main_visible}>
+            <button class="menu-but" on:click={dimSwitch}>
+                <span>2D ⟷ 3D</span>
+            </button>
 
-                <button class="menu-but"
-                        on:click={
+            <button class="menu-but"
+                    on:click={
                     () => {
                         main_visible = false;
                         main_visible = main_visible;
@@ -120,101 +120,124 @@
                         gen_visible = gen_visible;
                     }
                 }>
-                    <span>Generate...</span>
-                </button>
+                <span>Generate...</span>
+            </button>
 
-                <button class="menu-but"
-                        on:click={Import}>
-                    <span>Open...</span>
-                </button>
+            <button class="menu-but"
+                    on:click={Import}>
+                <span>Open...</span>
+            </button>
 
-                <button class="menu-but"
-                        on:click={Export}>
-                    <span>Save</span>
-                </button>
-                <button class="menu-but"
-                        on:click={Add}>
-                    <span>Add...</span>
-                </button>
-                <button class="menu-but"
-                        on:click={Substr}>
-                    <span>Subtract...</span>
-                </button>
-                <button class="menu-but"
-                        on:click={ExcelExport}>
-                    <span>Export</span>
-                </button>
-                <button class="menu-but"
-                        on:click={SettingsSwitch}>
-                    <span>Settings</span>
-                </button>
-            </div>
-            <div class:hidden={!gen_visible}>
-                <Param>
-                    <span>width: {width}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={width}
-                           max="1000"
-                           min="10">
-                </Param>
+            <button class="menu-but"
+                    on:click={Export}>
+                <span>Save</span>
+            </button>
 
-                <Param>
-                    <span>height: {height}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={height}
-                           max="1000"
-                           min="10">
-                </Param>
+            <button class="menu-but"
+                    on:click={Add}>
+                <span>Add...</span>
+            </button>
 
-                <Param>
-                    <span>max altitude: {maxAltitude}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={maxAltitude}
-                           max="50"
-                           min="-50">
-                </Param>
+            <button class="menu-but"
+                    on:click={Substr}>
+                <span>Subtract...</span>
+            </button>
 
-                <Param>
-                    <span>min altitude: {minAltitude}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={minAltitude}
-                           max="50"
-                           min="-50">
-                </Param>
+            <button class="menu-but"
+                    on:click={ExcelExport}>
+                <span>Export</span>
+            </button>
 
-                <Param>
-                    <span>roughness: {roughnessCoefficient}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={roughnessCoefficient}
-                           max="100"
-                           min="1">
-                </Param>
+            <button class="menu-but"
+                    on:click={
+                    () => {
+                        main_visible = false;
+                        main_visible = main_visible;
+                        settings_visible = true;
+                        settings_visible = settings_visible;
+                    }
+                }>
+                <span>Settings</span>
+            </button>
+        </div>
+        <div class:hidden={!gen_visible}>
+            <Param>
+                <label for="width">width: {width}</label>
+                <input id="width"
+                       class="basic-range"
+                       type="range"
+                       bind:value={width}
+                       max="1000"
+                       min="10"
+                />
+            </Param>
 
-                <Param>
-                    <span>level of detail: {levelOfDetail}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={levelOfDetail}
-                           max="50"
-                           min="1">
-                </Param>
+            <Param>
+                <label for="height">height: {height}</label>
+                <input id="height"
+                       class="basic-range"
+                       type="range"
+                       bind:value={height}
+                       max="1000"
+                       min="10"
+                />
+            </Param>
 
-                <Param>
-                    <label for="seed">seed: {(seed === 0) ? "random" : seed.toString()}</label>
-                    <input class="basic-text"
-                           type="text"
-                           bind:value={seed}
-                           id="seed"
-                    />
-                </Param>
+            <Param>
+                <label for="maxAltitude">max altitude: {maxAltitude}</label>
+                <input id="maxAltitude"
+                       class="basic-range"
+                       type="range"
+                       bind:value={maxAltitude}
+                       max="50"
+                       min="-50"
+                />
+            </Param>
 
-                <button class="menu-but"
-                        on:click={
+            <Param>
+                <label for="minAltitude">min altitude: {minAltitude}</label>
+                <input id="minAltitude"
+                       class="basic-range"
+                       type="range"
+                       bind:value={minAltitude}
+                       max="50"
+                       min="-50"
+                />
+            </Param>
+
+            <Param>
+                <label for="roughnessCoefficient">roughness: {roughnessCoefficient}</label>
+                <input id="roughnessCoefficient"
+                       class="basic-range"
+                       type="range"
+                       bind:value={roughnessCoefficient}
+                       max="100"
+                       min="1"
+                />
+            </Param>
+
+            <Param>
+                <label for="levelOfDetail">level of detail: {levelOfDetail}</label>
+                <input id="levelOfDetail"
+                       class="basic-range"
+                       type="range"
+                       bind:value={levelOfDetail}
+                       max="50"
+                       min="1"
+                />
+            </Param>
+
+            <Param>
+                <label for="seed">seed: {(seed === 0) ? "random" : seed.toString()}</label>
+                <input id="seed"
+                       class="basic-text"
+                       type="text"
+                       bind:value={seed}
+                />
+            </Param>
+
+            <button class="menu-but"
+                    on:click={
                     () => {
                         generate(
                             {
@@ -229,57 +252,57 @@
                         )
                     }
                 }>
-                    <span>Generate</span>
-                </button>
-            </div>
-        {:else}
-            <div>
-                <Param>
-                    <span>Wireframe opacity: {wireframeOpacity}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={wireframeOpacity}
-                           max="1"
-                           min="0"
-                           step="0.05">
-                </Param>
-                <Param>
-                    <span>Wireframe Sickness: {wireframeLineWidth}</span>
-                    <input class="basic-range"
-                           type="range"
-                           bind:value={wireframeLineWidth}
-                           max="10"
-                           min="1">
-                </Param>
-                <Param>
-                    <h3>Mode</h3>
-                    <span>Lighting:</span>
-                    <input
-                           type="radio"
-                           value={1}
-                           bind:group={mode}
-                    >
+                <span>Generate</span>
+            </button>
+        </div>
+        <div class:hidden={!settings_visible}>
+            <Param>
+                <label for="wireframeOpacity">Wireframe opacity: {wireframeOpacity}</label>
+                <input id="wireframeOpacity"
+                       class="basic-range"
+                       type="range"
+                       bind:value={wireframeOpacity}
+                       max="1"
+                       min="0"
+                       step="0.05"
+                />
+            </Param>
+            <Param>
+                <label for="wireframeLineWidth">Wireframe Sickness: {wireframeLineWidth}</label>
+                <input id="wireframeLineWidth"
+                       class="basic-range"
+                       type="range"
+                       bind:value={wireframeLineWidth}
+                       max="10"
+                       min="1"
+                />
+            </Param>
+            <Param>
+                <h3>Mode</h3>
+                <label for="modeLightning">Lighting:</label>
+                <input id="modeLightning"
+                       type=checkbox
+                       value={"1"}
+                       bind:group={mode}
+                />
 
-                    <span>Wireframe:</span>
-                    <input
-                           type="radio"
-                           value={2}
-                           bind:group={mode}
-                    >
+                <label for="modeWireframe">Wireframe:</label>
+                <input id="modeWireframe"
+                       type=checkbox
+                       value={"2"}
+                       bind:group={mode}
+                />
 
-
-                    <span>Gradient:</span>
-                    <input
-                           type="radio"
-                           value={3}
-                           bind:group={mode}
-                    >
-                </Param>
-                <button class="menu-but"
-                        on:click={SettingsSwitch}>
-                    <span>Save</span>
-                </button>
-            </div>
-        {/if}
+                <label for="modeGradient">Gradient:</label>
+                <input id="modeGradient"
+                       type=checkbox
+                       value={"3"}
+                       bind:group={mode}
+                />
+            </Param>
+            <button class="menu-but" on:click={menuSwitch}>
+                <span>Save</span>
+            </button>
+        </div>
     </div>
 </div>

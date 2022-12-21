@@ -158,7 +158,28 @@
 
         draw(canvasContext)
     });
+
+    const remote = require('@electron/remote');
+    const {Menu} = remote.require('electron');
+    const {MenuItem} = remote.require('electron');
+    const menu = new Menu();
+    let rightClickPosition = null;
+    const menuItem = new MenuItem({
+        label: 'Copy',
+        click: ()=>{
+            canvas.toBlob((blob) => {
+                let data = [new ClipboardItem({ [blob.type]: blob })];
+                navigator.clipboard.write(data);
+            });
+        }
+    });
+    menu.append(menuItem);
+    function canvasClick(e){
+        e.preventDefault()
+        rightClickPosition = {x: e.x, y: e.y}
+        menu.popup(remote.getCurrentWindow())
+    }
 </script>
 
-<canvas id="rendererD2"
-        bind:this={canvas}/>
+<canvas on:contextmenu={canvasClick} id="rendererD2"
+        bind:this={canvas}></canvas>
