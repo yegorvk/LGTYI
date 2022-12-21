@@ -104,7 +104,7 @@
             <Param>
                 <span>seed: {(seed === 0) ? "random" : seed.toString()}</span>
                 <input class="basic-range"
-                       type="range"
+                       type="text"
                        bind:value={seed}
                        max="65535"
                        min="1">
