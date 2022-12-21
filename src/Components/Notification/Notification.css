@@ -3,8 +3,9 @@
     background: #999999;
     border-radius: 10px;
     position: absolute;
-    bottom: -90px;
+    bottom: 10px;
     right: 10px;
+    opacity: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,7 +14,7 @@
     font-size: 25px;
     font-weight: bold;
     font-family: Calibri;
-    transition: bottom 400ms;
+    transition: opacity 400ms;
 }
 .notify-wind>img{
     width: 40px;
@@ -21,7 +22,7 @@
     object-fit: scale-down;
 }
 .visible_notify{
-    bottom: 10px;
+    opacity: 1;
 }
 .err>span{
     color: red;
