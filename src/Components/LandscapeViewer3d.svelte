@@ -46,7 +46,27 @@
 
         const sunLight = new THREE.DirectionalLight( 0xffffff, 0.7);
         sunLight.position.set(0, 0, 200)
+
         scene.add(sunLight)
+
+        // Water won't look like water without lighting
+
+        const waterLayerGeometry = new THREE.PlaneGeometry(chunk.width-1, chunk.height-1)
+
+        waterLayerGeometry.translate(0, 0, 10)
+
+        const waterLayerMat = new THREE.MeshPhongMaterial(
+            {
+                transparent: true,
+                opacity: 0.8,
+                shininess: 0.9,
+                reflectivity: 0.9,
+                color: 0x064273
+            }
+        )
+
+        const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat)
+        scene.add(waterLayer)
     }
 
     function animate() {

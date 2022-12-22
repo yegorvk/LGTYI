@@ -12,13 +12,17 @@ export function colorRGBFromAltitude(
 
     const alts = [
         0,
-        0.4*maxAlt,
+        0.55*maxAlt,
+        0.6*maxAlt,
         0.7*maxAlt,
+        0.8*maxAlt,
         0.9*maxAlt,
         maxAlt
     ]
 
     const colors = [
+        0x0000FF,
+        0xadd8e6,
         0x004225,
         0x3CB043,
         0xAAFF00,
@@ -27,14 +31,14 @@ export function colorRGBFromAltitude(
     ]
 
     if (smooth) {
-        for (let i = 1; i < 5; i++) {
+        for (let i = 1; i < 8; i++) {
             if (alt <= alts[i]) {
                 const a = (alt - alts[i-1]) / (alts[i] - alts[i-1])
                 return lerp_color(colors[i-1], colors[i], a)
             }
         }
     } else {
-        for (let i = 0; i < 5; i++)
+        for (let i = 0; i < 8; i++)
             if (alt <= alts[i])
                 return colors[i];
     }

@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import { applyDefaults } from '../Defaults'
 import type { Chunk } from '../Terrain/Chunk'
 import  { type RenderOptions, DefaultRenderOptions } from './RenderOptions'
-import { Color } from 'three'
 
 export class RenderChunk extends THREE.Object3D {
     constructor(offset: THREE.Vector3, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
@@ -56,8 +55,12 @@ export class RenderChunk extends THREE.Object3D {
 
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
         const mat = options.prepareForLighting ? 
-                                    new THREE.MeshLambertMaterial() :
+                                    new THREE.MeshPhongMaterial() :
                                     new THREE.MeshBasicMaterial()
+
+        if (options.prepareForLighting) {
+            (mat as THREE.MeshPhongMaterial).shininess = 0.1
+        }
 
         if (options.vertexColors)
             mat.vertexColors = true
