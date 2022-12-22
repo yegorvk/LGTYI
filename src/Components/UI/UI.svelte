@@ -281,7 +281,7 @@
 
             <button class="menu-but"
                     on:click={ExcelExport}>
-                <span>Export</span>
+                <span>Export as Table</span>
             </button>
 
             <button class="menu-but"

@@ -12,6 +12,7 @@ export async function ImageExport(pixels: Uint8ClampedArray, heightMap: Heightma
         filters: [
             { name: 'PNG Files', extensions: ['png'] },
             { name: 'BMP Files', extensions: ['bmp'] },
+            { name: 'JPEG Files', extensions: ['jpg'] },
         ],
         defaultPath: "project.png"
     });
