@@ -11,6 +11,7 @@ export async function ImageImport(): Promise<Heightmap> {
         filters: [
             { name: 'PNG Files', extensions: ['png'] },
             { name: 'BMP Files', extensions: ['bmp'] },
+            { name: 'JPEG Files', extensions: ['jpg'] },
         ],
         properties: ['openFile']
     });
