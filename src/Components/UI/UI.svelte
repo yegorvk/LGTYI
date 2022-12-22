@@ -310,7 +310,7 @@
 
             <div class:hidden={is2D}>
                 <Param>
-                    <label for="wireframeOpacity">Wireframe opacity: {wireframeOpacity}</label>
+                    <label for="wireframeOpacity">Wireframe Opacity: {wireframeOpacity}</label>
                     <input id="wireframeOpacity"
                            class="basic-range"
                            type="range"
