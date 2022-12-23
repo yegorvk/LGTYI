@@ -344,26 +344,32 @@
                     />
                 </Param>
                 <Param>
-                    <label for="modeLightning">Lighting:</label>
-                    <input id="modeLightning"
-                           type=checkbox
-                           value={"1"}
-                           bind:group={mode}
-                    />
+                    <div class="check-label">
+                        <label for="modeLightning">Lighting:</label>
+                        <input id="modeLightning"
+                               type=checkbox
+                               value={"1"}
+                               bind:group={mode}
+                        />
+                    </div>
 
-                    <label for="modeWireframe">Wireframe:</label>
-                    <input id="modeWireframe"
-                           type=checkbox
-                           value={"2"}
-                           bind:group={mode}
-                    />
+                    <div class="check-label">
+                        <label for="modeWireframe">Wireframe:</label>
+                        <input id="modeWireframe"
+                               type=checkbox
+                               value={"2"}
+                               bind:group={mode}
+                        />
+                    </div>
 
-                    <label for="modeGradient">Gradient:</label>
-                    <input id="modeGradient"
-                           type=checkbox
-                           value={"3"}
-                           bind:group={mode}
-                    />
+                    <div class="check-label">
+                        <label for="modeGradient">Gradient:</label>
+                        <input id="modeGradient"
+                               type=checkbox
+                               value={"3"}
+                               bind:group={mode}
+                        />
+                    </div>
                 </Param>
             </div>
 
