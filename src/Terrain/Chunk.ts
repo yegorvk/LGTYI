@@ -1,5 +1,5 @@
-import type { Heightmap } from './Heightmap'
-import { colorGrayScaleFromAltitude, colorRGBFromAltitude, rgbFromGrayScale } from './PointColor';
+import type {Heightmap} from './Heightmap'
+import {colorGrayScaleFromAltitude, colorRGBFromAltitude, rgbFromGrayScale} from './PointColor';
 
 export class Chunk {
     // space between vertices
@@ -33,7 +33,7 @@ export class Chunk {
         this.heightmap = heightmap;
         this.useVertexColors = useVertexColors;
 
-        this.generateVertices()        
+        this.generateVertices()
         this.generateIndices()
 
         if (useVertexColors)
@@ -41,7 +41,7 @@ export class Chunk {
     }
 
     private generateVertices() {
-        this.vertices = new Float32Array(3*this.width*this.height)
+        this.vertices = new Float32Array(3 * this.width * this.height)
 
         const offsetX = this.scale * (this.width - 1) / 2;
         const offsetY = this.scale * (this.height - 1) / 2;
@@ -54,15 +54,15 @@ export class Chunk {
                     this.heightmap.offsetX + j
                 )
 
-                this.vertices[3*base] = this.scale * j - offsetX
-                this.vertices[3*base+1] = this.scale * i - offsetY
-                this.vertices[3*base+2] = this.heightmap.data[hBase]
+                this.vertices[3 * base] = this.scale * j - offsetX
+                this.vertices[3 * base + 1] = this.scale * i - offsetY
+                this.vertices[3 * base + 2] = this.heightmap.data[hBase]
             }
         }
     }
 
     private generateVertexColors() {
-        this.vertexColors = new Float32Array(3*this.width*this.height)
+        this.vertexColors = new Float32Array(3 * this.width * this.height)
 
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
@@ -77,12 +77,12 @@ export class Chunk {
                     this.heightmap.waterLevel,
                     false
                 )
-            
-                this.vertexColors[3*base] = ((colorRGB >> 16) & 0xFF) / 255
-                this.vertexColors[3*base+1] = ((colorRGB >> 8) & 0xFF) / 255
-                this.vertexColors[3*base+2] = (colorRGB & 0xFF) / 255
-             }
-        }        
+
+                this.vertexColors[3 * base] = ((colorRGB >> 16) & 0xFF) / 255
+                this.vertexColors[3 * base + 1] = ((colorRGB >> 8) & 0xFF) / 255
+                this.vertexColors[3 * base + 2] = (colorRGB & 0xFF) / 255
+            }
+        }
     }
 
     private generateIndices() {
@@ -93,13 +93,13 @@ export class Chunk {
             for (let j = 0; j < this.width - 1; j++) {
                 const base = this.mIndex(i, j)
 
-                this.indices[3*(2*base)] = base
-                this.indices[3*(2*base)+1] = base + 1
-                this.indices[3*(2*base)+2] = base + this.width
+                this.indices[3 * (2 * base)] = base
+                this.indices[3 * (2 * base) + 1] = base + 1
+                this.indices[3 * (2 * base) + 2] = base + this.width
 
-                this.indices[3*(2*base+1)] = base + this.width
-                this.indices[3*(2*base+1)+1] = base + 1;
-                this.indices[3*(2*base+1)+2] = base + this.width + 1
+                this.indices[3 * (2 * base + 1)] = base + this.width
+                this.indices[3 * (2 * base + 1) + 1] = base + 1;
+                this.indices[3 * (2 * base + 1) + 2] = base + this.width + 1
             }
         }
     }

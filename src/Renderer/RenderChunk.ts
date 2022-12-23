@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { applyDefaults } from '../Defaults'
-import type { Chunk } from '../Terrain/Chunk'
-import  { type RenderOptions, DefaultRenderOptions } from './RenderOptions'
+import {applyDefaults} from '../Defaults'
+import type {Chunk} from '../Terrain/Chunk'
+import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
 
 export class RenderChunk extends THREE.Object3D {
     constructor(offset: THREE.Vector3, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
@@ -38,7 +38,7 @@ export class RenderChunk extends THREE.Object3D {
         if (options.useWireframe) {
             const wireframeGeometry = new THREE.WireframeGeometry(geometry)
 
-            const wireframeMat = new THREE.LineBasicMaterial({ 
+            const wireframeMat = new THREE.LineBasicMaterial({
                 color: options.wireframeColor,
                 linewidth: options.wireframeLineWidth,
                 opacity: options.wireframeOpacity,
@@ -54,9 +54,9 @@ export class RenderChunk extends THREE.Object3D {
     }
 
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
-        const mat = options.prepareForLighting ? 
-                                    new THREE.MeshPhongMaterial() :
-                                    new THREE.MeshBasicMaterial()
+        const mat = options.prepareForLighting ?
+            new THREE.MeshPhongMaterial() :
+            new THREE.MeshBasicMaterial()
 
         if (options.prepareForLighting) {
             (mat as THREE.MeshPhongMaterial).shininess = 0.1
@@ -66,7 +66,7 @@ export class RenderChunk extends THREE.Object3D {
             mat.vertexColors = true
         else
             mat.color.set(0x000000)
-        
+
         return mat
     }
 }

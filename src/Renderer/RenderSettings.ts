@@ -1,4 +1,3 @@
-
 export interface RenderSettings {
     wireframe: boolean;
     gradient: boolean;

@@ -10,9 +10,9 @@ export async function ImageExport(pixels: Uint8ClampedArray, heightMap: Heightma
     // Use the electron dialog module to prompt the user for a file path
     const {filePath} = await remote.dialog.showSaveDialog({
         filters: [
-            { name: 'PNG Files', extensions: ['png'] },
-            { name: 'BMP Files', extensions: ['bmp'] },
-            { name: 'JPEG Files', extensions: ['jpg'] },
+            {name: 'PNG Files', extensions: ['png']},
+            {name: 'BMP Files', extensions: ['bmp']},
+            {name: 'JPEG Files', extensions: ['jpg']},
         ],
         defaultPath: "project.png"
     });
@@ -21,11 +21,10 @@ export async function ImageExport(pixels: Uint8ClampedArray, heightMap: Heightma
     let promise: Promise<void>;
     try {
         const buffer = new Buffer(pixels);
-        promise = new Jimp({ data: buffer, width: heightMap.width, height: heightMap.height }, (err, image) => {
+        promise = new Jimp({data: buffer, width: heightMap.width, height: heightMap.height}, (err, image) => {
             image.writeAsync(filePath)
         });
-    }
-    catch (e) {
+    } catch (e) {
         throw new Error(e);
     }
     return promise;

@@ -14,10 +14,10 @@ export default async function ExcelExport(heightMap: Heightmap) {
         const ExcelJS = window.require('exceljs');
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Coords');
-        let columnArr : any[] = [];
+        let columnArr: any[] = [];
         columnArr.push("Coordinate")
         for (let i = 1; i < heightMap.width; i++) {
-            columnArr.push(i-1);
+            columnArr.push(i - 1);
         }
         sheet.addRow(columnArr);
         columnArr = [];
