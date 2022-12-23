@@ -14,14 +14,14 @@ export default async function AddMap(heightMap: Heightmap): Promise<Heightmap> {
     if (heightMap.width < importedHeightmap.width) {
         for (let i = 0; i < heightMap.height; i++) {
             for (let j = 0; j < heightMap.width; j++) {
-                importedHeightmap.data[j + difWidth + difHeight * importedHeightmap.width + i * (heightMap.width + 2 * difWidth)] += heightMap.data[j + heightMap.width*i];
+                importedHeightmap.data[j + difWidth + difHeight * importedHeightmap.width + i * (heightMap.width + 2 * difWidth)] += heightMap.data[j + heightMap.width * i];
             }
         }
         return importedHeightmap;
     } else {
         for (let i = 0; i < importedHeightmap.height; i++) {
             for (let j = 0; j < importedHeightmap.width; j++) {
-                heightMap.data[j + difWidth + difHeight * heightMap.width + i * heightMap.width ] += importedHeightmap.data[j + importedHeightmap.width*i];
+                heightMap.data[j + difWidth + difHeight * heightMap.width + i * heightMap.width] += importedHeightmap.data[j + importedHeightmap.width * i];
             }
         }
         return heightMap;

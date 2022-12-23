@@ -9,9 +9,9 @@ export async function ImageImport(): Promise<Heightmap> {
     // Use the electron dialog module to prompt the user for a file path
     const {filePaths} = await remote.dialog.showOpenDialog({
         filters: [
-            { name: 'PNG Files', extensions: ['png'] },
-            { name: 'BMP Files', extensions: ['bmp'] },
-            { name: 'JPEG Files', extensions: ['jpg', 'jpeg'] },
+            {name: 'PNG Files', extensions: ['png']},
+            {name: 'BMP Files', extensions: ['bmp']},
+            {name: 'JPEG Files', extensions: ['jpg', 'jpeg']},
         ],
         properties: ['openFile']
     });
@@ -23,17 +23,16 @@ export async function ImageImport(): Promise<Heightmap> {
 
         promise = Jimp.read(filePaths[0]).then(img => {
             let arr = new Float32Array(img.bitmap.width * img.bitmap.height);
-            img.scan(0, 0, img.bitmap.width, img.bitmap.height, function(x, y, idx) {
+            img.scan(0, 0, img.bitmap.width, img.bitmap.height, function (x, y, idx) {
                 const red = this.bitmap.data[idx + 0];
                 arr[y * img.bitmap.width + x] = altitudeFromGrayscale(red);
             });
 
 
-            let heightMap = new Heightmap(img.bitmap.width, img.bitmap.height, arr, 0 , 0);
+            let heightMap = new Heightmap(img.bitmap.width, img.bitmap.height, arr, 0, 0);
             return heightMap;
         })
-    }
-    catch (e) {
+    } catch (e) {
         throw new Error(e);
     }
     return promise;

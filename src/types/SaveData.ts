@@ -1,7 +1,7 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 import type {GeneratorOptions} from "../Terrain/GeneratorOptions";
 
-export interface SaveData{
+export interface SaveData {
     heightMap: {
         width: number,
         height: number,

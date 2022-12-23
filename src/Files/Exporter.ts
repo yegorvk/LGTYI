@@ -7,13 +7,13 @@ const remote = require('@electron/remote');
 export async function exportMap(heightMap: Heightmap, genOptions: GeneratorOptions, is2d: boolean) {
     const fs = window.require('fs');
     const data: SaveData = {
-      heightMap:{
-          width: heightMap.width,
-          height: heightMap.height,
-          data: heightMap.data,
-          offsetX: heightMap.offsetX,
-          offsetY: heightMap.offsetY
-      },
+        heightMap: {
+            width: heightMap.width,
+            height: heightMap.height,
+            data: heightMap.data,
+            offsetX: heightMap.offsetX,
+            offsetY: heightMap.offsetY
+        },
         genOptions: genOptions,
         viewMode: is2d,
     };
@@ -21,7 +21,7 @@ export async function exportMap(heightMap: Heightmap, genOptions: GeneratorOptio
     // Use the electron dialog module to prompt the user for a file path
     const {filePath} = await remote.dialog.showSaveDialog({
         filters: [
-            { name: 'LGTYI Files', extensions: ['lgtyi'] },
+            {name: 'LGTYI Files', extensions: ['lgtyi']},
         ],
         defaultPath: "project.lgtyi"
     });
