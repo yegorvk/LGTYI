@@ -28,6 +28,7 @@
     let minAltitude: number = DefaultGeneratorOptions.minAltitude;
     let roughnessCoefficient: number = DefaultGeneratorOptions.roughnessCoefficient * 100;
     let levelOfDetail: number = DefaultGeneratorOptions.levelOfDetail;
+    let waterLevel: number = DefaultGeneratorOptions.waterLevel;
     
     //render settings
     let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
@@ -239,6 +240,17 @@
             </Param>
 
             <Param>
+                <label for="waterLevel">water level: {waterLevel}</label>
+                <input id="waterLevel"
+                       class="basic-range"
+                       type="range"
+                       bind:value={waterLevel}
+                       max="51"
+                       min="-60"
+                />
+            </Param>
+
+            <Param>
                 <label for="seed">seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
                 <input id="seed"
                        class="basic-text"
@@ -259,7 +271,8 @@
                                 minAltitude: minAltitude,
                                 roughnessCoefficient: roughnessCoefficient / 100,
                                 levelOfDetail: levelOfDetail,
-                                seed: ((seed === null) ? 0 : seed)
+                                seed: ((seed === null) ? 0 : seed),
+                                waterLevel: waterLevel
                             }
                         )
                     }

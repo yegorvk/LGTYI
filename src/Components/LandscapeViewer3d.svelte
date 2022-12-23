@@ -40,7 +40,43 @@
 
     scene.add(renderChunk)
 
+    let waterLayerNorm: THREE.Texture = null;
+
     if (renderSettings.lighting) {
+        const waterLayerGeometry = new THREE.PlaneGeometry(
+            chunk.width-1,
+            chunk.height-1
+        )
+
+        waterLayerGeometry.translate(0, 0, heightmap.waterLevel)
+
+        /*waterLayerNorm = new THREE.TextureLoader().load(
+            "assets/textures/water_norm.",
+        )
+
+        waterLayerNorm.minFilter = THREE.LinearFilter;
+        waterLayerNorm.magFilter = THREE.LinearFilter;
+        waterLayerNorm.wrapS = THREE.RepeatWrapping;
+        waterLayerNorm.wrapT = THREE.RepeatWrapping;
+
+        waterLayerNorm.repeat.set(1, 1)
+        waterLayerNorm.generateMipmaps = true;*/
+
+        const waterLayerMat = new THREE.MeshBasicMaterial(
+            {
+                transparent: true,
+                opacity: 0.6,
+                //shininess: 0.9,
+                reflectivity: 0.9,
+                color: 0x064273,
+                //specular: 0xFFFFFF,
+                //normalMap: waterLayerNorm,
+            }
+        )
+
+        const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat)
+        scene.add(waterLayer)
+
         const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1)
         scene.add(ambientLight)
 
@@ -48,25 +84,6 @@
         sunLight.position.set(0, 0, 200)
 
         scene.add(sunLight)
-
-        // Water won't look like water without lighting
-
-        const waterLayerGeometry = new THREE.PlaneGeometry(chunk.width-1, chunk.height-1)
-
-        waterLayerGeometry.translate(0, 0, 10)
-
-        const waterLayerMat = new THREE.MeshPhongMaterial(
-            {
-                transparent: true,
-                opacity: 0.8,
-                shininess: 0.9,
-                reflectivity: 0.9,
-                color: 0x064273
-            }
-        )
-
-        const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat)
-        scene.add(waterLayer)
     }
 
     function animate() {
@@ -149,9 +166,12 @@
         window.removeEventListener('resize', windowResizeEventListener)
         windowResizeEventListener = null;
 
+        if (waterLayerNorm !== null)
+            waterLayerNorm.dispose()
+
         clock.stop();
 
-        clock = scene = camera = chunk = renderChunk = null;
+        waterLayerNorm = clock = scene = camera = chunk = renderChunk = null;
     })
 </script>
 

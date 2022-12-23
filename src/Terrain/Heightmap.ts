@@ -12,6 +12,9 @@ export class Heightmap {
     // heightmap data (row-major order)
     data: Float32Array;
 
+    // TODO create a separate class that will hold all map data (heightmap will be part of it)
+    waterLevel: number = DefaultGeneratorOptions.waterLevel;
+
     static generate(
         options: GeneratorOptions
     ): Heightmap {
@@ -48,6 +51,8 @@ export class Heightmap {
         for (let i = 0; i < heightmap.data.length; i++) {
             heightmap.data[i] += options.minAltitude;
         }
+
+        heightmap.waterLevel = options.waterLevel;
 
         return heightmap
     }

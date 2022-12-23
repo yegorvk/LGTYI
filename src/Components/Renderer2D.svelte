@@ -22,7 +22,7 @@
             const alt = data.data[(i+data.offsetY)*data.width+(j+data.offsetX)]
 
             if (useColors) {
-                const color = colorRGBFromAltitude(alt)
+                const color = colorRGBFromAltitude(alt, data.waterLevel)
 
                 pixels[base] = (color >> 16) & 0xFF;
                 pixels[base+1] = (color >> 8) & 0xFF;

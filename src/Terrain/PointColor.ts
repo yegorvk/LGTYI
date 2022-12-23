@@ -2,27 +2,29 @@
 
 export function colorRGBFromAltitude(
     alt: number,
-    smooth: boolean = true,
+    waterLevel: number,
+    useWaterColors: boolean = true,
     maxAlt: number = 50,
     minAlt: number = -50
 ): number {
     // get rid of negative values
     maxAlt -= minAlt;
     alt -= minAlt;
+    waterLevel -= minAlt;
 
-    const alts = [
+    maxAlt = Math.max(0, maxAlt)
+    alt = Math.max(0, alt)
+    waterLevel = Math.max(0, waterLevel)
+
+    const landAlts = [
         0,
-        0.55*maxAlt,
-        0.6*maxAlt,
+        0.4*maxAlt,
         0.7*maxAlt,
-        0.8*maxAlt,
         0.9*maxAlt,
         maxAlt
     ]
 
-    const colors = [
-        0x0000FF,
-        0xadd8e6,
+    const landColors = [
         0x004225,
         0x3CB043,
         0xAAFF00,
@@ -30,17 +32,54 @@ export function colorRGBFromAltitude(
         0x231709
     ]
 
-    if (smooth) {
-        for (let i = 1; i < 8; i++) {
-            if (alt <= alts[i]) {
-                const a = (alt - alts[i-1]) / (alts[i] - alts[i-1])
-                return lerp_color(colors[i-1], colors[i], a)
-            }
+    const waterColors = [
+        0x0A1172,
+        0x016064,
+        0x13388E,
+        0x3944BC
+    ]
+
+    const waterColor = 0x3944BC
+
+    const waterAlts = [
+        0.1,
+        0.2,
+        0.6,
+        1.0,
+    ]
+
+    let j = 0;
+
+    while (j < landAlts.length && landAlts[j] < waterLevel)
+        j++;
+
+    if (j == landAlts.length) j--;
+
+    if (useWaterColors && alt <= waterLevel) {
+        if (waterLevel > landAlts[j])
+            return waterColor;
+        else {
+            const altRel = alt / waterLevel
+
+            for (let i = 1; i < waterAlts.length; i++) {
+                if (altRel <= waterAlts[i]) {
+                    const a = 
+                        (altRel - waterAlts[i-1]) / 
+                        (waterAlts[i] - waterAlts[i-1])
+
+                    return lerp_color(waterColors[i-1], waterColors[i], a)
+                }
+            } 
+
+            return waterColor;
         }
-    } else {
-        for (let i = 0; i < 8; i++)
-            if (alt <= alts[i])
-                return colors[i];
+    }
+
+    for (let i = 1; i < landColors.length; i++) {
+        if (alt <= landAlts[i]) {
+            const a = (alt - landAlts[i-1]) / (landAlts[i] - landAlts[i-1])
+            return lerp_color(landColors[i-1], landColors[i], a)
+        }
     }
 }
 

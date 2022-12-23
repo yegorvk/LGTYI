@@ -72,7 +72,11 @@ export class Chunk {
                     this.heightmap.offsetX + j
                 )
 
-                const colorRGB = colorRGBFromAltitude(this.heightmap.data[hBase])
+                const colorRGB = colorRGBFromAltitude(
+                    this.heightmap.data[hBase],
+                    this.heightmap.waterLevel,
+                    false
+                )
             
                 this.vertexColors[3*base] = ((colorRGB >> 16) & 0xFF) / 255
                 this.vertexColors[3*base+1] = ((colorRGB >> 8) & 0xFF) / 255

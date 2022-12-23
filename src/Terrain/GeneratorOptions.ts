@@ -6,6 +6,7 @@ export interface GeneratorOptions {
     roughnessCoefficient: number;
     levelOfDetail: number;
     seed: number;
+    waterLevel: number;
 }
 
 export const DefaultGeneratorOptions: GeneratorOptions = {
@@ -15,5 +16,6 @@ export const DefaultGeneratorOptions: GeneratorOptions = {
     minAltitude: -50,
     roughnessCoefficient: 0.09,
     levelOfDetail: 6,
-    seed: 0
+    seed: 0,
+    waterLevel: 10
 }
