@@ -22,6 +22,9 @@ export async function ImageImport(): Promise<Heightmap> {
     try {
 
         promise = Jimp.read(filePaths[0]).then(img => {
+            img.flip(false, true, function(err){
+                if (err) throw err;
+            })
             let arr = new Float32Array(img.bitmap.width * img.bitmap.height);
             img.scan(0, 0, img.bitmap.width, img.bitmap.height, function (x, y, idx) {
                 const red = this.bitmap.data[idx + 0];
