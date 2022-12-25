@@ -14,7 +14,7 @@
         roughnessCoefficient = genData.roughnessCoefficient;
         levelOfDetail = genData.levelOfDetail;
     };
-    export let getGenData = (): GeneratorOptions => {
+    eventHandler.getGenData = (): GeneratorOptions => {
         return {seed, width, height, maxAltitude, minAltitude, roughnessCoefficient, levelOfDetail, waterLevel}
     }
     let seed: number = 0;

@@ -18,10 +18,9 @@
 
     let dispatcher = createEventDispatcher();
     eventHandler = new UIEventsHandler(dispatcher);
-    eventHandler = eventHandler;
-
-
-
+    eventHandler.setPanel = (panel: Panels)=>{
+        currPanel = panel;
+    }
 
     function menuSwitch() {
         visible = !visible;
@@ -41,7 +40,7 @@
     </button>
     <div class="content">
         {#if currPanel === Panels.MAIN}
-            <Main {getGenData} bind:currPanel {eventHandler}></Main>
+            <Main {getGenData} {eventHandler}></Main>
         {:else if currPanel === Panels.GENERATE}
             <Generate bind:getGenData={getGenData} bind:setGeneratorData={setGeneratorData} {generate} {eventHandler}></Generate>
         {:else if currPanel === Panels.OPERATIONS}

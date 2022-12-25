@@ -1,17 +1,18 @@
-import {Panels} from "./Pages";
+import type {Panels} from "./Pages";
 import type {RenderSettings} from "../../Renderer/RenderSettings";
+import type {DefaultGeneratorOptions,GeneratorOptions} from "../../Terrain/GeneratorOptions";
 
 export class UIEventsHandler {
     // private readonly dispatcher: Function;
     public dispatcher: Function;
     private useColorFor2D: boolean = false;
-
+    public setPanel: (panel: Panels) => void;
+    public getGenData: () => GeneratorOptions;
     public constructor(dispatcher: Function) {
         this.dispatcher = dispatcher;
     }
 
     public Import() {
-        console.log(this.dispatcher)
         this.dispatcher('import_map');
     }
 

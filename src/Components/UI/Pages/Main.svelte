@@ -4,12 +4,13 @@
 
 
     export let getGenData: Function;
-    export let currPanel: Panels = Panels.MAIN;
     export let eventHandler: UIEventsHandler;
-    let toGen = () => {currPanel = Panels.GENERATE;currPanel = currPanel;};
-    let toOp = () => {currPanel = Panels.OPERATIONS;currPanel = currPanel;};
-    let toSet = () => {currPanel = Panels.SETTINGS;currPanel = currPanel;};
-    let exp = () => {eventHandler.Export(...getGenData)};
+    let toGen = () => {eventHandler.setPanel(Panels.GENERATE)};
+    let toOp = () => {eventHandler.setPanel(Panels.OPERATIONS)};
+    let toSet = () => {eventHandler.setPanel(Panels.SETTINGS)};
+    let exp = () => {
+        console.log(eventHandler.getGenData);
+        eventHandler.Export(getGenData())};
     let imp = () => {eventHandler.Import();};
 </script>
 
