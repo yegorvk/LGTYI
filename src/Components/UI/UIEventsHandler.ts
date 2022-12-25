@@ -1,6 +1,6 @@
 import type {Panels} from "./Pages";
 import type {RenderSettings} from "../../Renderer/RenderSettings";
-import type {DefaultGeneratorOptions,GeneratorOptions} from "../../Terrain/GeneratorOptions";
+import {DefaultGeneratorOptions,type GeneratorOptions} from "../../Terrain/GeneratorOptions";
 
 export class UIEventsHandler {
     // private readonly dispatcher: Function;
@@ -10,6 +10,7 @@ export class UIEventsHandler {
     public getGenData: () => GeneratorOptions;
     public constructor(dispatcher: Function) {
         this.dispatcher = dispatcher;
+        this.getGenData = () => DefaultGeneratorOptions;
     }
 
     public Import() {
