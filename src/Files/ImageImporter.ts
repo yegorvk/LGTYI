@@ -9,9 +9,7 @@ export async function ImageImport(): Promise<Heightmap> {
     // Use the electron dialog module to prompt the user for a file path
     const {filePaths} = await remote.dialog.showOpenDialog({
         filters: [
-            {name: 'PNG Files', extensions: ['png']},
-            {name: 'BMP Files', extensions: ['bmp']},
-            {name: 'JPEG Files', extensions: ['jpg', 'jpeg']},
+            {name: 'Image Files', extensions: ['jpg', 'jpeg','bmp', 'png']},
         ],
         properties: ['openFile']
     });
