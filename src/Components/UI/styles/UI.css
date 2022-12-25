@@ -114,3 +114,6 @@ input {
 input[type=checkbox] {
     margin: auto;
 }
+.not_enabled{
+    color: #666666;
+}
