@@ -20,7 +20,9 @@
     let renderSettings: RenderSettings = DefaultRenderSettings;
 
     let useColors2d: boolean = false;
-
+    let setGenData;
+    let notify: (text:string, err:boolean)=>{};
+    let pixels: Uint8ClampedArray;
     const generate = (options: GeneratorOptions) => {
         if (options.seed === 0)
             options.seed = Math.round(Math.random() * 65536)
@@ -37,7 +39,6 @@
             is2DView = data.viewMode;
             is2DView = is2DView;
             setGenData(data.genOptions);
-
             heightmap = data.heightMap as Heightmap;
             notify("Successfully opened!", false);
             heightmap = heightmap;
@@ -99,9 +100,7 @@
             notify(e, true);
         }
     }
-    let setGenData;
-    let notify: (text:string, err:boolean)=>{};
-    let pixels: Uint8ClampedArray;
+
 </script>
 
 <main id="app_content">

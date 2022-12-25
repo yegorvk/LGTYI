@@ -1,9 +1,6 @@
 <script lang="ts">
     import {UIEventsHandler} from "../UIEventsHandler";
     import {Panels} from "../Pages";
-
-
-    export let getGenData: Function;
     export let eventHandler: UIEventsHandler;
     let toGen = () => {eventHandler.setPanel(Panels.GENERATE)};
     let toOp = () => {eventHandler.setPanel(Panels.OPERATIONS)};

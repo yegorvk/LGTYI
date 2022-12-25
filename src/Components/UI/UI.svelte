@@ -15,6 +15,8 @@
     export let setGeneratorData;
     let getGenData;
     let eventHandler: UIEventsHandler;
+    let visible: boolean = false;
+    let currPanel: Panels = Panels.GENERATE;
 
     let dispatcher = createEventDispatcher();
     eventHandler = new UIEventsHandler(dispatcher);
@@ -24,14 +26,9 @@
 
     function menuSwitch() {
         visible = !visible;
-        visible = visible;
         currPanel = Panels.MAIN;
-        currPanel = currPanel;
     }
 
-    //panels visibility
-    let visible: boolean = false;
-    let currPanel: Panels = Panels.MAIN;
 </script>
 
 <div class="main_panel" class:opened_panel={visible}>
@@ -42,7 +39,7 @@
         {#if currPanel === Panels.MAIN}
             <Main {getGenData} {eventHandler}></Main>
         {:else if currPanel === Panels.GENERATE}
-            <Generate bind:getGenData={getGenData} bind:setGeneratorData={setGeneratorData} {generate} {eventHandler}></Generate>
+            <Generate bind:setGeneratorData {generate} {eventHandler}></Generate>
         {:else if currPanel === Panels.OPERATIONS}
             <Operations {is2D} {eventHandler}></Operations>
         {:else if currPanel === Panels.SETTINGS}
