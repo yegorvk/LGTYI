@@ -14,13 +14,14 @@
     import type {RenderSettings} from "./Renderer/RenderSettings"
     import {ImageExport} from "./Files/ImageExporter";
     import {ImageImport} from "./Files/ImageImporter";
+    import {UIEventsHandler} from "./Components/UI/UIEventsHandler";
     let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
     let renderSettings: RenderSettings = DefaultRenderSettings;
 
     let useColors2d: boolean = false;
-    let setGenData;
+    let eventHandler: UIEventsHandler;
     let notify: (text:string, err:boolean)=>{};
     let pixels: Uint8ClampedArray;
     const generate = (options: GeneratorOptions) => {
@@ -38,7 +39,7 @@
             let data = await importMap();
             is2DView = data.viewMode;
             is2DView = is2DView;
-            setGenData(data.genOptions);
+            eventHandler.generatorOptions = data.genOptions;
             heightmap = data.heightMap as Heightmap;
             notify("Successfully opened!", false);
             heightmap = heightmap;
@@ -106,7 +107,7 @@
 <main id="app_content">
     <Notification bind:notify={notify}></Notification>
     <UI {generate}
-        bind:setGeneratorData={setGenData}
+        bind:eventHandler
         bind:is2D={is2DView}
         on:settings_save_2d={(e) => {
             useColors2d = e.detail.useColors;

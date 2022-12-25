@@ -2,33 +2,43 @@
     import Param from "../Param/Param.svelte";
     import {DefaultGeneratorOptions, type GeneratorOptions} from "../../../Terrain/GeneratorOptions";
     import {UIEventsHandler} from "../UIEventsHandler";
-    import {beforeUpdate, onMount} from "svelte";
 
     export let generate: (options: GeneratorOptions) => void = null;
     export let eventHandler: UIEventsHandler;
 
-    let genOpt: GeneratorOptions = DefaultGeneratorOptions;
-    $: seed = genOpt.seed;
-    $: width = genOpt.width;
-    $: height = genOpt.height;
-    $: maxAltitude = genOpt.maxAltitude;
-    $: minAltitude = genOpt.minAltitude;
-    $: roughnessCoefficient = genOpt.roughnessCoefficient * 100;
-    $: levelOfDetail = genOpt.levelOfDetail;
-    $: waterLevel = genOpt.waterLevel;
+    let seed = eventHandler.generatorOptions.seed;
+    let width = eventHandler.generatorOptions.width;
+    let height = eventHandler.generatorOptions.height;
+    let maxAltitude = eventHandler.generatorOptions.maxAltitude;
+    let minAltitude = eventHandler.generatorOptions.minAltitude;
+    let roughnessCoefficient = eventHandler.generatorOptions.roughnessCoefficient * 100;
+    let levelOfDetail = eventHandler.generatorOptions.levelOfDetail;
+    let waterLevel = eventHandler.generatorOptions.waterLevel;
 
-    onMount(()=>{
-        console.log(genOpt)
-    });
-
-    export let setGeneratorData = (genData: GeneratorOptions) => {
-        genOpt = genData;
-        genOpt = genOpt
-    };
-    eventHandler.getGenData = (): GeneratorOptions => {
-        return genOpt;
-    };
-
+    function Generate(){
+        generate(
+            {
+                width: width,
+                height: height,
+                maxAltitude: maxAltitude,
+                minAltitude: minAltitude,
+                roughnessCoefficient: roughnessCoefficient / 100,
+                levelOfDetail: levelOfDetail,
+                seed: ((seed === null) ? 0 : seed),
+                waterLevel: waterLevel
+            }
+        );
+        eventHandler.generatorOptions = {
+            width,
+            height,
+            maxAltitude,
+            minAltitude,
+            roughnessCoefficient,
+            levelOfDetail,
+            seed,
+            waterLevel
+        };
+    }
 
 </script>
 <div>
@@ -128,22 +138,7 @@
     </Param>
 
     <button class="menu-but"
-            on:click={
-                    () => {
-                        generate(
-                            {
-                                width: width,
-                                height: height,
-                                maxAltitude: maxAltitude,
-                                minAltitude: minAltitude,
-                                roughnessCoefficient: roughnessCoefficient / 100,
-                                levelOfDetail: levelOfDetail,
-                                seed: ((seed === null) ? 0 : seed),
-                                waterLevel: waterLevel
-                            }
-                        )
-                    }
-                }>
+            on:click={Generate}>
         <span>Generate</span>
     </button>
 </div>

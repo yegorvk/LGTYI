@@ -5,7 +5,7 @@
     let toGen = () => {eventHandler.setPanel(Panels.GENERATE)};
     let toOp = () => {eventHandler.setPanel(Panels.OPERATIONS)};
     let toSet = () => {eventHandler.setPanel(Panels.SETTINGS)};
-    let exp = () => {eventHandler.Export(...Object.values(eventHandler.getGenData()))};
+    let exp = () => {eventHandler.Export(...Object.values(eventHandler.generatorOptions))};
     let imp = () => {eventHandler.Import();};
 </script>
 

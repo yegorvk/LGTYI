@@ -1,5 +1,6 @@
 <script lang="ts">
     import {UIEventsHandler} from "../UIEventsHandler";
+    import {Panels} from "../Pages";
 
     export let is2D: boolean;
     export let eventHandler: UIEventsHandler;
@@ -7,7 +8,7 @@
     let sub = ()=>{eventHandler.Substr()};
     let tableExp = ()=>{eventHandler.ExcelExport()};
     let imExp = ()=>{eventHandler.ImageExport()};
-    let imImp = ()=>{eventHandler.ImageImport()};
+    let imImp = ()=>{eventHandler.setPanel(Panels.IMAGE_IMPORT)};
 </script>
 <div>
     <button class="menu-but"

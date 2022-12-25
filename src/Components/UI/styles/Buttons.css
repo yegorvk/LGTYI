@@ -1,0 +1,55 @@
+.menu-but {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    min-height: 44px;
+    padding: 0 2rem;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    outline: none;
+    align-items: center;
+    transition: all 320ms;
+    z-index: 100;
+    background: #999999;
+    border: 2px solid #cecece;
+    border-radius: 8px;
+    color: #333333;
+    text-align: center;
+    font-family: Comfortaa, cursive;
+    font-size: 23px;
+}
+.closeup {
+    position: absolute;
+    top: 10px;
+    left: 280px;
+    width: 38px;
+    height: 38px;
+    outline: inherit;
+    transition: left 400ms;
+    background: #999999;
+    border-radius: 10px;
+}
+.opened_panel > .closeup {
+    left: 10px;
+}
+
+.back-but{
+    transition: opacity 400ms;
+    border-radius: 10px;
+    background: #999999;
+    position: absolute;
+    opacity: 0;
+    top: 10px;
+    right: 280px;
+    width: 38px;
+    height: 38px;
+}
+.back-but > img{
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+.opened_panel > .back-but {
+    right: 10px;
+    opacity: 1;
+}

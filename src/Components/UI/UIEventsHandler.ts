@@ -1,16 +1,23 @@
 import type {Panels} from "./Pages";
 import type {RenderSettings} from "../../Renderer/RenderSettings";
-import {DefaultGeneratorOptions,type GeneratorOptions} from "../../Terrain/GeneratorOptions";
+import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Terrain/GeneratorOptions";
 
 export class UIEventsHandler {
-    // private readonly dispatcher: Function;
-    public dispatcher: Function;
+    private readonly dispatcher: Function;
     private useColorFor2D: boolean = false;
     public setPanel: (panel: Panels) => void;
-    public getGenData: () => GeneratorOptions;
+    public generatorOptions: GeneratorOptions;
+
     public constructor(dispatcher: Function) {
         this.dispatcher = dispatcher;
-        this.getGenData = () => DefaultGeneratorOptions;
+        this.generatorOptions = DefaultGeneratorOptions;
+    }
+    public setGeneratorOptions(generatorOptions: GeneratorOptions) {
+        this.generatorOptions = generatorOptions;
+    }
+
+    public getGenData(): GeneratorOptions {
+        return this.generatorOptions;
     }
 
     public Import() {
@@ -47,11 +54,13 @@ export class UIEventsHandler {
         }
         this.dispatcher('settings_save', {render: renderSettings});
     }
+
     public d2SettingsSwitch() {
         this.useColorFor2D = !this.useColorFor2D;
         this.dispatcher('settings_save_2d', {useColors: this.useColorFor2D});
     }
-    public Export(seed:number, width:number, height:number, maxAltitude:number, minAltitude:number, levelOfDetail:number, roughnessCoefficient: number, waterLevel: number) {
+
+    public Export(seed: number, width: number, height: number, maxAltitude: number, minAltitude: number, levelOfDetail: number, roughnessCoefficient: number, waterLevel: number) {
         this.dispatcher('export_map', {
             genOpt: {
                 seed,

@@ -1,0 +1,39 @@
+.burger {
+    position: relative;
+    transform: translateY(2px);
+}
+
+.burger_or .burger {
+    transform: translateY(0);
+}
+
+.burger::after, .burger, .burger::before {
+    content: '';
+    width: 24px;
+    border-radius: 4px;
+    transition: transform .6s ease-in-out, margin .6s ease-in-out;
+}
+
+.burger::after, .burger::before {
+    display: block !important;
+    height: 4px;
+    background: #fff;
+}
+
+.burger::after {
+    margin-top: 0;
+    transform: rotate(45deg) translateY(-3px) translateX(-3px);
+}
+
+.burger::before {
+    transform: rotate(-45deg);
+}
+
+.burger_or .burger::after {
+    margin-top: 4px;
+    transform: none;
+}
+
+.burger_or .burger::before {
+    transform: none;
+}
