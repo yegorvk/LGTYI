@@ -1,7 +1,8 @@
 <script lang="ts">
     import Param from "../Param/Param.svelte";
-    import {UIEventsHandler} from "../UIEventsHandler";
+    import type {UIEventsHandler} from "../UIEventsHandler";
     import {DefaultRenderSettings} from "../../../Renderer/RenderSettings";
+
     export let is2D: boolean = false;
     export let eventHandler: UIEventsHandler;
     let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
@@ -21,7 +22,11 @@
 
     <div class:hidden={!is2D}>
         <button class="menu-but"
-                on:click={eventHandler.d2SettingsSwitch}>
+                on:click={
+                    () => {
+                        eventHandler.d2SettingsSwitch();
+                    }
+                }>
             <span>Grayscale ⟷ Color</span>
         </button>
     </div>

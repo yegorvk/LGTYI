@@ -14,7 +14,7 @@
     import type {RenderSettings} from "./Renderer/RenderSettings"
     import {ImageExport} from "./Files/ImageExporter";
     import {ImageImport} from "./Files/ImageImporter";
-    import {UIEventsHandler} from "./Components/UI/UIEventsHandler";
+    import type {UIEventsHandler} from "./Components/UI/UIEventsHandler";
     import "./LoadScreen.css"
 
     let trigger: boolean;
