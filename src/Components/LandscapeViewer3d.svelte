@@ -2,18 +2,19 @@
     import * as THREE from "three";
     import { onDestroy, onMount } from "svelte";
     import { FlyControls } from "three/examples/jsm/controls/FlyControls";
-    import { CustomFlyControls } from "../CustomFlyControls";
     import { Chunk } from "../Terrain/Chunk";
     import type { Heightmap } from "../Terrain/Heightmap";
     import { RenderChunk } from "../Renderer/RenderChunk";
-    import { Terrain } from "../Terrain/Terrain";
-    import { RenderTerrain } from "../Renderer/RenderTerrain";
     import {
         DefaultRenderSettings,
         type RenderSettings,
     } from "../Renderer/RenderSettings";
 
     let root: Element;
+
+    export let onPrepare: () => void;
+    export let onReady: () => void;
+
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
 
@@ -29,16 +30,6 @@
 
     let chunk = new Chunk(1, heightmap, renderSettings.gradient);
 
-    let renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), chunk, {
-        useWireframe: renderSettings.wireframe,
-        wireframeLineWidth: renderSettings.wireframeLineWidth,
-        wireframeOpacity: renderSettings.wireframeOpacity,
-        prepareForLighting: renderSettings.lighting,
-        vertexColors: renderSettings.gradient,
-    });
-
-    scene.add(renderChunk);
-
     let waterLayerNorm: THREE.Texture = null;
 
     if (renderSettings.lighting) {
@@ -49,25 +40,11 @@
 
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);
 
-        /*waterLayerNorm = new THREE.TextureLoader().load(
-            "assets/textures/water_nmap1.png",
-        )
-
-        waterLayerNorm.minFilter = THREE.LinearFilter;
-        waterLayerNorm.magFilter = THREE.LinearFilter;
-        waterLayerNorm.wrapS = THREE.RepeatWrapping;
-        waterLayerNorm.wrapT = THREE.RepeatWrapping;
-
-        waterLayerNorm.generateMipmaps = false;*/
-
         const waterLayerMat = new THREE.MeshBasicMaterial({
             transparent: true,
             opacity: 0.6,
-            //shininess: 0.9,
             reflectivity: 0.9,
-            color: 0x064273,
-            //specular: 0xFFFFFF,
-            //normalMap: waterLayerNorm,
+            color: 0x064273
         });
 
         const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat);
@@ -93,9 +70,19 @@
         requestAnimationFrame(update);
     }
 
-    onMount(() => {
+    function loop() {
         const rootWidth = root.clientWidth;
         const rootHeight = root.clientHeight;
+
+        let renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), chunk, {
+            useWireframe: renderSettings.wireframe,
+            wireframeLineWidth: renderSettings.wireframeLineWidth,
+            wireframeOpacity: renderSettings.wireframeOpacity,
+            prepareForLighting: renderSettings.lighting,
+            vertexColors: renderSettings.gradient,
+        });
+
+        scene.add(renderChunk);
 
         camera = new THREE.PerspectiveCamera(
             75, // fov
@@ -142,6 +129,17 @@
         };
 
         camControls.addEventListener("change", camControlsChangeEventListener);
+
+        onReady();
+    }
+
+    onMount(() => {
+        onPrepare();
+        setTimeout(() => {
+                requestAnimationFrame(() => {
+                loop();
+            })
+        }, 200);
     });
 
     onDestroy(() => {
@@ -167,7 +165,7 @@
 
         clock.stop();
 
-        waterLayerNorm = clock = scene = camera = chunk = renderChunk = null;
+        waterLayerNorm = clock = scene = camera = chunk = null;
     });
 </script>
 
@@ -175,6 +173,7 @@
 
 <style>
     #landscape_viewer3d {
+        position: absolute;
         width: 100%;
         height: 100%;
         background-color: black;

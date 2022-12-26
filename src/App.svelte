@@ -26,6 +26,7 @@
     let eventHandler: UIEventsHandler;
     let notify: (text: string, err: boolean) => {};
     let pixels: Uint8ClampedArray;
+
     const generate = (options: GeneratorOptions) => {
         if (options.seed === 0)
             options.seed = Math.round(Math.random() * 65536)
@@ -35,6 +36,7 @@
     }
 
     let invisible = false;
+    let isLoadingView = true;
 
     async function ImportMap() {
         invisible = true;
@@ -126,11 +128,12 @@
             notify(e, true);
         }
     }
-
 </script>
 
 <main id="app_content">
     <Notification bind:notify={notify}></Notification>
+
+    {#if !isLoadingView && !invisible}
     <UI {generate}
         bind:eventHandler
         bind:is2D={is2DView}
@@ -148,10 +151,39 @@
         on:settings_save={SettingsChange}
         on:image_export_map={ImageExportMap}
         on:image_import_map={ImportImageMap}/>
+    {/if}
+
+    {#if isLoadingView || invisible}
+        <div class="load_screen">
+            <div class="loadingio-spinner-spinner-r8uofwx50c"><div class="ldio-81av1u323tf">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div></div>
+        </div>
+    {/if}
+
     {#if !invisible}
         {#if !is2DView}
             {#key trigger}
-                <LandScapeViewer3d {renderSettings} {heightmap}/>
+                <LandScapeViewer3d 
+                    onPrepare={() => {
+                        isLoadingView = true;
+                     }}
+                    onReady={() => { 
+                        isLoadingView = false;
+                     }}
+                    {renderSettings} 
+                    {heightmap}/>
             {/key}
         {:else}
             <div class="d2-cont">
@@ -161,12 +193,6 @@
                 {/key}
             </div>
         {/if}
-    {:else}
-        <div class="load_screen">
-            <div class="loadingio-spinner-spinner-r8uofwx50c"><div class="ldio-81av1u323tf">
-                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-            </div></div>
-        </div>
     {/if}
 </main>
 
@@ -175,7 +201,9 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-
+        position: absolute;
+        top: 0;
+        left: 0;
     }
     .load_screen{
         background: #010101;
@@ -186,8 +214,15 @@
         align-items: center;
         justify-content: center;
         font-size: 40px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
     }
     .d2-cont {
+        position: absolute;
         width: 100%;
         height: 100%;
         display: flex;
