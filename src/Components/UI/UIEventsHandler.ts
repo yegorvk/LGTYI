@@ -1,6 +1,8 @@
 import type {Panels} from "./Pages";
 import type {RenderSettings} from "../../Renderer/RenderSettings";
 import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Terrain/GeneratorOptions";
+import type {Color} from "../../types/Color";
+import type {GrayscaleColor} from "../../types/GrayscaleColor";
 
 export class UIEventsHandler {
     private readonly dispatcher: Function;
@@ -40,8 +42,14 @@ export class UIEventsHandler {
         this.dispatcher('image_export_map');
     }
 
-    public ImageImport() {
-        this.dispatcher('image_import_map');
+    public ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number) {
+        this.dispatcher('image_import_map', {
+            grayscale: grayscaleColor,
+            color: color,
+            isAlphaMod: isAlphaMod,
+            isColorMod: isColorMod,
+            waterLevel: waterLevel
+        });
     }
 
     public settingsSave(mode: string[], wireframeLineWidth: number, wireframeOpacity: number) {

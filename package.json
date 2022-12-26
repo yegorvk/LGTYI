@@ -1,6 +1,6 @@
 {
   "name": "lgtyi",
-  "version": "1.5.0",
+  "version": "1.7.0",
   "description": "Landscape Generator for TYI",
   "private": false,
   "license": "MIT",
@@ -10,6 +10,11 @@
       "name": "Yegor Vaskonyan",
       "email": "egor.vaskonyan@gmail.com",
       "url": "https://github.com/egor-vaskon"
+    },
+    {
+      "name": "Anton Matiash",
+      "email": "manton2007@gmail.com",
+      "url": "https://github.com/Pazzann"
     }
   ],
   "build": {

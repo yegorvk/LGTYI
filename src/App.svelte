@@ -88,10 +88,10 @@
     function ImageExportMap(){
         ImageExport(pixels, heightmap).then(()=>{notify("Successfully exported to image!", false);}).catch(err=>{notify(err, true)});
     }
-    async function ImportImageMap(){
+    async function ImportImageMap(e){
         invisible = true;
         try {
-            let newMap = await ImageImport();
+            let newMap = await ImageImport(e.detail.isAlphaMod, e.detail.isColorMod, e.detail.color, e.detail.grayscale, e.detail.waterLevel);
             notify("Successfully Imported", false);
             heightmap = newMap;
             heightmap = heightmap;

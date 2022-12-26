@@ -56,7 +56,7 @@
         {:else if currPanel === Panels.SETTINGS}
             <Settings bind:is2D={is2D} {eventHandler}></Settings>
         {:else if currPanel === Panels.IMAGE_IMPORT}
-            <ImageImport></ImageImport>
+            <ImageImport {eventHandler}></ImageImport>
         {/if}
     </div>
 </div>
