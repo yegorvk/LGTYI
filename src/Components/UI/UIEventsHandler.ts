@@ -8,18 +8,25 @@ export class UIEventsHandler {
     private readonly dispatcher: Function;
     private useColorFor2D: boolean = false;
     public setPanel: (panel: Panels) => void;
-    public generatorOptions: GeneratorOptions;
+    private _generatorOptions: GeneratorOptions;
+    set generatorOptions(value: GeneratorOptions) {
+        this._generatorOptions = value;
+        this._generatorOptions.roughnessCoefficient = value.roughnessCoefficient / 100;
+    }
+    get generatorOptions(): GeneratorOptions {
+        return this._generatorOptions;
+    }
 
     public constructor(dispatcher: Function) {
         this.dispatcher = dispatcher;
-        this.generatorOptions = DefaultGeneratorOptions;
+        this._generatorOptions = DefaultGeneratorOptions;
     }
     public setGeneratorOptions(generatorOptions: GeneratorOptions) {
-        this.generatorOptions = generatorOptions;
+        this._generatorOptions = generatorOptions;
     }
 
     public getGenData(): GeneratorOptions {
-        return this.generatorOptions;
+        return this._generatorOptions;
     }
 
     public Import() {
