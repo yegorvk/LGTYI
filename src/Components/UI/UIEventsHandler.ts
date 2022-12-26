@@ -11,6 +11,7 @@ export class UIEventsHandler {
     private _generatorOptions: GeneratorOptions;
     set generatorOptions(value: GeneratorOptions) {
         this._generatorOptions = value;
+        this._generatorOptions.seed = (value.seed === null) ? 0 : value.seed;
         this._generatorOptions.roughnessCoefficient = value.roughnessCoefficient / 100;
     }
     get generatorOptions(): GeneratorOptions {
@@ -49,12 +50,13 @@ export class UIEventsHandler {
         this.dispatcher('image_export_map');
     }
 
-    public ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number) {
+    public ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean) {
         this.dispatcher('image_import_map', {
             grayscale: grayscaleColor,
             color: color,
             isAlphaMod: isAlphaMod,
             isColorMod: isColorMod,
+            isInverted: isInverted,
             waterLevel: waterLevel
         });
     }

@@ -6,7 +6,7 @@ import {DefaultGeneratorOptions} from "../Terrain/GeneratorOptions";
 
 const remote = require('@electron/remote');
 
-export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number): Promise<Heightmap> {
+export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean): Promise<Heightmap> {
     const Jimp = window.require('jimp');
 
     // Use the electron dialog module to prompt the user for a file path
@@ -63,7 +63,10 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
                     }
                 }
                 if (isAlphaMod){
-                    altitude =  altitude + alpha*((HeightmapRandom.data[y * img.bitmap.width + x] - altitude)/255);
+                    if (!isInverted)
+                        altitude =  altitude + alpha*((HeightmapRandom.data[y * img.bitmap.width + x] - altitude)/255);
+                    else
+                        altitude =  altitude + (255 - alpha) * ((HeightmapRandom.data[y * img.bitmap.width + x] - altitude)/255);
                 }
 
                 arr[y * img.bitmap.width + x] = altitude;

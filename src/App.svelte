@@ -116,7 +116,7 @@
     async function ImportImageMap(e) {
         invisible = true;
         try {
-            let newMap = await ImageImport(e.detail.isAlphaMod, e.detail.isColorMod, e.detail.color, e.detail.grayscale, e.detail.waterLevel);
+            let newMap = await ImageImport(e.detail.isAlphaMod, e.detail.isColorMod, e.detail.color, e.detail.grayscale, e.detail.waterLevel, e.detail.isInverted);
             notify("Successfully Imported", false);
             heightmap = newMap;
             heightmap = heightmap;

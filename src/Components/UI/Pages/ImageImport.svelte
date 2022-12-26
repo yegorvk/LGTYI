@@ -5,9 +5,10 @@
     import {DefaultGeneratorOptions} from "../../../Terrain/GeneratorOptions";
 
     export let eventHandler: UIEventsHandler;
-    let imp = () => {eventHandler.ImageImport(isAlphaMod, isColorMod, {r: red, b: blue, g: green}, grayscaleColor, waterLevel);};
+    let imp = () => {eventHandler.ImageImport(isAlphaMod, isColorMod, {r: red, b: blue, g: green}, grayscaleColor, waterLevel, isInvertedAlphaMod);};
     let isAlphaMod: boolean = false;
     let isColorMod: boolean = false;
+    let isInvertedAlphaMod: boolean = false;
     let red: number = 0;
     let blue: number = 0;
     let green: number = 0;
@@ -17,7 +18,10 @@
         isColorMod = !isColorMod;
     }
     function onAlpha(){
-        isAlphaMod = !isAlphaMod
+        isAlphaMod = !isAlphaMod;
+    }
+    function onInverted(){
+        isInvertedAlphaMod = !isInvertedAlphaMod;
     }
 </script>
 
@@ -51,6 +55,8 @@
     <Param>
         <span>Alpha Mod:</span>
         <input type="checkbox" on:change={onAlpha}/>
+        <span>Inverted Mod:</span>
+        <input type="checkbox" on:change={onInverted}/>
     </Param>
     <Param>
         <span>Grayscale is taken from:</span>
