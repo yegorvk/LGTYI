@@ -15,6 +15,8 @@
     import {ImageExport} from "./Files/ImageExporter";
     import {ImageImport} from "./Files/ImageImporter";
     import {UIEventsHandler} from "./Components/UI/UIEventsHandler";
+    import "./LoadScreen.css"
+
     let trigger: boolean;
     let is2DView: boolean = false;
     let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
@@ -22,7 +24,7 @@
 
     let useColors2d: boolean = false;
     let eventHandler: UIEventsHandler;
-    let notify: (text:string, err:boolean)=>{};
+    let notify: (text: string, err: boolean) => {};
     let pixels: Uint8ClampedArray;
     const generate = (options: GeneratorOptions) => {
         if (options.seed === 0)
@@ -33,6 +35,7 @@
     }
 
     let invisible = false;
+
     async function ImportMap() {
         invisible = true;
         try {
@@ -44,11 +47,12 @@
             notify("Successfully opened!", false);
             heightmap = heightmap;
             invisible = false;
-        }catch (err){
+        } catch (err) {
             invisible = false;
             notify(err, true);
         }
     }
+
     async function addMap() {
         invisible = true;
         try {
@@ -56,39 +60,60 @@
             notify("Successfully added!", false);
             heightmap = heightmap;
             invisible = false;
-        } catch (err){
+        } catch (err) {
             invisible = false;
             notify(err, true);
         }
 
     }
-    async function substrMap(){
+
+    async function substrMap() {
         invisible = true;
         try {
             heightmap = await SubtructMap(heightmap);
             notify("Successfully subtracted!", false);
             heightmap = heightmap;
             invisible = false;
-        }catch (err){
+        } catch (err) {
             invisible = false;
             notify(err, true);
         }
     }
-    function SettingsChange(e){
-        renderSettings=e.detail.render;
+
+    function SettingsChange(e) {
+        renderSettings = e.detail.render;
         invisible = true;
-        setTimeout(()=>{invisible=false; notify("Successfully", false);}, 50);
+        setTimeout(() => {
+            invisible = false;
+            notify("Successfully", false);
+        }, 50);
     }
-    function ExportMap(e){
-        exportMap(heightmap, e.detail.genOpt,is2DView).then(()=>{notify("Successfully saved!", false);}).catch(err=>{notify(err, true)});
+
+    function ExportMap(e) {
+        exportMap(heightmap, e.detail.genOpt, is2DView).then(() => {
+            notify("Successfully saved!", false);
+        }).catch(err => {
+            notify(err, true)
+        });
     }
-    function ExcelExportMap(){
-        ExcelExport(heightmap).then(()=>{notify("Successfully exported!", false);}).catch(err=>{notify(err, true)});
+
+    function ExcelExportMap() {
+        ExcelExport(heightmap).then(() => {
+            notify("Successfully exported!", false);
+        }).catch(err => {
+            notify(err, true)
+        });
     }
-    function ImageExportMap(){
-        ImageExport(pixels, heightmap).then(()=>{notify("Successfully exported to image!", false);}).catch(err=>{notify(err, true)});
+
+    function ImageExportMap() {
+        ImageExport(pixels, heightmap).then(() => {
+            notify("Successfully exported to image!", false);
+        }).catch(err => {
+            notify(err, true)
+        });
     }
-    async function ImportImageMap(e){
+
+    async function ImportImageMap(e) {
         invisible = true;
         try {
             let newMap = await ImageImport(e.detail.isAlphaMod, e.detail.isColorMod, e.detail.color, e.detail.grayscale, e.detail.waterLevel);
@@ -96,7 +121,7 @@
             heightmap = newMap;
             heightmap = heightmap;
             invisible = false;
-        }catch (e){
+        } catch (e) {
             invisible = false;
             notify(e, true);
         }
@@ -121,20 +146,27 @@
         on:substr_map={substrMap}
         on:excel_export_map={ExcelExportMap}
         on:settings_save={SettingsChange}
-        on:image_export_map ={ImageExportMap}
-        on:image_import_map = {ImportImageMap}/>
+        on:image_export_map={ImageExportMap}
+        on:image_import_map={ImportImageMap}/>
     {#if !invisible}
-    {#if !is2DView}
-        {#key trigger}
-            <LandScapeViewer3d {renderSettings} {heightmap}/>
-        {/key}
-    {:else}
-        <div class="d2-cont">
+        {#if !is2DView}
             {#key trigger}
-                <Renderer2D on:pixels={(e)=>{pixels = e.detail.pixels}} useColors={useColors2d} data={heightmap}></Renderer2D>
+                <LandScapeViewer3d {renderSettings} {heightmap}/>
             {/key}
+        {:else}
+            <div class="d2-cont">
+                {#key trigger}
+                    <Renderer2D on:pixels={(e)=>{pixels = e.detail.pixels}} useColors={useColors2d}
+                                data={heightmap}></Renderer2D>
+                {/key}
+            </div>
+        {/if}
+    {:else}
+        <div class="load_screen">
+            <div class="loadingio-spinner-spinner-r8uofwx50c"><div class="ldio-81av1u323tf">
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            </div></div>
         </div>
-    {/if}
     {/if}
 </main>
 
@@ -145,7 +177,16 @@
         overflow: hidden;
 
     }
-
+    .load_screen{
+        background: #010101;
+        color: #ffffff;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+    }
     .d2-cont {
         width: 100%;
         height: 100%;
@@ -155,3 +196,6 @@
         overflow: auto;
     }
 </style>
+
+
+
