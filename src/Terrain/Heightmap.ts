@@ -57,19 +57,20 @@ export class Heightmap {
         return heightmap
     }
 
-    static flat(width: number, height: number, fillValue: number = 0) {
+    static flat(width: number, height: number, fillValue: number = 0, waterLevel: number = -1) {
         const data = new Float32Array(width*height)
 
         if (fillValue !== 0)
             data.fill(fillValue)
 
-        return new Heightmap(width, height, data)
+        return new Heightmap(width, height, data, waterLevel)
     }
 
     constructor(
         width: number,
         height: number,
         data: Float32Array,
+        waterLevel: number,
         offsetX: number = 0,
         offsetY: number = 0
     ) {
@@ -78,6 +79,7 @@ export class Heightmap {
         this.data = data
         this.offsetX = offsetX;
         this.offsetY = offsetY;
+        this.waterLevel = waterLevel;
     }
 
     subMap(width: number, height: number, offsetX: number, offsetY: number): Heightmap {

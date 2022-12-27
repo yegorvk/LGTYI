@@ -12,16 +12,19 @@
 
     let root: Element;
 
-    export let onPrepare: () => void;
-    export let onReady: () => void;
+    export let onPrepare: () => Promise<void>;
+    export let onReady: () => Promise<void>;
 
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
 
     let renderer: THREE.WebGLRenderer = null;
     let camControls: FlyControls = null;
+
     let camControlsChangeEventListener: () => any = null;
     let windowResizeEventListener: () => any = null;
+    let keydownEventListener: (e: KeyboardEvent) => any = null;
+    let keyupEventListener: (e: KeyboardEvent) => any = null;
 
     let clock = new THREE.Clock();
 
@@ -70,9 +73,11 @@
         requestAnimationFrame(update);
     }
 
-    function loop() {
-        const rootWidth = root.clientWidth;
-        const rootHeight = root.clientHeight;
+    function loop(width: number, height: number) {
+        const rootWidth = width;
+        const rootHeight = height;
+
+        console.log(chunk);
 
         let renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), chunk, {
             useWireframe: renderSettings.wireframe,
@@ -121,6 +126,41 @@
         camControls.movementSpeed *= 40;
         camControls.rollSpeed *= 100;
 
+        keydownEventListener = (e) => {
+            switch (e.key) {
+                case 'Shift':
+                    camControls.movementSpeed *= 3;
+                    break;
+                case 'Control':
+                    camControls.movementSpeed /= 3;
+                    break;
+                default:
+                    return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+        };
+
+        keyupEventListener = (e) => {
+            switch (e.key) {
+                case 'Shift':
+                    camControls.movementSpeed /= 3;
+                    break;
+                case 'Control':
+                    camControls.movementSpeed *= 3;
+                    break;
+                default:
+                    return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+        };
+
+        document.addEventListener('keydown', keyupEventListener);
+        document.addEventListener('keyup', keydownEventListener);
+
         update();
         animate();
 
@@ -129,17 +169,12 @@
         };
 
         camControls.addEventListener("change", camControlsChangeEventListener);
-
-        onReady();
     }
 
-    onMount(() => {
-        onPrepare();
-        setTimeout(() => {
-                requestAnimationFrame(() => {
-                loop();
-            })
-        }, 200);
+    onMount(async () => {
+        await onPrepare();
+        loop(root.clientWidth, root.clientHeight);
+        await onReady();
     });
 
     onDestroy(() => {
@@ -160,6 +195,9 @@
 
         window.removeEventListener("resize", windowResizeEventListener);
         windowResizeEventListener = null;
+
+        document.removeEventListener('keydown', keydownEventListener);
+        document.removeEventListener('keyup', keyupEventListener);
 
         if (waterLayerNorm !== null) waterLayerNorm.dispose();
 

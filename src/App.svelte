@@ -16,10 +16,12 @@
     import {ImageImport} from "./Files/ImageImporter";
     import type {UIEventsHandler} from "./Components/UI/UIEventsHandler";
     import "./LoadScreen.css"
+    import { afterUpdate, onMount } from 'svelte';
+    import { tick } from 'svelte';
 
     let trigger: boolean;
     let is2DView: boolean = false;
-    let heightmap: Heightmap = Heightmap.generate(DefaultGeneratorOptions);
+    let heightmap: Heightmap = Heightmap.flat(100, 100, 0, -1);
     let renderSettings: RenderSettings = DefaultRenderSettings;
 
     let useColors2d: boolean = false;
@@ -134,6 +136,7 @@
     <Notification bind:notify={notify}></Notification>
 
     {#if !isLoadingView && !invisible}
+
     <UI {generate}
         bind:eventHandler
         bind:is2D={is2DView}
@@ -151,9 +154,11 @@
         on:settings_save={SettingsChange}
         on:image_export_map={ImageExportMap}
         on:image_import_map={ImportImageMap}/>
+    
     {/if}
 
     {#if isLoadingView || invisible}
+
         <div class="load_screen">
             <div class="loadingio-spinner-spinner-r8uofwx50c"><div class="ldio-81av1u323tf">
                 <div></div>
@@ -170,30 +175,37 @@
                 <div></div>
             </div></div>
         </div>
+
     {/if}
 
-    {#if !invisible}
+    {#key trigger}
+
+    {#if !invisible && heightmap !== null}
         {#if !is2DView}
-            {#key trigger}
-                <LandScapeViewer3d 
-                    onPrepare={() => {
-                        isLoadingView = true;
-                     }}
-                    onReady={() => { 
-                        isLoadingView = false;
-                     }}
-                    {renderSettings} 
-                    {heightmap}/>
-            {/key}
+            <LandScapeViewer3d 
+                onPrepare={async () => {
+                    isLoadingView = true;
+
+                    await tick();
+
+                    await new Promise((resolve) => {
+                        setTimeout(resolve, 300)
+                    });
+                }}
+                onReady={async () => { 
+                    isLoadingView = false;
+                }}
+                {renderSettings} 
+                {heightmap}/>
         {:else}
             <div class="d2-cont">
-                {#key trigger}
-                    <Renderer2D on:pixels={(e)=>{pixels = e.detail.pixels}} useColors={useColors2d}
-                                data={heightmap}></Renderer2D>
-                {/key}
+                <Renderer2D on:pixels={(e)=>{pixels = e.detail.pixels}} useColors={useColors2d}
+                            data={heightmap}></Renderer2D>
             </div>
         {/if}
     {/if}
+
+    {/key}
 </main>
 
 <style>
