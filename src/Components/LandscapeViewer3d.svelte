@@ -9,12 +9,13 @@
         DefaultRenderSettings,
         type RenderSettings,
     } from "../Renderer/RenderSettings";
-    import { seededRandom } from "three/src/math/MathUtils";
 
     let root: Element;
 
     export let onPrepare: () => Promise<void>;
     export let onReady: () => Promise<void>;
+
+    export let useOrthographicCamera: boolean = false;
 
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
@@ -30,7 +31,7 @@
     let clock = new THREE.Clock();
 
     let scene = new THREE.Scene();
-    let camera: THREE.PerspectiveCamera = null;
+    let camera: THREE.Camera = null;
 
     let chunk = new Chunk(1, heightmap, renderSettings.gradient);
 
@@ -90,12 +91,23 @@
 
         scene.add(renderChunk);
 
-        camera = new THREE.PerspectiveCamera(
-            75, // fov
-            rootWidth / rootHeight, // aspect ratio
-            0.1, // near
-            1000 // far
-        );
+        if (useOrthographicCamera)
+            camera = new THREE.OrthographicCamera(
+                -width/2,
+                width/2,
+                -height/2,
+                height/2,
+                0.1,
+                1000
+            );
+        else {
+            camera = new THREE.PerspectiveCamera(
+                75, // fov
+                rootWidth / rootHeight, // aspect ratio
+                0.1, // near
+                1000 // far
+            );
+        }
 
         camera.position.set(0, 0, 50);
         camera.lookAt(0, 0, 0);
@@ -111,8 +123,8 @@
         renderer.setSize(rootWidth, rootHeight);
 
         windowResizeEventListener = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+            (camera as THREE.PerspectiveCamera).aspect = window.innerWidth / window.innerHeight;
+            (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
 
             renderer.setSize(window.innerWidth, window.innerHeight);
         };
@@ -155,11 +167,13 @@
         keyupEventListener = (e) => {
             if (!speedModifier) return;
 
-            camControls.movementSpeed /= speedBoost;
-            speedModifier = false;
+            if (e.key == 'Tab' || e.key == 'Shift') {
+                camControls.movementSpeed /= speedBoost;
+                speedModifier = false;
 
-            e.preventDefault();
-            e.stopPropagation();
+                e.preventDefault();
+                e.stopPropagation();
+            }
         };
 
         document.addEventListener('keydown', keydownEventListener);
