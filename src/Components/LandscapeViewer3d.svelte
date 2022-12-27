@@ -9,6 +9,7 @@
         DefaultRenderSettings,
         type RenderSettings,
     } from "../Renderer/RenderSettings";
+    import { seededRandom } from "three/src/math/MathUtils";
 
     let root: Element;
 
@@ -126,40 +127,43 @@
         camControls.movementSpeed *= 40;
         camControls.rollSpeed *= 100;
 
+        let speedModifier = false;
+        let speedBoost = 1;
+
         keydownEventListener = (e) => {
+            if (speedModifier) return;
+
             switch (e.key) {
                 case 'Shift':
                     camControls.movementSpeed *= 3;
+                    speedBoost = 3;
                     break;
-                case 'Control':
+                case 'Tab':
                     camControls.movementSpeed /= 3;
+                    speedBoost = 1/3;
                     break;
                 default:
                     return;
             }
+
+            speedModifier = true;
 
             e.preventDefault();
             e.stopPropagation();
         };
 
         keyupEventListener = (e) => {
-            switch (e.key) {
-                case 'Shift':
-                    camControls.movementSpeed /= 3;
-                    break;
-                case 'Control':
-                    camControls.movementSpeed *= 3;
-                    break;
-                default:
-                    return;
-            }
+            if (!speedModifier) return;
+
+            camControls.movementSpeed /= speedBoost;
+            speedModifier = false;
 
             e.preventDefault();
             e.stopPropagation();
         };
 
-        document.addEventListener('keydown', keyupEventListener);
-        document.addEventListener('keyup', keydownEventListener);
+        document.addEventListener('keydown', keydownEventListener);
+        document.addEventListener('keyup', keyupEventListener);
 
         update();
         animate();
