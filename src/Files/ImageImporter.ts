@@ -72,9 +72,7 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
                 arr[y * img.bitmap.width + x] = altitude;
             });
 
-
-            let heightMap = new Heightmap(img.bitmap.width, img.bitmap.height, arr, 0, 0);
-            heightMap.waterLevel = waterLevel;
+            let heightMap = new Heightmap(img.bitmap.width, img.bitmap.height, arr, waterLevel);
             return heightMap;
         })
     } catch (e) {

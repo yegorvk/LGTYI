@@ -13,7 +13,7 @@ export function colorRGBFromAltitude(
     waterLevel -= minAlt;
 
     maxAlt = Math.max(0, maxAlt)
-    alt = Math.max(0, alt)
+    alt = Math.max(0, Math.min(alt, maxAlt))
     waterLevel = Math.max(0, waterLevel)
 
     const landAlts = [
@@ -29,7 +29,7 @@ export function colorRGBFromAltitude(
         0x3CB043,
         0xAAFF00,
         0xFF0000,
-        0x231709
+        0xFFFFFF
     ]
 
     const waterColors = [

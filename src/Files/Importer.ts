@@ -22,9 +22,7 @@ export async function importMap(): Promise<SaveData> {
 
         let Data: SaveData = JSON.parse(file);
 
-        if (!(Data.heightMap.offsetX === undefined ||
-            Data.heightMap.offsetY === undefined ||
-            Data.heightMap.width === undefined ||
+        if (!(Data.heightMap.width === undefined ||
             Data.heightMap.height === undefined ||
             Data.heightMap.data === undefined ||
             Data.viewMode === undefined ||
@@ -33,6 +31,7 @@ export async function importMap(): Promise<SaveData> {
             Data.genOptions.roughnessCoefficient === undefined ||
             Data.genOptions.maxAltitude === undefined ||
             Data.genOptions.minAltitude === undefined ||
+            Data.genOptions.waterLevel === undefined ||
             Data.genOptions.width === undefined ||
             Data.genOptions.height === undefined)) {
             let arr = new Float32Array(Data.heightMap.width * Data.heightMap.height);
@@ -42,7 +41,7 @@ export async function importMap(): Promise<SaveData> {
                 i++;
             }
             Data.heightMap.data = arr;
-            Data.heightMap = new Heightmap(Data.heightMap.width, Data.heightMap.height, Data.heightMap.data, Data.heightMap.offsetX, Data.heightMap.offsetY);
+            Data.heightMap = new Heightmap(Data.heightMap.width, Data.heightMap.height, Data.heightMap.data, Data.genOptions.waterLevel);
             return Data;
         } else {
             throw new Error('Invalid Data');
