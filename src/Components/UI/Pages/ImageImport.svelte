@@ -29,14 +29,16 @@
 <div>
     <Param>
         <div class="check-label">
-            <span>Color Mode: </span>
-            <input type="checkbox"
+            <label for="importColorMode">Color Mode:</label>
+            <input id="importColorMode"
+                   type="checkbox"
                    on:change={onColor}
             />
         </div>
 
-        <span class:not_enabled={isColorMode===false}>Red: {red}</span>
-        <input disabled={isColorMode===false}
+        <label for="importColorRed" class:not_enabled={isColorMode===false}>Red: {red}</label>
+        <input id="importColorRed"
+               disabled={isColorMode===false}
                class="basic-range"
                type="range"
                bind:value={red}
@@ -44,8 +46,9 @@
                min="1"
         />
 
-        <span class:not_enabled={isColorMode===false}>Blue: {blue}</span>
-        <input disabled={isColorMode===false}
+        <label for="importColorBlue" class:not_enabled={isColorMode===false}>Blue: {blue}</label>
+        <input id="importColorBlue"
+               disabled={isColorMode===false}
                class="basic-range"
                type="range"
                bind:value={blue}
@@ -53,8 +56,9 @@
                min="1"
         />
 
-        <span class:not_enabled={isColorMode===false}>Green: {green}</span>
-        <input disabled={isColorMode===false}
+        <label for="importColorGreen" class:not_enabled={isColorMode===false}>Green: {green}</label>
+        <input id="importColorGreen"
+               disabled={isColorMode===false}
                class="basic-range"
                type="range"
                bind:value={green}
@@ -65,15 +69,17 @@
 
     <Param>
         <div class="check-label">
-            <span>Alpha Mode: </span>
-            <input type="checkbox"
+            <label for="importAlphaMode">Alpha Mode:</label>
+            <input id="importAlphaMode"
+                   type="checkbox"
                    on:change={onAlpha}
             />
         </div>
 
         <div class="check-label">
-            <span>Inverted Mode: </span>
-            <input type="checkbox"
+            <label for="importInvertedMode">Inverted Mode:</label>
+            <input id="importInvertedMode"
+                   type="checkbox"
                    on:change={onInverted}
             />
         </div>
@@ -83,39 +89,45 @@
         <span>Grayscale is taken from:</span>
         <div class="colors_selector_import">
             <div class="color_radio">
-                <span>Red</span>
-                <input type="radio"
+                <label for="importColorsSelectorRed">Red</label>
+                <input id="importColorsSelectorRed"
+                       type="radio"
                        value="red"
                        bind:group={grayscaleColor}
                 />
             </div>
 
             <div class="color_radio">
-                <span>Blue</span>
-                <input type="radio"
+                <label for="importColorsSelectorBlue">Blue</label>
+                <input id="importColorsSelectorBlue"
+                       type="radio"
                        value="blue"
                        bind:group={grayscaleColor}
                 />
             </div>
 
             <div class="color_radio">
-                <span>Green</span>
-                <input type="radio"
+                <label for="importColorsSelectorGreen">Green</label>
+                <input id="importColorsSelectorGreen"
+                       type="radio"
                        value="green"
                        bind:group={grayscaleColor}
                 />
             </div>
         </div>
     </Param>
+
     <Param>
-        <span>water level: {waterLevel}</span>
-        <input class="basic-range"
-                type="range"
-                bind:value={waterLevel}
-                max="51"
-                min="-60"
+        <label for="importWaterLevel">water level: {waterLevel}</label>
+        <input id="importWaterLevel"
+               class="basic-range"
+               type="range"
+               bind:value={waterLevel}
+               max="51"
+               min="-60"
         />
     </Param>
+
     <button class="menu-but"
             on:click={imp}>
         <span>Import</span>

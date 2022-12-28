@@ -43,81 +43,89 @@
 
 <div>
     <Param>
-        <span>Width: {width}</span>
-        <input  class="basic-range"
-                type="range"
-                bind:value={width}
-                max="1000"
-                min="10"
+        <label for="generateWidth">Width: {width}</label>
+        <input id="generateWidth"
+               class="basic-range"
+               type="range"
+               bind:value={width}
+               max="1000"
+               min="10"
         />
     </Param>
 
     <Param>
-        <span>Height: {height}</span>
-        <input  class="basic-range"
-                type="range"
-                bind:value={height}
-                max="1000"
-                min="10"
+        <label for="generateHeight">Height: {height}</label>
+        <input id="generateHeight"
+               class="basic-range"
+               type="range"
+               bind:value={height}
+               max="1000"
+               min="10"
         />
     </Param>
 
     <Param>
-        <span>Max altitude: {maxAltitude}</span>
-        <input  class="basic-range"
-                type="range"
-                bind:value={maxAltitude}
-                max="50"
-                min="-50"
+        <label for="generateMaxAltitude">Max altitude: {maxAltitude}</label>
+        <input id="generateMaxAltitude"
+               class="basic-range"
+               type="range"
+               bind:value={maxAltitude}
+               max="50"
+               min="-50"
         />
     </Param>
 
     <Param>
-        <span>Min altitude: {minAltitude}</span>
-        <input  class="basic-range"
-                type="range"
-                bind:value={minAltitude}
-                max="50"
-                min="-50"
+        <label for="generateMinAltitude">Min altitude: {minAltitude}</label>
+        <input id="generateMinAltitude"
+               class="basic-range"
+               type="range"
+               bind:value={minAltitude}
+               max="50"
+               min="-50"
         />
     </Param>
 
     <Param>
-        <span>Roughness: {roughness}</span>
-        <input  class="basic-range"
-                type="range"
-                bind:value={roughness}
-                max="100"
-                min="1"
+        <label for="generateRoughness">Roughness: {roughness}</label>
+        <input id="generateRoughness"
+               class="basic-range"
+               type="range"
+               bind:value={roughness}
+               max="100"
+               min="1"
         />
     </Param>
 
     <Param>
-        <span>Level of detail: {levelOfDetail}</span>
-        <input  class="basic-range"
-                type="range"
-                bind:value={levelOfDetail}
-                max="50"
-                min="1"
+        <label for="generateLevelOfDetail">Level of detail: {levelOfDetail}</label>
+        <input id="generateLevelOfDetail"
+               class="basic-range"
+               type="range"
+               bind:value={levelOfDetail}
+               max="50"
+               min="1"
         />
     </Param>
 
     <Param>
-        <span>Water level: {waterLevel}</span>
-        <input  class="basic-range"
-                type="range"
-                bind:value={waterLevel}
-                max="51"
-                min="-60"
+        <label for="generateWaterLevel">Water level: {waterLevel}</label>
+        <input id="generateWaterLevel"
+               class="basic-range"
+               type="range"
+               bind:value={waterLevel}
+               max="51"
+               min="-60"
         />
     </Param>
 
     <Param>
-        <span>Seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</span>
-        <input  class="basic-text"
-                type="number"
-                min="0"
-                bind:value={seed}
+        <label for="generateSeed">Seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
+        <input id="generateSeed"
+               class="basic-text"
+               type="number"
+               min="0"
+               bind:value={seed}
         />
     </Param>
 

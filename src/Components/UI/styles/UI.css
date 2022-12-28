@@ -26,36 +26,25 @@
     max-height: 90vh;
     opacity: 0;
     transition: opacity 400ms;
-    scroll-behavior: auto;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-color: #999999 #666666;
+    scrollbar-width: thin;
 }
 .opened_panel > .content {
     opacity: 1;
 }
 
-/* width */
 ::-webkit-scrollbar {
     width: 3px;
-}
 
-/* Track */
+}
 ::-webkit-scrollbar-track {
-    border-radius: 3px;
+    background-color: #666666;
 }
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #999999;
+    background-color: #999999;
     border-radius: 10px;
-}
-
-.hidden {
-    display: none;
-}
-
-input {
-    border:none;
 }
 
 .basic-text {
@@ -92,4 +81,8 @@ input {
 
 input[type=checkbox] {
     margin: auto;
+}
+
+.hidden {
+    display: none;
 }

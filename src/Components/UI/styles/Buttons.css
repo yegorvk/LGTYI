@@ -4,8 +4,7 @@
     height: 60px;
     min-height: 44px;
     padding: 0 2rem;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin: 8px 0;
     outline: none;
     align-items: center;
     transition: all 320ms;
@@ -49,20 +48,24 @@
     background: #999999;
     border-radius: 10px;
 }
-.closeup:hover {
+.closeup:not([disabled]):hover {
     outline: none;
     background: #18656e;
     cursor: pointer;
 }
-.closeup:focus {
+.closeup:not([disabled]):focus {
     outline: none;
     border: 2px dashed #cecece;
     border-radius: 8px;
 }
-.closeup:active {
+.closeup:not([disabled]):active {
     outline: none;
     background: #999999;
     cursor: pointer;
+}
+.closeup:disabled {
+    cursor: default;
+    color: #666666;
 }
 .opened_panel > .closeup {
     left: 10px;
@@ -79,20 +82,24 @@
     background: #999999;
     border-radius: 10px;
 }
-.back-but:hover {
+.back-but:not([disabled]):hover {
     outline: none;
     background: #18656e;
     cursor: pointer;
 }
-.back-but:focus {
+.back-but:not([disabled]):focus {
     outline: none;
     border: 2px dashed #cecece;
     border-radius: 8px;
 }
-.back-but:active {
+.back-but:not([disabled]):active {
     outline: none;
     background: #999999;
     cursor: pointer;
+}
+.back-but:disabled {
+    cursor: default;
+    color: #666666;
 }
 .back-but > img{
     width: 100%;
