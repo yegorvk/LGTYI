@@ -2,6 +2,7 @@ import { applyDefaults } from '../Defaults';
 import { PerlinNoise } from '../PerlinNoise/PerlinNoise';
 import { DefaultGeneratorOptions, type GeneratorOptions } from '../Terrain/GeneratorOptions';
 import type { Heightmap } from '../Terrain/Heightmap'
+import seedrandom from 'seedrandom';
 
 export function generateTerrain(
     heightmap: Heightmap,
@@ -14,12 +15,14 @@ export function generateTerrain(
     const mapHeuristicSize = (heightmap.width + heightmap.height) / 2;
     const centerX = Math.trunc(heightmap.width / 2), centerY = Math.trunc(heightmap.height / 2);
 
-    for (let i = 0; i < Math.ceil(mapHeuristicSize * 0.2); i++) {
-        const hillCenterX = Math.min(heightmap.width - 1, Math.round(Math.random() * heightmap.width));
-        const hillCenterY = Math.min(heightmap.height - 1, Math.round(Math.random() * heightmap.height));
+    const rng = seedrandom(options.seed);
 
-        const heightCoef = Math.random() * 80 - 40;
-        const radiusCoef = Math.random() * 50 + 20;
+    for (let i = 0; i < Math.ceil(mapHeuristicSize * 0.2); i++) {
+        const hillCenterX = Math.min(heightmap.width - 1, Math.round(rng() * heightmap.width));
+        const hillCenterY = Math.min(heightmap.height - 1, Math.round(rng() * heightmap.height));
+
+        const heightCoef = rng() * 80 - 40;
+        const radiusCoef = rng() * 50 + 20;
 
         generateSmoothHill(heightmap, hillCenterX, hillCenterY, heightCoef, radiusCoef);
     }
