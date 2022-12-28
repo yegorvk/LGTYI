@@ -1,3 +1,7 @@
+
+export const MAX_ALT = 120;
+export const MIN_ALT = -120;
+
 export interface GeneratorOptions {
     width: number;
     height: number;
@@ -12,10 +16,10 @@ export interface GeneratorOptions {
 export const DefaultGeneratorOptions: GeneratorOptions = {
     width: 500,
     height: 500,
-    maxAltitude: 50,
-    minAltitude: -50,
-    roughness: 0.09,
+    maxAltitude: MAX_ALT,
+    minAltitude: MIN_ALT,
+    roughness: 0.5,
     levelOfDetail: 6,
     seed: 0,
-    waterLevel: 10
+    waterLevel: 0
 }

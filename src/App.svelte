@@ -30,10 +30,15 @@
 
     const generate = (options: GeneratorOptions) => {
         if (options.seed === 0)
-            options.seed = Math.round(Math.random() * 65536)
+            options.seed = Math.round(Math.random() * 65536);
 
-        heightmap = Heightmap.generate(options)
-        trigger = !trigger
+        isLoadingView = true;
+
+        setTimeout(() => {
+            heightmap = Heightmap.generate(options);
+            isLoadingView = false;
+            trigger = !trigger;
+        }, 500);
     }
 
     let invisible = false;

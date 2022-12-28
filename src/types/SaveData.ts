@@ -6,8 +6,6 @@ export interface SaveData {
         width: number,
         height: number,
         data: Float32Array,
-        offsetX: number,
-        offsetY: number
     };
     viewMode: boolean;
     genOptions: GeneratorOptions;

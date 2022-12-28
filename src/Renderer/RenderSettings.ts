@@ -7,7 +7,7 @@ export interface RenderSettings {
 }
 
 export const DefaultRenderSettings: RenderSettings = {
-    wireframe: true,
+    wireframe: false,
     gradient: true,
     lighting: true,
     wireframeOpacity: 0.1,

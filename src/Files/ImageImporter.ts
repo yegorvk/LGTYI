@@ -27,7 +27,7 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
             let arr = new Float32Array(img.bitmap.width * img.bitmap.height);
             const maxAltitude = DefaultGeneratorOptions.maxAltitude;
             const minAltitude = DefaultGeneratorOptions.minAltitude;
-            const HeightmapRandom = Heightmap.generate({
+            const HeightmapRandom = Heightmap.simpleGenerate({
                 width: img.bitmap.width,
                 height: img.bitmap.height,
                 minAltitude: minAltitude,
@@ -42,7 +42,7 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
                 const red = this.bitmap.data[idx + 0];
                 const green = this.bitmap.data[idx + 1];
                 const blue = this.bitmap.data[idx + 2];
-                const alpha = this.bitmap.data[idx + 3];
+                let alpha = this.bitmap.data[idx + 3];
 
                 if (isColorMod && red == color.r && green == color.g && blue == color.b) {
                     altitude = HeightmapRandom.data[y * img.bitmap.width + x];
@@ -62,19 +62,25 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
                         }
                     }
                 }
-                if (isAlphaMod){
+                /*if (isAlphaMod){
                     if (!isInverted)
                         altitude =  altitude + alpha*((HeightmapRandom.data[y * img.bitmap.width + x] - altitude)/255);
                     else
                         altitude =  altitude + (255 - alpha) * ((HeightmapRandom.data[y * img.bitmap.width + x] - altitude)/255);
-                }
+                }*/
+
+                alpha /= 255;
+
+                if (!isInverted)
+                    alpha = 1 - alpha;
+
+                if (isAlphaMod)
+                    altitude = (1-alpha)*altitude + alpha*HeightmapRandom.data[y*img.bitmap.width+x];
 
                 arr[y * img.bitmap.width + x] = altitude;
             });
 
-
-            let heightMap = new Heightmap(img.bitmap.width, img.bitmap.height, arr, 0, 0);
-            heightMap.waterLevel = waterLevel;
+            let heightMap = new Heightmap(img.bitmap.width, img.bitmap.height, arr, waterLevel);
             return heightMap;
         })
     } catch (e) {

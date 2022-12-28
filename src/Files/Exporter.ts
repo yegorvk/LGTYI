@@ -11,8 +11,6 @@ export async function exportMap(heightMap: Heightmap, genOptions: GeneratorOptio
             width: heightMap.width,
             height: heightMap.height,
             data: heightMap.data,
-            offsetX: heightMap.offsetX,
-            offsetY: heightMap.offsetY
         },
         genOptions: genOptions,
         viewMode: is2d,
