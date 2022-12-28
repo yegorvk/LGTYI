@@ -12,7 +12,7 @@ export class UIEventsHandler {
     set generatorOptions(value: GeneratorOptions) {
         this._generatorOptions = value;
         this._generatorOptions.seed = (value.seed === null) ? 0 : value.seed;
-        this._generatorOptions.roughnessCoefficient = value.roughnessCoefficient / 100;
+        this._generatorOptions.roughness = value.roughness / 100;
     }
     get generatorOptions(): GeneratorOptions {
         return this._generatorOptions;
@@ -50,12 +50,12 @@ export class UIEventsHandler {
         this.dispatcher('image_export_map');
     }
 
-    public ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean) {
+    public ImageImport(isAlphaMode: boolean, isColorMode: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean) {
         this.dispatcher('image_import_map', {
             grayscale: grayscaleColor,
             color: color,
-            isAlphaMod: isAlphaMod,
-            isColorMod: isColorMod,
+            isAlphaMode: isAlphaMode,
+            isColorMode: isColorMode,
             isInverted: isInverted,
             waterLevel: waterLevel
         });
@@ -77,7 +77,7 @@ export class UIEventsHandler {
         this.dispatcher('settings_save_2d', {useColors: this.useColorFor2D});
     }
 
-    public Export(seed: number, width: number, height: number, maxAltitude: number, minAltitude: number, levelOfDetail: number, roughnessCoefficient: number, waterLevel: number) {
+    public Export(seed: number, width: number, height: number, maxAltitude: number, minAltitude: number, levelOfDetail: number, roughness: number, waterLevel: number) {
         this.dispatcher('export_map', {
             genOpt: {
                 seed,
@@ -86,7 +86,7 @@ export class UIEventsHandler {
                 maxAltitude,
                 minAltitude,
                 levelOfDetail,
-                roughnessCoefficient,
+                roughness,
                 waterLevel
             }
         });

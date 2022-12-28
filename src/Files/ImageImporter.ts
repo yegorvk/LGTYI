@@ -32,7 +32,7 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
                 height: img.bitmap.height,
                 minAltitude: minAltitude,
                 maxAltitude: maxAltitude,
-                roughnessCoefficient: DefaultGeneratorOptions.roughnessCoefficient,
+                roughness: DefaultGeneratorOptions.roughness,
                 levelOfDetail: DefaultGeneratorOptions.levelOfDetail,
                 waterLevel: DefaultGeneratorOptions.waterLevel,
                 seed: DefaultGeneratorOptions.seed

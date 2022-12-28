@@ -18,6 +18,26 @@
     font-family: Comfortaa, cursive;
     font-size: 23px;
 }
+.menu-but:not([disabled]):hover {
+    outline: none;
+    background: #18656e;
+    cursor: pointer;
+}
+.menu-but:not([disabled]):focus {
+    outline: none;
+    border: 2px dashed #cecece;
+    border-radius: 8px;
+}
+.menu-but:not([disabled]):active {
+    outline: none;
+    background: #999999;
+    cursor: pointer;
+}
+.menu-but:disabled {
+    cursor: default;
+    color: #666666;
+}
+
 .closeup {
     position: absolute;
     top: 10px;
@@ -29,20 +49,50 @@
     background: #999999;
     border-radius: 10px;
 }
+.closeup:hover {
+    outline: none;
+    background: #18656e;
+    cursor: pointer;
+}
+.closeup:focus {
+    outline: none;
+    border: 2px dashed #cecece;
+    border-radius: 8px;
+}
+.closeup:active {
+    outline: none;
+    background: #999999;
+    cursor: pointer;
+}
 .opened_panel > .closeup {
     left: 10px;
 }
 
-.back-but{
-    transition: opacity 400ms;
-    border-radius: 10px;
-    background: #999999;
+.back-but {
     position: absolute;
-    opacity: 0;
     top: 10px;
     right: 280px;
     width: 38px;
     height: 38px;
+    opacity: 0;
+    transition: opacity 400ms;
+    background: #999999;
+    border-radius: 10px;
+}
+.back-but:hover {
+    outline: none;
+    background: #18656e;
+    cursor: pointer;
+}
+.back-but:focus {
+    outline: none;
+    border: 2px dashed #cecece;
+    border-radius: 8px;
+}
+.back-but:active {
+    outline: none;
+    background: #999999;
+    cursor: pointer;
 }
 .back-but > img{
     width: 100%;

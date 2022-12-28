@@ -10,6 +10,7 @@
     let imExp = ()=>{eventHandler.ImageExport()};
     let imImp = ()=>{eventHandler.setPanel(Panels.IMAGE_IMPORT)};
 </script>
+
 <div>
     <button class="menu-but"
             on:click={add}>
