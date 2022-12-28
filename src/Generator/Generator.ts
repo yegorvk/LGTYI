@@ -27,7 +27,7 @@ export function generateTerrain(
     generateDetails(
         heightmap,
         options.seed,
-        options.roughnessCoefficient,
+        options.roughness,
         options.levelOfDetail,
         5
     );
@@ -69,7 +69,7 @@ function generateDetails(
 }
 
 function normalize(heightmap: Heightmap, outMinAlt: number, outMaxAlt: number) {
-    let minAlt = 1000.0, maxAlt = -1000.0;
+    let minAlt = Infinity, maxAlt = -Infinity;
 
     for (let i = 0; i < heightmap.data.length; i++) {
         minAlt = Math.min(minAlt, heightmap.data[i]);
@@ -81,6 +81,7 @@ function normalize(heightmap: Heightmap, outMinAlt: number, outMaxAlt: number) {
 
     for (let i = 0; i < heightmap.data.length; i++) {
         heightmap.data[i] = outMinAlt + outAltRange * ((heightmap.data[i] - minAlt) / altRange);
+        heightmap.data[i] = Math.max(outMinAlt, Math.min(outMaxAlt, heightmap.data[i]));
     }
 }
 
