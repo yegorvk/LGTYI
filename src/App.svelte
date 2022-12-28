@@ -15,8 +15,7 @@
     import {ImageExport} from "./Files/ImageExporter";
     import {ImageImport} from "./Files/ImageImporter";
     import type {UIEventsHandler} from "./Components/UI/UIEventsHandler";
-    import "./LoadScreen.css"
-    import { afterUpdate, onMount } from 'svelte';
+    import "./LoadScreen.css";
     import { tick } from 'svelte';
 
     let trigger: boolean;
@@ -120,7 +119,7 @@
     async function ImportImageMap(e) {
         invisible = true;
         try {
-            let newMap = await ImageImport(e.detail.isAlphaMod, e.detail.isColorMod, e.detail.color, e.detail.grayscale, e.detail.waterLevel, e.detail.isInverted);
+            let newMap = await ImageImport(e.detail.isAlphaMode, e.detail.isColorMode, e.detail.color, e.detail.grayscale, e.detail.waterLevel, e.detail.isInverted);
             notify("Successfully Imported", false);
             heightmap = newMap;
             heightmap = heightmap;

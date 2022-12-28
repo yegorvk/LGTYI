@@ -43,10 +43,8 @@
 
 <div>
     <Param>
-        <label for="generateWidth">width: {width}</label>
-        <input
-                id="generateWidth"
-                class="basic-range"
+        <span>Width: {width}</span>
+        <input  class="basic-range"
                 type="range"
                 bind:value={width}
                 max="1000"
@@ -55,10 +53,8 @@
     </Param>
 
     <Param>
-        <label for="generateHeight">height: {height}</label>
-        <input
-                id="generateHeight"
-                class="basic-range"
+        <span>Height: {height}</span>
+        <input  class="basic-range"
                 type="range"
                 bind:value={height}
                 max="1000"
@@ -67,10 +63,8 @@
     </Param>
 
     <Param>
-        <label for="generateMaxAltitude">max altitude: {maxAltitude}</label>
-        <input
-                id="generateMaxAltitude"
-                class="basic-range"
+        <span>Max altitude: {maxAltitude}</span>
+        <input  class="basic-range"
                 type="range"
                 bind:value={maxAltitude}
                 max="50"
@@ -79,10 +73,8 @@
     </Param>
 
     <Param>
-        <label for="generateMinAltitude">min altitude: {minAltitude}</label>
-        <input
-                id="generateMinAltitude"
-                class="basic-range"
+        <span>Min altitude: {minAltitude}</span>
+        <input  class="basic-range"
                 type="range"
                 bind:value={minAltitude}
                 max="50"
@@ -91,10 +83,8 @@
     </Param>
 
     <Param>
-        <label for="generateRoughness">roughness: {roughness}</label>
-        <input
-                id="generateRoughness"
-                class="basic-range"
+        <span>Roughness: {roughness}</span>
+        <input  class="basic-range"
                 type="range"
                 bind:value={roughness}
                 max="100"
@@ -103,10 +93,8 @@
     </Param>
 
     <Param>
-        <label for="generateLevelOfDetail">level of detail: {levelOfDetail}</label>
-        <input
-                id="generateLevelOfDetail"
-                class="basic-range"
+        <span>Level of detail: {levelOfDetail}</span>
+        <input  class="basic-range"
                 type="range"
                 bind:value={levelOfDetail}
                 max="50"
@@ -115,10 +103,8 @@
     </Param>
 
     <Param>
-        <label for="generateWaterLevel">water level: {waterLevel}</label>
-        <input
-                id="generateWaterLevel"
-                class="basic-range"
+        <span>Water level: {waterLevel}</span>
+        <input  class="basic-range"
                 type="range"
                 bind:value={waterLevel}
                 max="51"
@@ -127,10 +113,8 @@
     </Param>
 
     <Param>
-        <label for="generateSeed">seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
-        <input
-                id="generateSeed"
-                class="basic-text"
+        <span>Seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</span>
+        <input  class="basic-text"
                 type="number"
                 min="0"
                 bind:value={seed}

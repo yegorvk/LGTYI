@@ -33,9 +33,8 @@
 
     <div class:hidden={is2D}>
         <Param>
-            <label for="wireframeOpacity">Wireframe Opacity: {wireframeOpacity}</label>
-            <input id="wireframeOpacity"
-                   class="basic-range"
+            <span>Wireframe Opacity: {wireframeOpacity}</span>
+            <input class="basic-range"
                    type="range"
                    bind:value={wireframeOpacity}
                    max="1"
@@ -45,9 +44,8 @@
         </Param>
 
         <Param>
-            <label for="wireframeLineWidth">Wireframe Sickness: {wireframeLineWidth}</label>
-            <input id="wireframeLineWidth"
-                   class="basic-range"
+            <span>Wireframe Sickness: {wireframeLineWidth}</span>
+            <input class="basic-range"
                    type="range"
                    bind:value={wireframeLineWidth}
                    max="10"
@@ -57,27 +55,24 @@
 
         <Param>
             <div class="check-label">
-                <label for="modeLightning">Lighting:</label>
-                <input id="modeLightning"
-                       type="checkbox"
+                <span>Lighting:</span>
+                <input type="checkbox"
                        value={"1"}
                        bind:group={mode}
                 />
             </div>
 
             <div class="check-label">
-                <label for="modeWireframe">Wireframe:</label>
-                <input id="modeWireframe"
-                       type="checkbox"
+                <span>Wireframe:</span>
+                <input type="checkbox"
                        value={"2"}
                        bind:group={mode}
                 />
             </div>
 
             <div class="check-label">
-                <label for="modeGradient">Gradient:</label>
-                <input id="modeGradient"
-                       type="checkbox"
+                <span>Gradient:</span>
+                <input type="checkbox"
                        value={"3"}
                        bind:group={mode}
                 />

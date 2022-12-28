@@ -29,16 +29,14 @@
 <div>
     <Param>
         <div class="check-label">
-            <label for="importColorMode">Color Mode: </label>
-            <input id="importColorMode"
-                   type="checkbox"
+            <span>Color Mode: </span>
+            <input type="checkbox"
                    on:change={onColor}
             />
         </div>
 
-        <label for="importColorRed" class:not_enabled={isColorMode===false}>Red: {red}</label>
-        <input id="importColorRed"
-               disabled={isColorMode===false}
+        <span class:not_enabled={isColorMode===false}>Red: {red}</span>
+        <input disabled={isColorMode===false}
                class="basic-range"
                type="range"
                bind:value={red}
@@ -46,9 +44,8 @@
                min="1"
         />
 
-        <label for="importColorBlue" class:not_enabled={isColorMode===false}>Blue: {blue}</label>
-        <input id="importColorBlue"
-               disabled={isColorMode===false}
+        <span class:not_enabled={isColorMode===false}>Blue: {blue}</span>
+        <input disabled={isColorMode===false}
                class="basic-range"
                type="range"
                bind:value={blue}
@@ -56,9 +53,8 @@
                min="1"
         />
 
-        <label for="importColorGreen" class:not_enabled={isColorMode===false}>Green: {green}</label>
-        <input id="importColorGreen"
-               disabled={isColorMode===false}
+        <span class:not_enabled={isColorMode===false}>Green: {green}</span>
+        <input disabled={isColorMode===false}
                class="basic-range"
                type="range"
                bind:value={green}
@@ -69,17 +65,15 @@
 
     <Param>
         <div class="check-label">
-            <label for="importAlphaMode">Alpha Mode: </label>
-            <input id="importAlphaMode"
-                   type="checkbox"
+            <span>Alpha Mode: </span>
+            <input type="checkbox"
                    on:change={onAlpha}
             />
         </div>
 
         <div class="check-label">
-            <label for="importInvertedMode">Inverted Mode: </label>
-            <input id="importInvertedMode"
-                   type="checkbox"
+            <span>Inverted Mode: </span>
+            <input type="checkbox"
                    on:change={onInverted}
             />
         </div>
@@ -89,27 +83,24 @@
         <span>Grayscale is taken from:</span>
         <div class="colors_selector_import">
             <div class="color_radio">
-                <label for="importColorsSelectorRed">Red</label>
-                <input id="importColorsSelectorRed"
-                       type="radio"
+                <span>Red</span>
+                <input type="radio"
                        value="red"
                        bind:group={grayscaleColor}
                 />
             </div>
 
             <div class="color_radio">
-                <label for="importColorsSelectorBlue">Blue</label>
-                <input id="importColorsSelectorBlue"
-                       type="radio"
+                <span>Blue</span>
+                <input type="radio"
                        value="blue"
                        bind:group={grayscaleColor}
                 />
             </div>
 
             <div class="color_radio">
-                <label for="importColorsSelectorGreen">Green</label>
-                <input id="importColorsSelectorGreen"
-                       type="radio"
+                <span>Green</span>
+                <input type="radio"
                        value="green"
                        bind:group={grayscaleColor}
                 />
@@ -117,10 +108,8 @@
         </div>
     </Param>
     <Param>
-        <label for="importWaterLevel">water level: {waterLevel}</label>
-        <input
-                id="importWaterLevel"
-                class="basic-range"
+        <span>water level: {waterLevel}</span>
+        <input class="basic-range"
                 type="range"
                 bind:value={waterLevel}
                 max="51"
