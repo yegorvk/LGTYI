@@ -34,27 +34,6 @@
     opacity: 1;
 }
 
-
-.menu-but:not([disabled]):hover {
-    outline: none;
-    background: #18656e;
-    cursor: pointer;
-}
-.menu-but:not([disabled]):focus {
-    outline: none;
-    border: 2px dashed #cecece;
-    border-radius: 8px;
-}
-.menu-but:not([disabled]):active {
-    outline: none;
-    background: #999999;
-    cursor: pointer;
-}
-.menu-but:disabled {
-    cursor: default;
-    color: #666666;
-}
-
 /* width */
 ::-webkit-scrollbar {
     width: 3px;
@@ -113,7 +92,4 @@ input {
 
 input[type=checkbox] {
     margin: auto;
-}
-.not_enabled{
-    color: #666666;
 }

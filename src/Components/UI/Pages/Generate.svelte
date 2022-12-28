@@ -11,7 +11,7 @@
     let height = eventHandler.generatorOptions.height;
     let maxAltitude = eventHandler.generatorOptions.maxAltitude;
     let minAltitude = eventHandler.generatorOptions.minAltitude;
-    let roughnessCoefficient = eventHandler.generatorOptions.roughnessCoefficient * 100;
+    let roughness = eventHandler.generatorOptions.roughness * 100;
     let levelOfDetail = eventHandler.generatorOptions.levelOfDetail;
     let waterLevel = eventHandler.generatorOptions.waterLevel;
 
@@ -22,7 +22,7 @@
                 height: height,
                 maxAltitude: maxAltitude,
                 minAltitude: minAltitude,
-                roughnessCoefficient: roughnessCoefficient / 100,
+                roughness: roughness / 100,
                 levelOfDetail: levelOfDetail,
                 seed: ((seed === null) ? 0 : seed),
                 waterLevel: waterLevel
@@ -33,19 +33,19 @@
             height,
             maxAltitude,
             minAltitude,
-            roughnessCoefficient,
+            roughness: roughness,
             levelOfDetail,
             seed,
             waterLevel
         };
     }
-
 </script>
+
 <div>
     <Param>
-        <label for="width">width: {width}</label>
+        <label for="generateWidth">width: {width}</label>
         <input
-                id="width"
+                id="generateWidth"
                 class="basic-range"
                 type="range"
                 bind:value={width}
@@ -55,9 +55,9 @@
     </Param>
 
     <Param>
-        <label for="height">height: {height}</label>
+        <label for="generateHeight">height: {height}</label>
         <input
-                id="height"
+                id="generateHeight"
                 class="basic-range"
                 type="range"
                 bind:value={height}
@@ -67,9 +67,9 @@
     </Param>
 
     <Param>
-        <label for="maxAltitude">max altitude: {maxAltitude}</label>
+        <label for="generateMaxAltitude">max altitude: {maxAltitude}</label>
         <input
-                id="maxAltitude"
+                id="generateMaxAltitude"
                 class="basic-range"
                 type="range"
                 bind:value={maxAltitude}
@@ -79,9 +79,9 @@
     </Param>
 
     <Param>
-        <label for="minAltitude">min altitude: {minAltitude}</label>
+        <label for="generateMinAltitude">min altitude: {minAltitude}</label>
         <input
-                id="minAltitude"
+                id="generateMinAltitude"
                 class="basic-range"
                 type="range"
                 bind:value={minAltitude}
@@ -91,21 +91,21 @@
     </Param>
 
     <Param>
-        <label for="roughnessCoefficient">roughness: {roughnessCoefficient}</label>
+        <label for="generateRoughness">roughness: {roughness}</label>
         <input
-                id="roughnessCoefficient"
+                id="generateRoughness"
                 class="basic-range"
                 type="range"
-                bind:value={roughnessCoefficient}
+                bind:value={roughness}
                 max="100"
                 min="1"
         />
     </Param>
 
     <Param>
-        <label for="levelOfDetail">level of detail: {levelOfDetail}</label>
+        <label for="generateLevelOfDetail">level of detail: {levelOfDetail}</label>
         <input
-                id="levelOfDetail"
+                id="generateLevelOfDetail"
                 class="basic-range"
                 type="range"
                 bind:value={levelOfDetail}
@@ -115,9 +115,9 @@
     </Param>
 
     <Param>
-        <label for="waterLevel">water level: {waterLevel}</label>
+        <label for="generateWaterLevel">water level: {waterLevel}</label>
         <input
-                id="waterLevel"
+                id="generateWaterLevel"
                 class="basic-range"
                 type="range"
                 bind:value={waterLevel}
@@ -127,9 +127,9 @@
     </Param>
 
     <Param>
-        <label for="seed">seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
+        <label for="generateSeed">seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
         <input
-                id="seed"
+                id="generateSeed"
                 class="basic-text"
                 type="number"
                 min="0"

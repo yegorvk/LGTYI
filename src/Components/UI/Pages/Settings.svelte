@@ -43,6 +43,7 @@
                    step="0.05"
             />
         </Param>
+
         <Param>
             <label for="wireframeLineWidth">Wireframe Sickness: {wireframeLineWidth}</label>
             <input id="wireframeLineWidth"
@@ -53,11 +54,12 @@
                    min="1"
             />
         </Param>
+
         <Param>
             <div class="check-label">
                 <label for="modeLightning">Lighting:</label>
                 <input id="modeLightning"
-                       type=checkbox
+                       type="checkbox"
                        value={"1"}
                        bind:group={mode}
                 />
@@ -66,7 +68,7 @@
             <div class="check-label">
                 <label for="modeWireframe">Wireframe:</label>
                 <input id="modeWireframe"
-                       type=checkbox
+                       type="checkbox"
                        value={"2"}
                        bind:group={mode}
                 />
@@ -75,7 +77,7 @@
             <div class="check-label">
                 <label for="modeGradient">Gradient:</label>
                 <input id="modeGradient"
-                       type=checkbox
+                       type="checkbox"
                        value={"3"}
                        bind:group={mode}
                 />

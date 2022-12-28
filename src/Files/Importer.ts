@@ -30,7 +30,7 @@ export async function importMap(): Promise<SaveData> {
             Data.viewMode === undefined ||
             Data.genOptions.seed === undefined ||
             Data.genOptions.levelOfDetail === undefined ||
-            Data.genOptions.roughnessCoefficient === undefined ||
+            Data.genOptions.roughness === undefined ||
             Data.genOptions.maxAltitude === undefined ||
             Data.genOptions.minAltitude === undefined ||
             Data.genOptions.width === undefined ||
