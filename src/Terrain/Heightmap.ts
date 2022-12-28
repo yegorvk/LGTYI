@@ -1,6 +1,6 @@
 import { applyDefaults } from "../Defaults";
 import { DefaultGeneratorOptions, type GeneratorOptions } from "./GeneratorOptions";
-import { generateTerrain } from "../Generator/Generator";
+import { generateTerrain, generateSimpleTerrain } from "../Generator/Generator";
 
 export class Heightmap {
     width: number;
@@ -19,6 +19,17 @@ export class Heightmap {
 
         const heightmap = Heightmap.flat(options.width, options.height, 0, options.waterLevel);
         generateTerrain(heightmap, options);
+
+        return heightmap;
+    }
+
+    static simpleGenerate(
+        options: GeneratorOptions
+    ): Heightmap {
+        applyDefaults(options, DefaultGeneratorOptions);
+
+        const heightmap = Heightmap.flat(options.width, options.height, 0, options.waterLevel);
+        generateSimpleTerrain(heightmap, options);
 
         return heightmap;
     }

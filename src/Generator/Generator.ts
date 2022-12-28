@@ -38,6 +38,12 @@ export function generateTerrain(
     normalize(heightmap, options.minAltitude, options.maxAltitude);
 }
 
+export function generateSimpleTerrain(heightmap: Heightmap, options: GeneratorOptions) {
+    applyDefaults(options, DefaultGeneratorOptions);
+    generateDetails(heightmap, options.seed, options.roughness, options.levelOfDetail);
+    normalize(heightmap, options.minAltitude, options.maxAltitude);
+}
+
 function generateDetails(
     heightmap: Heightmap,
     seed: number,
