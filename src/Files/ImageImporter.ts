@@ -71,7 +71,7 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
 
                 alpha /= 255;
 
-                if (!isInverted)
+                if (isInverted)
                     alpha = 1 - alpha;
 
                 if (isAlphaMod)
