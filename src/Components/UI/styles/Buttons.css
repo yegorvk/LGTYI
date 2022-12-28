@@ -25,7 +25,6 @@
 .menu-but:not([disabled]):focus {
     outline: none;
     border: 2px dashed #cecece;
-    border-radius: 8px;
 }
 .menu-but:not([disabled]):active {
     outline: none;
@@ -46,6 +45,7 @@
     outline: inherit;
     transition: left 400ms;
     background: #999999;
+    border: 1px solid #cecece;
     border-radius: 10px;
 }
 .closeup:not([disabled]):hover {
@@ -55,8 +55,7 @@
 }
 .closeup:not([disabled]):focus {
     outline: none;
-    border: 2px dashed #cecece;
-    border-radius: 8px;
+    border: 1px dashed #cecece;
 }
 .closeup:not([disabled]):active {
     outline: none;
@@ -80,6 +79,7 @@
     opacity: 0;
     transition: opacity 400ms;
     background: #999999;
+    border: 1px solid #cecece;
     border-radius: 10px;
 }
 .back-but:not([disabled]):hover {
@@ -89,8 +89,7 @@
 }
 .back-but:not([disabled]):focus {
     outline: none;
-    border: 2px dashed #cecece;
-    border-radius: 8px;
+    border: 1px dashed #cecece;
 }
 .back-but:not([disabled]):active {
     outline: none;
