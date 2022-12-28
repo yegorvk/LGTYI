@@ -17,12 +17,12 @@ export function generateTerrain(
 
     const rng = seedrandom(options.seed);
 
-    for (let i = 0; i < Math.ceil(mapHeuristicSize * 0.2); i++) {
+    for (let i = 0; i < Math.ceil(mapHeuristicSize * 0.4); i++) {
         const hillCenterX = Math.min(heightmap.width - 1, Math.round(rng() * heightmap.width));
         const hillCenterY = Math.min(heightmap.height - 1, Math.round(rng() * heightmap.height));
 
-        const heightCoef = rng() * 80 - 40;
-        const radiusCoef = rng() * 50 + 20;
+        const heightCoef = rng() * 80 - 30;
+        const radiusCoef = rng() * 40 + 20;
 
         generateSmoothHill(heightmap, hillCenterX, hillCenterY, heightCoef, radiusCoef);
     }
@@ -55,7 +55,7 @@ function generateDetails(
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 
-    roughness /= 5.6;
+    roughness /= 20;
     let altCoef = scale;
 
     for (let step = 0; step < numSteps; step++) {

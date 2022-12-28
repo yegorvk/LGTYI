@@ -112,8 +112,8 @@
         <input class="basic-range"
                 type="range"
                 bind:value={waterLevel}
-                max="51"
-                min="-60"
+                max="120"
+                min="-120"
         />
     </Param>
     <button class="menu-but"

@@ -67,8 +67,8 @@
         <input  class="basic-range"
                 type="range"
                 bind:value={maxAltitude}
-                max="50"
-                min="-50"
+                max="120"
+                min="-120"
         />
     </Param>
 
@@ -77,8 +77,8 @@
         <input  class="basic-range"
                 type="range"
                 bind:value={minAltitude}
-                max="50"
-                min="-50"
+                max="120"
+                min="-120"
         />
     </Param>
 
@@ -97,7 +97,7 @@
         <input  class="basic-range"
                 type="range"
                 bind:value={levelOfDetail}
-                max="50"
+                max="20"
                 min="1"
         />
     </Param>
@@ -107,8 +107,8 @@
         <input  class="basic-range"
                 type="range"
                 bind:value={waterLevel}
-                max="51"
-                min="-60"
+                max="120"
+                min="-120"
         />
     </Param>
 

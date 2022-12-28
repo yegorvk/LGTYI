@@ -1,11 +1,11 @@
-
+import { MAX_ALT, MIN_ALT } from "./GeneratorOptions";
 
 export function colorRGBFromAltitude(
     alt: number,
     waterLevel: number,
     useWaterColors: boolean = true,
-    maxAlt: number = 50,
-    minAlt: number = -50
+    maxAlt: number = MAX_ALT,
+    minAlt: number = MIN_ALT
 ): number {
     // get rid of negative values
     maxAlt -= minAlt;
@@ -85,8 +85,8 @@ export function colorRGBFromAltitude(
 
 export function colorGrayScaleFromAltitude(
     alt: number,
-    maxAlt: number = 50,
-    minAlt: number = -50
+    maxAlt: number = MAX_ALT,
+    minAlt: number = MIN_ALT
 ): number {
     return Math.min(255, Math.round((((alt - minAlt) / (maxAlt - minAlt)) * 255)))
 }
@@ -94,8 +94,8 @@ export function colorGrayScaleFromAltitude(
 /** @argument grayscale grayscale value (from 0 to 255) */
 export function altitudeFromGrayscale(
     grayscale: number,
-    maxAlt: number = 50,
-    minAlt: number = -50
+    maxAlt: number = MAX_ALT,
+    minAlt: number = MIN_ALT
 ) {
     const altRel = (grayscale / 255) * (maxAlt - minAlt)
     return minAlt + altRel;
