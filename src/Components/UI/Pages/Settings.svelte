@@ -16,12 +16,12 @@
 </script>
 
 <div>
-    <button class="menu-but" on:click={dimSwitch}>
+    <button class="menu-but center-text" on:click={dimSwitch}>
         <span>2D ⟷ 3D</span>
     </button>
 
     <div class:hidden={!is2D}>
-        <button class="menu-but"
+        <button class="menu-but center-text"
                 on:click={
                     () => {
                         eventHandler.d2SettingsSwitch();
@@ -85,7 +85,7 @@
         </Param>
     </div>
 
-    <button class="menu-but" on:click={save}>
+    <button class="menu-but center-text" on:click={save}>
         <span>Save</span>
     </button>
 </div>

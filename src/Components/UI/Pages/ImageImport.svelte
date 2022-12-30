@@ -128,7 +128,7 @@
         />
     </Param>
 
-    <button class="menu-but"
+    <button class="menu-but center-text"
             on:click={imp}>
         <span>Import</span>
     </button>
