@@ -19,7 +19,7 @@
     export let is2D: boolean = false;
     export let generate: (options: GeneratorOptions) => void = null;
     let visible: boolean = false;
-    let currPanel: Panels = Panels.GENERATE;
+    let currPanel: Panels = Panels.MAIN;
 
     let dispatcher = createEventDispatcher();
     export let eventHandler: UIEventsHandler = new UIEventsHandler(dispatcher);
@@ -33,9 +33,9 @@
     }
 
     function backButton() {
-        currPanel = Panels.MAIN;
+        if (currPanel == Panels.IMAGE_IMPORT) currPanel = Panels.OPERATIONS;
+        else currPanel = Panels.MAIN;
     }
-
 </script>
 
 <div class="main_panel" class:opened_panel={visible}>
@@ -47,7 +47,7 @@
     </button>
     <button title="Back"
             class="back-but"
-            hidden={currPanel === Panels.MAIN}
+            class:hidden={currPanel === Panels.MAIN}
             disabled={currPanel === Panels.MAIN}
             on:click={backButton}>
         <img src="back_arrow.png" alt="back"/>

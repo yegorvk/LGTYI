@@ -134,7 +134,6 @@
     </button>
 </div>
 
-
 <style>
     .colors_selector_import{
         display: flex;

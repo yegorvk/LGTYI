@@ -1,30 +1,31 @@
-.notify-wind{
-    height: 70px;
-    background: #999999;
-    border-radius: 10px;
+.notify-wind {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    opacity: 0;
     display: flex;
+    height: 70px;
+    padding: 5px;
     align-items: center;
     justify-content: center;
-    padding:5px;
-    color: green;
-    font-size: 25px;
-    font-weight: bold;
-    font-family: Calibri;
     transition: opacity 400ms;
     z-index: 999999;
+    opacity: 0;
+    background: #999999;
+    border-radius: 10px;
+    color: green;
+    font-family: Comfortaa, cursive;
+    font-size: 23px;
 }
-.notify-wind>img{
+.notify-wind > img {
     width: 40px;
     height: 40px;
     object-fit: scale-down;
 }
-.visible_notify{
+
+.visible {
     opacity: 1;
 }
-.err>span{
+
+.red {
     color: red;
 }
