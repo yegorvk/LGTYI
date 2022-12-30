@@ -10,7 +10,6 @@
     let mode = ["1", "2", "3"];
     function dimSwitch() {
         is2D = !is2D;
-        is2D = is2D;
     }
     let save = () => {eventHandler.settingsSave(mode, wireframeLineWidth, wireframeOpacity);}
 </script>
