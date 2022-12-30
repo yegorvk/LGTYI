@@ -50,7 +50,7 @@
             hidden={currPanel === Panels.MAIN}
             disabled={currPanel === Panels.MAIN}
             on:click={backButton}>
-        <img src="https://cdn.pixabay.com/photo/2012/04/11/10/22/arrow-27315_960_720.png" alt="back"/>
+        <img src="back_arrow.png" alt="back"/>
     </button>
     <div class="content">
         {#if currPanel === Panels.MAIN}
