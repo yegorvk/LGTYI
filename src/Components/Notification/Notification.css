@@ -15,6 +15,7 @@
     font-weight: bold;
     font-family: Calibri;
     transition: opacity 400ms;
+    z-index: 999999;
 }
 .notify-wind>img{
     width: 40px;
