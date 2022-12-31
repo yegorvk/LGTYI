@@ -1,5 +1,4 @@
 .menu-but {
-    display: flex;
     width: 100%;
     height: 60px;
     min-height: 44px;
@@ -8,12 +7,11 @@
     outline: none;
     align-items: center;
     transition: all 320ms;
-    z-index: 100;
     background: #999999;
     border: 2px solid #cecece;
     border-radius: 8px;
     color: #333333;
-    text-align: center;
+    text-align: left;
     font-family: Comfortaa, cursive;
     font-size: 23px;
 }
@@ -108,4 +106,8 @@
 .opened_panel > .back-but {
     right: 10px;
     opacity: 1;
+}
+
+.center-text {
+    text-align: center;
 }

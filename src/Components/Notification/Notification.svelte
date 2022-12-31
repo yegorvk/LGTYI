@@ -16,12 +16,11 @@
     }
 </script>
 
-<div class="notify-wind" class:visible_notify={visible} class:err={err}>
+<div class="notify-wind" class:visible={visible}>
     {#if err}
-        <img alt="notOk"
-             src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Deletion_icon.svg/1024px-Deletion_icon.svg.png"/>
-    {:else }
-        <img alt="ok" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Symbol_OK.svg/1024px-Symbol_OK.svg.png"/>
+        <img src="cross.png" alt="not ok"/>
+    {:else}
+        <img src="checkmark.png" alt="ok"/>
     {/if}
-    <span>{spanText}</span>
+    <span class:red={err}>{spanText}</span>
 </div>

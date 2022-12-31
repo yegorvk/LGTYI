@@ -129,7 +129,7 @@
         />
     </Param>
 
-    <button class="menu-but"
+    <button class="menu-but center-text"
             on:click={Generate}>
         <span>Generate</span>
     </button>
