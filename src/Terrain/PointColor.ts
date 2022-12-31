@@ -1,3 +1,4 @@
+import { lerp } from "../math";
 import { MAX_ALT, MIN_ALT } from "./GeneratorOptions";
 
 export function colorRGBFromAltitude(
@@ -21,6 +22,7 @@ export function colorRGBFromAltitude(
         0.4*maxAlt,
         0.7*maxAlt,
         0.9*maxAlt,
+        0.95*maxAlt,
         maxAlt
     ]
 
@@ -29,6 +31,7 @@ export function colorRGBFromAltitude(
         0x3CB043,
         0xAAFF00,
         0xFF0000,
+        0xFFFFFF,
         0xFFFFFF
     ]
 
@@ -119,8 +122,4 @@ function lerp_color(y1: number, y2: number, a: number): number {
     const b = lerp(b1, b2, a);
 
     return (r << 16) + (g << 8) + b;
-}
-
-function lerp(v1: number, v2: number, a: number): number {
-    return a*v2+v1*(1-a);
 }

@@ -1,6 +1,6 @@
 export function applyDefaults<T>(obj: T, defaults: T) {
-    for (const key in obj) {
+    Object.keys(defaults).forEach((key) => {
         if (obj[key] === undefined)
-            obj[key] = defaults[key]
-    }
+            Object.defineProperty(obj, key, { value: defaults[key] })
+    });
 }

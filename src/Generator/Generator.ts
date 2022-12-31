@@ -1,51 +1,114 @@
 import { applyDefaults } from '../Defaults';
 import { PerlinNoise } from '../PerlinNoise/PerlinNoise';
-import { DefaultGeneratorOptions, type GeneratorOptions } from '../Terrain/GeneratorOptions';
+import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions } from '../Terrain/GeneratorOptions';
 import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
+import { distance, map_pow, sigmoid_prime } from './Util';
+import { Biome, MAX_BIOME_ID, biome } from './Biome';
 
 export function generateTerrain(
     heightmap: Heightmap,
     options: GeneratorOptions = DefaultGeneratorOptions
 ) {
     applyDefaults(options, DefaultGeneratorOptions);
-
     heightmap.waterLevel = options.waterLevel;
 
-    const mapHeuristicSize = (heightmap.width + heightmap.height) / 2;
-    const centerX = Math.trunc(heightmap.width / 2), centerY = Math.trunc(heightmap.height / 2);
-
+    const temp = new Float32Array(heightmap.data.length);
     const rng = seedrandom(options.seed);
 
-    for (let i = 0; i < Math.ceil(mapHeuristicSize * 0.4); i++) {
-        const hillCenterX = Math.min(heightmap.width - 1, Math.round(rng() * heightmap.width));
-        const hillCenterY = Math.min(heightmap.height - 1, Math.round(rng() * heightmap.height));
-
-        const heightCoef = rng() * 80 - 30;
-        const radiusCoef = rng() * 40 + 20;
-
-        generateSmoothHill(heightmap, hillCenterX, hillCenterY, heightCoef, radiusCoef);
-    }
-
-    generateDetails(
+    generate(
         heightmap,
+        temp,
         options.seed,
-        options.roughness,
-        options.levelOfDetail,
-        5
+        options.roughness + 0.5,
+        options.levelOfDetail
     );
 
-    normalize(heightmap, options.minAltitude, options.maxAltitude);
+    const biomes = new Array<Biome>();
+
+    for (let i = 0; i < 8; i++) {
+        biomes.push(
+            biome(
+                Math.min(MAX_BIOME_ID, Math.trunc(rng() * (MAX_BIOME_ID + 1))), 
+                rng() * options.width,
+                rng() * options.height,
+                options
+            )
+        )
+    }
+
+    for (let i = 0; i < options.height; i++) {
+        for (let j = 0; j < options.width; j++) {
+            const k = i * options.width + j;
+
+            let totalStrength = 0.0;
+            let totalHeight = 0.0;
+
+            for (let t = 0; t < biomes.length; t++) {
+                const strength = biomes[t].strength(j, i);
+                totalStrength += strength;
+
+                const height = strength * biomes[t].height(j, i, temp[k]);
+                totalHeight += height;
+            }
+
+            heightmap.data[k] = totalHeight / totalStrength;
+        }
+    }
 }
 
 export function generateSimpleTerrain(heightmap: Heightmap, options: GeneratorOptions) {
     applyDefaults(options, DefaultGeneratorOptions);
-    generateDetails(heightmap, options.seed, options.roughness, options.levelOfDetail);
-    normalize(heightmap, options.minAltitude, options.maxAltitude);
+
+    generateDetails(
+        heightmap.data,
+        heightmap.width,
+        heightmap.height,
+        options.seed,
+        options.roughness,
+        options.levelOfDetail
+    );
+
+    map_pow(
+        heightmap.data,
+        options.minAltitude,
+        options.maxAltitude,
+        0.7
+    );
+}
+
+function generate(
+    heightmap: Heightmap,
+    out: Float32Array,
+    seed: number,
+    roughnessCoef: number = 1.0,
+    levelOfDetails: number = 10
+) {
+    out.fill(0.0);
+    let scale = 1.0;
+
+    for (let i = 0; i < 9; i++) {
+        generateDetails(
+            out,
+            heightmap.width,
+            heightmap.height,
+            seed,
+            1.0 * roughnessCoef,
+            levelOfDetails,
+            scale,
+            3,
+            0.2
+        );
+
+        map_pow(out, -1.0, 1.0, 1.0 + 1.0/7.0);
+        scale -= 0.1;
+    }
 }
 
 function generateDetails(
-    heightmap: Heightmap,
+    heightmap: Float32Array,
+    width: number,
+    height: number,
     seed: number,
     roughness: number,
     numSteps: number,
@@ -55,17 +118,17 @@ function generateDetails(
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 
-    roughness /= 20;
+    roughness /= 80;
     let altCoef = scale;
 
     for (let step = 0; step < numSteps; step++) {
         let noiseY = 0
 
-        for (let i = 0; i < heightmap.height; i++) {
+        for (let i = 0; i < height; i++) {
             let noiseX = 0
 
-            for (let j = 0; j < heightmap.width; j++) {
-                heightmap.data[i*heightmap.width+j] += altCoef * noiseGenerator.perlin2(noiseX, noiseY);
+            for (let j = 0; j < width; j++) {
+                heightmap[i*width+j] += altCoef * noiseGenerator.perlin2(noiseX, noiseY);
                 noiseX += roughness
             }
 
@@ -74,23 +137,6 @@ function generateDetails(
 
         roughness *= roughnessStep;
         altCoef *= altStep;
-    }
-}
-
-function normalize(heightmap: Heightmap, outMinAlt: number, outMaxAlt: number) {
-    let minAlt = Infinity, maxAlt = -Infinity;
-
-    for (let i = 0; i < heightmap.data.length; i++) {
-        minAlt = Math.min(minAlt, heightmap.data[i]);
-        maxAlt = Math.max(maxAlt, heightmap.data[i]);
-    }
-
-    const altRange = maxAlt - minAlt;
-    const outAltRange = outMaxAlt - outMinAlt;
-
-    for (let i = 0; i < heightmap.data.length; i++) {
-        heightmap.data[i] = outMinAlt + outAltRange * ((heightmap.data[i] - minAlt) / altRange);
-        heightmap.data[i] = Math.max(outMinAlt, Math.min(outMaxAlt, heightmap.data[i]));
     }
 }
 
@@ -109,14 +155,4 @@ function generateSmoothHill(
             heightmap.data[i*heightmap.width+j] += delta;
         } 
     }
-}
-
-function distance(x1: number, y1: number, x2: number, y2: number) {
-    const dx = x1 - x2, dy = y1 - y2;
-    return Math.sqrt(dx*dx + dy*dy);
-}
-
-function sigmoid_prime(x: number): number {
-    const sigmoid_val = 1.0 / (1.0 + Math.exp(-x));
-    return sigmoid_val * (1.0 - sigmoid_val);
 }

@@ -9,6 +9,7 @@
         DefaultRenderSettings,
         type RenderSettings,
     } from "../Renderer/RenderSettings";
+    import { RenderTerrainTest } from "../Renderer/RenderTerrainTest";
 
     let root: Element;
 
@@ -19,6 +20,8 @@
 
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
+
+    const SCALE = 1;
 
     let renderer: THREE.WebGLRenderer = null;
     let camControls: FlyControls = null;
@@ -34,13 +37,14 @@
     let camera: THREE.Camera = null;
 
     let chunk = new Chunk(1, heightmap, renderSettings.gradient);
+    //let chunk = null;
 
     let waterLayerNorm: THREE.Texture = null;
 
     if (renderSettings.lighting) {
         const waterLayerGeometry = new THREE.PlaneGeometry(
-            chunk.width - 1,
-            chunk.height - 1
+            (heightmap.width - 1) * SCALE,
+            (heightmap.height - 1) * SCALE
         );
 
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);
@@ -79,9 +83,7 @@
         const rootWidth = width;
         const rootHeight = height;
 
-        console.log(chunk);
-
-        let renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), chunk, {
+        let renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), SCALE, chunk, {
             useWireframe: renderSettings.wireframe,
             wireframeLineWidth: renderSettings.wireframeLineWidth,
             wireframeOpacity: renderSettings.wireframeOpacity,
@@ -89,27 +91,32 @@
             vertexColors: renderSettings.gradient,
         });
 
+        //let renderTerrain = new RenderTerrainTest(heightmap);
+
         scene.add(renderChunk);
+        //scene.add(renderTerrain);
 
         if (useOrthographicCamera)
-            camera = new THREE.OrthographicCamera(
+            /*camera = new THREE.OrthographicCamera(
                 -width/2,
                 width/2,
                 -height/2,
                 height/2,
                 0.1,
                 1000
-            );
+            );*/
+
+            camera = new THREE.OrthographicCamera(-100, 100, 100, -100, 0.1, 1000);
         else {
             camera = new THREE.PerspectiveCamera(
                 75, // fov
                 rootWidth / rootHeight, // aspect ratio
                 0.1, // near
-                1000 // far
+                10000 // far
             );
         }
 
-        camera.position.set(0, 0, 50);
+        camera.position.set(heightmap.width / 2, heightmap.height / 2, 240);
         camera.lookAt(0, 0, 0);
 
         if (renderer !== null) renderer.dispose();
@@ -123,8 +130,19 @@
         renderer.setSize(rootWidth, rootHeight);
 
         windowResizeEventListener = () => {
-            (camera as THREE.PerspectiveCamera).aspect = window.innerWidth / window.innerHeight;
-            (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+            if (useOrthographicCamera) {
+                /*const cam = (camera as THREE.OrthographicCamera);
+
+                cam.left = -window.innerWidth / 2;
+                cam.right = window.innerWidth / 2;
+                cam.bottom = -window.innerHeight / 2;
+                cam.top = window.innerHeight / 2;
+
+                (camera as THREE.OrthographicCamera).updateProjectionMatrix();*/
+            } else {
+                (camera as THREE.PerspectiveCamera).aspect = window.innerWidth / window.innerHeight;
+                (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
+            }
 
             renderer.setSize(window.innerWidth, window.innerHeight);
         };
@@ -136,7 +154,7 @@
         camControls = new FlyControls(camera, renderer.domElement);
         camControls.dragToLook = true;
 
-        camControls.movementSpeed *= 40;
+        camControls.movementSpeed *= 80;
         camControls.rollSpeed *= 100;
 
         let speedModifier = false;
@@ -147,12 +165,12 @@
 
             switch (e.key) {
                 case 'Shift':
-                    camControls.movementSpeed *= 3;
-                    speedBoost = 3;
+                    camControls.movementSpeed *= 3.5;
+                    speedBoost = 3.5;
                     break;
-                case 'Tab':
-                    camControls.movementSpeed /= 3;
-                    speedBoost = 1/3;
+                case 'Alt':
+                    camControls.movementSpeed /= 2;
+                    speedBoost = 0.5;
                     break;
                 default:
                     return;
@@ -167,7 +185,7 @@
         keyupEventListener = (e) => {
             if (!speedModifier) return;
 
-            if (e.key == 'Tab' || e.key == 'Shift') {
+            if (e.key == 'Alt' || e.key == 'Shift') {
                 camControls.movementSpeed /= speedBoost;
                 speedModifier = false;
 

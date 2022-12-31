@@ -4,10 +4,14 @@ import type {Chunk} from '../Terrain/Chunk'
 import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
 
 export class RenderChunk extends THREE.Object3D {
-    constructor(offset: THREE.Vector3, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
+    private terrainScale: number;
+
+    constructor(offset: THREE.Vector3, scale: number, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
         super()
 
         applyDefaults(options, DefaultRenderOptions)
+
+        this.terrainScale = scale;
 
         const terrain = this.createTerrain(offset, chunk, options)
         super.add(terrain)
@@ -16,16 +20,18 @@ export class RenderChunk extends THREE.Object3D {
     private createTerrain(offset: THREE.Vector3, chunk: Chunk, options: RenderOptions): THREE.Object3D {
         const geometry = new THREE.BufferGeometry()
 
-        const posAttr = new THREE.BufferAttribute(chunk.vertices, 3)
+        const posAttr = new THREE.Float32BufferAttribute(chunk.vertices, 3)
         geometry.setAttribute('position', posAttr)
 
         if (chunk.useVertexColors) {
-            const colorAttr = new THREE.BufferAttribute(chunk.vertexColors, 3)
+            const colorAttr = new THREE.Float32BufferAttribute(chunk.vertexColors, 3)
             geometry.setAttribute('color', colorAttr)
         }
 
-        const indexAttr = new THREE.BufferAttribute(chunk.indices, 1)
-        geometry.setIndex(indexAttr)
+        const indexAttr = new THREE.Uint32BufferAttribute(chunk.indices, 1);
+        geometry.setIndex(indexAttr);
+
+        geometry.scale(this.terrainScale, this.terrainScale, this.terrainScale * 2);
 
         if (options.prepareForLighting)
             geometry.computeVertexNormals()
