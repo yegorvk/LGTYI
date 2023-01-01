@@ -49,11 +49,14 @@
 
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);
 
-        const waterLayerMat = new THREE.MeshBasicMaterial({
+        waterLayerNorm = new THREE.TextureLoader().load('./assets/textures/water_norm.jpg');
+
+        const waterLayerMat = new THREE.MeshPhongMaterial({
             transparent: true,
-            opacity: 0.6,
+            opacity: 0.45,
             reflectivity: 0.9,
-            color: 0x064273
+            color: 0x064273,
+            normalMap: waterLayerNorm,
         });
 
         const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat);
@@ -76,6 +79,10 @@
     function update() {
         if (camControls === null) return;
         camControls.update(clock.getDelta());
+
+        if (renderSettings.dynamicScene) 
+            animate();
+
         requestAnimationFrame(update);
     }
 
@@ -204,7 +211,8 @@
             animate();
         };
 
-        camControls.addEventListener("change", camControlsChangeEventListener);
+        if (!renderSettings.dynamicScene) 
+            camControls.addEventListener("change", camControlsChangeEventListener);
     }
 
     onMount(async () => {
