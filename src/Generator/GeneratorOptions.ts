@@ -1,4 +1,4 @@
-import { BiomesDistribution, DefaultBiomesDistribution } from "./Biome";
+import { type BiomesDistribution, DefaultBiomesDistribution } from "./Biome";
 
 export const MAX_ALT = 120;
 export const MIN_ALT = -120;
