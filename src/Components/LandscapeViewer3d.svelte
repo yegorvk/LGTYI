@@ -10,6 +10,7 @@
         type RenderSettings,
     } from "../Renderer/RenderSettings";
     import { RenderTerrainTest } from "../Renderer/RenderTerrainTest";
+    import * as water from '../shaders/water.glsl';
 
     let root: Element;
 
@@ -39,25 +40,50 @@
     let chunk = new Chunk(1, heightmap, renderSettings.gradient);
     //let chunk = null;
 
+    let waterLayerMat: THREE.ShaderMaterial = null;
     let waterLayerNorm: THREE.Texture = null;
 
     if (renderSettings.lighting) {
         const waterLayerGeometry = new THREE.PlaneGeometry(
             (heightmap.width - 1) * SCALE,
-            (heightmap.height - 1) * SCALE
+            (heightmap.height - 1) * SCALE,
+            Math.floor((heightmap.width - 1) / 3),
+            Math.floor((heightmap.height - 1) / 3)
         );
 
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);
 
         waterLayerNorm = new THREE.TextureLoader().load('./assets/textures/water_norm.jpg');
 
-        const waterLayerMat = new THREE.MeshPhongMaterial({
+        waterLayerNorm.wrapS = THREE.RepeatWrapping;
+        waterLayerNorm.wrapT = THREE.RepeatWrapping;
+
+        const uniforms = THREE.UniformsUtils.merge([
+            THREE.ShaderLib.phong.uniforms,
+            {
+                diffuse: { value: new THREE.Color(0x064273) },
+                opacity: { value: 0.45 },
+                normalMap: { value: waterLayerNorm },
+                time: { value: 0.0 }
+            }
+        ]);
+
+        /*const waterLayerMat = new THREE.MeshPhongMaterial({
             transparent: true,
             opacity: 0.45,
-            reflectivity: 0.9,
             color: 0x064273,
             normalMap: waterLayerNorm,
-        });
+        });*/
+
+        waterLayerMat = new THREE.ShaderMaterial(
+            {
+                vertexShader: water.vertex,
+                fragmentShader: water.fragment,
+                lights: true,
+                uniforms: uniforms,
+                transparent: true,
+            }
+        );
 
         const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat);
         scene.add(waterLayer);
@@ -79,6 +105,9 @@
     function update() {
         if (camControls === null) return;
         camControls.update(clock.getDelta());
+
+        waterLayerMat.uniforms.time.value = clock.getElapsedTime() * 1000;
+        waterLayerMat.uniformsNeedUpdate = true;
 
         if (renderSettings.dynamicScene) 
             animate();
@@ -246,6 +275,8 @@
         if (waterLayerNorm !== null) waterLayerNorm.dispose();
 
         clock.stop();
+
+        waterLayerMat.dispose();
 
         waterLayerNorm = clock = scene = camera = chunk = null;
     });
