@@ -2,7 +2,7 @@
     import {UIEventsHandler} from "../UIEventsHandler";
     import Param from "../Param/Param.svelte";
     import type {GrayscaleColor} from "../../../types/GrayscaleColor";
-    import {DefaultGeneratorOptions} from "../../../Terrain/GeneratorOptions";
+    import {DefaultGeneratorOptions} from "../../../Generator/GeneratorOptions";
 
     export let eventHandler: UIEventsHandler;
     let imp = () => {eventHandler.ImageImport(isAlphaMod, isColorMode, {r: red, b: blue, g: green}, grayscaleColor, waterLevel, isInvertedAlphaMod);};

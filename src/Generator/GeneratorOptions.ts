@@ -1,3 +1,4 @@
+import { BiomesDistribution, DefaultBiomesDistribution } from "./Biome";
 
 export const MAX_ALT = 120;
 export const MIN_ALT = -120;
@@ -11,7 +12,8 @@ export interface GeneratorOptions {
     levelOfDetail: number;
     seed: number;
     waterLevel: number;
-    hillyness?: number;
+    biomes?: BiomesDistribution;
+    numberOfBiomes?: number;
 }
 
 export const DefaultGeneratorOptions: GeneratorOptions = {
@@ -23,5 +25,6 @@ export const DefaultGeneratorOptions: GeneratorOptions = {
     levelOfDetail: 6,
     seed: 0,
     waterLevel: 0,
-    hillyness: 0.6
+    biomes: DefaultBiomesDistribution,
+    numberOfBiomes: 15
 }

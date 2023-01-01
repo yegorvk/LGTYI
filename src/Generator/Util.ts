@@ -1,4 +1,4 @@
-import type { GeneratorOptions } from "../Terrain/GeneratorOptions";
+import type { GeneratorOptions } from "./GeneratorOptions";
 
 export function distance2(x1: number, y1: number, x2: number, y2: number) {
     const dx = x1 - x2, dy = y1 - y2;

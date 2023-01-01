@@ -116,7 +116,7 @@
             );
         }
 
-        camera.position.set(heightmap.width / 2, heightmap.height / 2, 240);
+        camera.position.set(0, 0, 240);
         camera.lookAt(0, 0, 0);
 
         if (renderer !== null) renderer.dispose();
@@ -154,8 +154,8 @@
         camControls = new FlyControls(camera, renderer.domElement);
         camControls.dragToLook = true;
 
-        camControls.movementSpeed *= 80;
-        camControls.rollSpeed *= 100;
+        camControls.movementSpeed *= 160;
+        camControls.rollSpeed *= 120;
 
         let speedModifier = false;
         let speedBoost = 1;

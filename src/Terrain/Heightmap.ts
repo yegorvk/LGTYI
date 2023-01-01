@@ -1,5 +1,5 @@
 import { applyDefaults } from "../Defaults";
-import { DefaultGeneratorOptions, type GeneratorOptions } from "./GeneratorOptions";
+import { DefaultGeneratorOptions, type GeneratorOptions } from "../Generator/GeneratorOptions";
 import { generateTerrain, generateSimpleTerrain } from "../Generator/Generator";
 
 export class Heightmap {

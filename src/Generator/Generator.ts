@@ -1,10 +1,10 @@
 import { applyDefaults } from '../Defaults';
 import { PerlinNoise } from '../PerlinNoise/PerlinNoise';
-import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions } from '../Terrain/GeneratorOptions';
+import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions } from './GeneratorOptions';
 import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
 import { distance, map_pow, sigmoid_prime } from './Util';
-import { Biome, MAX_BIOME_ID, biome } from './Biome';
+import { Biome, MAX_BIOME_ID, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
 
 export function generateTerrain(
     heightmap: Heightmap,
@@ -25,17 +25,22 @@ export function generateTerrain(
     );
 
     const biomes = new Array<Biome>();
+    const normDist = normalizeBiomesDistribution(options.biomes);
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < options.numberOfBiomes; i++) {
+        const biomeId = randomBiomeId(normDist, Math.random());
+
         biomes.push(
             biome(
-                Math.min(MAX_BIOME_ID, Math.trunc(rng() * (MAX_BIOME_ID + 1))), 
-                rng() * options.width,
-                rng() * options.height,
+                biomeId, 
+                rng() * options.width * 0.75,
+                rng() * options.height * 0.75,
                 options
             )
         )
     }
+
+    console.log(biomes);
 
     for (let i = 0; i < options.height; i++) {
         for (let j = 0; j < options.width; j++) {
@@ -48,7 +53,7 @@ export function generateTerrain(
                 const strength = biomes[t].strength(j, i);
                 totalStrength += strength;
 
-                const height = strength * biomes[t].height(j, i, temp[k]);
+                const height = strength * biomes[t].height(temp[k]);
                 totalHeight += height;
             }
 

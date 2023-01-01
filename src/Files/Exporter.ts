@@ -1,5 +1,5 @@
 import type {Heightmap} from "../Terrain/Heightmap";
-import type {GeneratorOptions} from "../Terrain/GeneratorOptions";
+import type {GeneratorOptions} from "../Generator/GeneratorOptions";
 import type {SaveData} from "../types/SaveData";
 
 const remote = require('@electron/remote');
