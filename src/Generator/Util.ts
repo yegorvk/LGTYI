@@ -32,6 +32,27 @@ export function map_pow(
     }
 }
 
+export function map_array(
+    heightmap: Float32Array,
+    outMinAlt: number,
+    outMaxAlt: number
+) {
+    let minAlt = Infinity, maxAlt = -Infinity;
+
+    for (let i = 0; i < heightmap.length; i++) {
+        minAlt = Math.min(minAlt, heightmap[i]);
+        maxAlt = Math.max(maxAlt, heightmap[i]);
+    }
+
+    const altRange = maxAlt - minAlt;
+    const outAltRange = outMaxAlt - outMinAlt;
+
+    for (let i = 0; i < heightmap.length; i++) {
+        heightmap[i] = outMinAlt + outAltRange * ((heightmap[i] - minAlt) / altRange);
+        heightmap[i] = Math.max(outMinAlt, Math.min(outMaxAlt, heightmap[i]));
+    }
+}
+
 export function alt(altNorm: number, options: GeneratorOptions) {
     return altRaw(
         options.minAltitude,

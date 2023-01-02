@@ -3,7 +3,7 @@ import { PerlinNoise } from '../PerlinNoise/PerlinNoise';
 import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions } from './GeneratorOptions';
 import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
-import { distance, map_pow, sigmoid_prime } from './Util';
+import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
 import { Biome, MAX_BIOME_ID, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
 
 export function generateTerrain(
@@ -16,25 +16,41 @@ export function generateTerrain(
     const temp = new Float32Array(heightmap.data.length);
     const rng = seedrandom(options.seed);
 
-    generate(
+    /*generate(
         heightmap,
         temp,
         options.seed,
         options.roughness + 0.5,
         options.levelOfDetail
+    );*/
+
+    generateDetails(
+        temp,
+        heightmap.width,
+        heightmap.height,
+        options.seed,
+        options.roughness,
+        options.levelOfDetail,
+        1.0,
+        3.0,
+        0.2
     );
+
+    map_array(temp, -1.0, 1.0);
 
     const biomes = new Array<Biome>();
     const normDist = normalizeBiomesDistribution(options.biomes);
 
+    console.log(normDist);
+
     for (let i = 0; i < options.numberOfBiomes; i++) {
-        const biomeId = randomBiomeId(normDist, Math.random());
+        const biomeId = randomBiomeId(normDist, rng());
 
         biomes.push(
             biome(
                 biomeId, 
-                rng() * options.width * 0.75,
-                rng() * options.height * 0.75,
+                rng() * options.width * 0.9,
+                rng() * options.height * 0.9,
                 options
             )
         )
@@ -50,7 +66,7 @@ export function generateTerrain(
             let totalHeight = 0.0;
 
             for (let t = 0; t < biomes.length; t++) {
-                const strength = biomes[t].strength(j, i);
+                const strength = biomes[t].strength(j, i, options.width, options.height);
                 totalStrength += strength;
 
                 const height = strength * biomes[t].height(temp[k]);
@@ -123,7 +139,7 @@ function generateDetails(
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 
-    roughness /= 80;
+    roughness /= 40;
     let altCoef = scale;
 
     for (let step = 0; step < numSteps; step++) {

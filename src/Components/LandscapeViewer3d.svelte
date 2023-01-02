@@ -11,6 +11,7 @@
     } from "../Renderer/RenderSettings";
     import { RenderTerrainTest } from "../Renderer/RenderTerrainTest";
     import * as water from '../shaders/water.glsl';
+    import { applyDefaults } from "../Defaults";
 
     let root: Element;
 
@@ -21,6 +22,10 @@
 
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
+
+    $: {
+        applyDefaults(renderSettings, DefaultRenderSettings);
+    }
 
     const SCALE = 1;
 
@@ -47,8 +52,8 @@
         const waterLayerGeometry = new THREE.PlaneGeometry(
             (heightmap.width - 1) * SCALE,
             (heightmap.height - 1) * SCALE,
-            Math.floor((heightmap.width - 1) / 3),
-            Math.floor((heightmap.height - 1) / 3)
+            1,
+            1
         );
 
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);

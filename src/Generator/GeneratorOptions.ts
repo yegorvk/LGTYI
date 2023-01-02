@@ -1,4 +1,4 @@
-import { BiomesDistribution, DefaultBiomesDistribution } from "./Biome";
+import { type BiomesDistribution, DefaultBiomesDistribution } from "./Biome";
 
 export const MAX_ALT = 120;
 export const MIN_ALT = -120;
@@ -21,10 +21,10 @@ export const DefaultGeneratorOptions: GeneratorOptions = {
     height: 500,
     maxAltitude: MAX_ALT,
     minAltitude: MIN_ALT,
-    roughness: 0.4,
+    roughness: 0.5,
     levelOfDetail: 6,
     seed: 0,
     waterLevel: 0,
     biomes: DefaultBiomesDistribution,
-    numberOfBiomes: 15
+    numberOfBiomes: 8
 }

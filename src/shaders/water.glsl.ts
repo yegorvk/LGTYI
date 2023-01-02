@@ -43,11 +43,6 @@ void main() {
 
 	#include <begin_vertex>
 
-    float zDelta = 2.0 * sin(time / 200.0 + 2.0 * position.x);
-    zDelta *= 1.5 * 2.0 * cos(time / 200.0 + 2.0 * position.y);
-
-    transformed.z -= zDelta;
-
 	#include <morphtarget_vertex>
 	#include <skinning_vertex>
 	#include <displacementmap_vertex>
@@ -79,6 +74,7 @@ uniform float shininess;
 uniform float opacity;
 
 uniform sampler2D normalMap;
+
 uniform mat3 normalMatrix;
 
 uniform float time;
