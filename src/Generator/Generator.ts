@@ -4,7 +4,7 @@ import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions } from './Gener
 import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
 import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
-import { Biome, MAX_BIOME_ID, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
+import { Biome, HIGH_PEAKS, LAKE, MAX_BIOME_ID, MEDIUM_PEAKS, OCEAN, PLAINS, SEA, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
 
 export function generateTerrain(
     heightmap: Heightmap,
@@ -15,14 +15,6 @@ export function generateTerrain(
 
     const temp = new Float32Array(heightmap.data.length);
     const rng = seedrandom(options.seed);
-
-    /*generate(
-        heightmap,
-        temp,
-        options.seed,
-        options.roughness + 0.5,
-        options.levelOfDetail
-    );*/
 
     generateDetails(
         temp,
@@ -41,22 +33,20 @@ export function generateTerrain(
     const biomes = new Array<Biome>();
     const normDist = normalizeBiomesDistribution(options.biomes);
 
-    console.log(normDist);
-
     for (let i = 0; i < options.numberOfBiomes; i++) {
         const biomeId = randomBiomeId(normDist, rng());
 
         biomes.push(
             biome(
                 biomeId, 
-                rng() * options.width * 0.9,
-                rng() * options.height * 0.9,
+                rng() * options.width,
+                rng() * options.height,
                 options
             )
         )
     }
 
-    console.log(biomes);
+    //console.log(biomes);
 
     for (let i = 0; i < options.height; i++) {
         for (let j = 0; j < options.width; j++) {
@@ -96,34 +86,6 @@ export function generateSimpleTerrain(heightmap: Heightmap, options: GeneratorOp
         options.maxAltitude,
         0.7
     );
-}
-
-function generate(
-    heightmap: Heightmap,
-    out: Float32Array,
-    seed: number,
-    roughnessCoef: number = 1.0,
-    levelOfDetails: number = 10
-) {
-    out.fill(0.0);
-    let scale = 1.0;
-
-    for (let i = 0; i < 9; i++) {
-        generateDetails(
-            out,
-            heightmap.width,
-            heightmap.height,
-            seed,
-            1.0 * roughnessCoef,
-            levelOfDetails,
-            scale,
-            3,
-            0.2
-        );
-
-        map_pow(out, -1.0, 1.0, 1.0 + 1.0/7.0);
-        scale -= 0.1;
-    }
 }
 
 function generateDetails(

@@ -1,17 +1,18 @@
 import { HtmlTagHydration } from "svelte/internal";
 import type { GeneratorOptions } from "./GeneratorOptions";
-import { alt, distance2 } from "./Util";
+import { alt, distance, distance2 } from "./Util";
 
 export interface BiomesDistribution {
     oceanChance: number;
+    oceanMountainsChance: number;
     seaChance: number;
     swampChance: number;
     plainsChance: number;
     hillsChance: number;
     plateuChance: number;
-    mountainsChance: number;
     lakeChance: number;
-    oceanMountainsChance: number;
+    mediumPeaksChance: number;
+    highPeaksChance: number;
 }
 
 export const DefaultBiomesDistribution: BiomesDistribution = {
@@ -23,7 +24,8 @@ export const DefaultBiomesDistribution: BiomesDistribution = {
     plainsChance: 0.5,
     hillsChance: 0.5,
     plateuChance: 0.5,
-    mountainsChance: 0.5,
+    mediumPeaksChance: 0.7,
+    highPeaksChance: 0.7
 };
 
 export function normalizeBiomesDistribution(dist: BiomesDistribution): Array<number> {
@@ -36,7 +38,8 @@ export function normalizeBiomesDistribution(dist: BiomesDistribution): Array<num
         dist.plainsChance,
         dist.hillsChance,
         dist.plateuChance,
-        dist.mountainsChance,
+        dist.mediumPeaksChance,
+        dist.highPeaksChance
     ];
 
     const total = chances.reduce((acc, chance) => acc + chance);
@@ -74,8 +77,7 @@ export class Biome {
     }
 
     strength(x: number, y: number, width: number, height: number) {
-        let d = distance2(x, y, this.centerX, this.centerY) / (width*height);
-        return d*d*d * this.weight;
+        return Math.pow(distance2(x, y, this.centerX, this.centerY) / (width*height) * this.weight, 5.0);
     }
 }
 
@@ -83,36 +85,39 @@ const MIN_ALT = [
     -1.0,
     -0.8,
     -0.6,
-    -0.08,
+    -0.2,
     -0.04,
     0.1,
     0.12,
     0.5,
-    0.6
+    0.6,
+    0.9
 ];
 
 const MAX_ALT = [
     -0.7,
     -0.5,
     -0.3,
-    0.05,
+    -0.01,
     0.02,
     0.3,
     0.4,
     0.7,
+    0.8,
     1.0
 ];
 
 const WEIGHT = [
+    0.5,
+    0.6,
     1.0,
     1.0,
     1.0,
     1.0,
     1.0,
     1.0,
-    1.0,
-    1.0,
-    1.0
+    0.6,
+    0.5
 ];
 
 export const OCEAN = 0;
@@ -123,10 +128,10 @@ export const SWAMP = 4;
 export const PLAINS = 5;
 export const HILLS = 6;
 export const PLATEU = 7;
-export const EXTREME_PEAKS = 8;
+export const MEDIUM_PEAKS = 8;
+export const HIGH_PEAKS = 9;
 
-const MAX_WATER_BIOME_ID = 3;
-export const MAX_BIOME_ID = 8;
+export const MAX_BIOME_ID = 9;
 
 export function biome(id: number, x: number, y: number, options: GeneratorOptions) {
     return new Biome(x, y, alt(MIN_ALT[id], options), alt(MAX_ALT[id], options), WEIGHT[id]);
