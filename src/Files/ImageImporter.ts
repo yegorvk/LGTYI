@@ -27,7 +27,7 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
             let arr = new Float32Array(img.bitmap.width * img.bitmap.height);
             const maxAltitude = DefaultGeneratorOptions.maxAltitude;
             const minAltitude = DefaultGeneratorOptions.minAltitude;
-            const HeightmapRandom = Heightmap.simpleGenerate({
+            const HeightmapRandom = Heightmap.generate({
                 width: img.bitmap.width,
                 height: img.bitmap.height,
                 minAltitude: minAltitude,

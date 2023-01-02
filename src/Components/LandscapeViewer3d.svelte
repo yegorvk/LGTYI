@@ -73,24 +73,30 @@
             }
         ]);
 
-        /*const waterLayerMat = new THREE.MeshPhongMaterial({
-            transparent: true,
-            opacity: 0.45,
-            color: 0x064273,
-            normalMap: waterLayerNorm,
-        });*/
+        let mat: THREE.Material;
 
-        waterLayerMat = new THREE.ShaderMaterial(
-            {
-                vertexShader: water.vertex,
-                fragmentShader: water.fragment,
-                lights: true,
-                uniforms: uniforms,
+        if (renderSettings.dynamicScene) {
+            waterLayerMat = new THREE.ShaderMaterial(
+                {
+                    vertexShader: water.vertex,
+                    fragmentShader: water.fragment,
+                    lights: true,
+                    uniforms: uniforms,
+                    transparent: true,
+                }
+            );
+
+            mat = waterLayerMat;
+        } else {
+            mat = new THREE.MeshPhongMaterial({
                 transparent: true,
-            }
-        );
+                opacity: 0.45,
+                color: 0x064273,
+                normalMap: waterLayerNorm,
+            });
+        }
 
-        const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat);
+        const waterLayer = new THREE.Mesh(waterLayerGeometry, mat);
         scene.add(waterLayer);
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
@@ -111,8 +117,10 @@
         if (camControls === null) return;
         camControls.update(clock.getDelta());
 
-        waterLayerMat.uniforms.time.value = clock.getElapsedTime() * 1000;
-        waterLayerMat.uniformsNeedUpdate = true;
+        if (renderSettings.dynamicScene) {
+            waterLayerMat.uniforms.time.value = clock.getElapsedTime() * 1000;
+            waterLayerMat.uniformsNeedUpdate = true;
+        }
 
         if (renderSettings.dynamicScene) 
             animate();
@@ -281,7 +289,7 @@
 
         clock.stop();
 
-        waterLayerMat.dispose();
+        if (waterLayerMat !== null) waterLayerMat.dispose();
 
         waterLayerNorm = clock = scene = camera = chunk = null;
     });

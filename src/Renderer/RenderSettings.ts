@@ -13,5 +13,5 @@ export const DefaultRenderSettings: RenderSettings = {
     lighting: true,
     wireframeOpacity: 0.1,
     wireframeLineWidth: 2,
-    dynamicScene: true
+    dynamicScene: false
 }

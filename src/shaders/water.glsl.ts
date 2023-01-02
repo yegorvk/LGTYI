@@ -74,6 +74,7 @@ uniform float shininess;
 uniform float opacity;
 
 uniform sampler2D normalMap;
+uniform sampler2D normalMap1;
 
 uniform mat3 normalMatrix;
 
