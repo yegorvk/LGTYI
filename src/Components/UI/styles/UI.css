@@ -11,7 +11,7 @@
     border-radius: 6px;
 }
 
-.opened_panel {
+.opened_main_panel {
     left: 10px;
     background: #666666;
 }
