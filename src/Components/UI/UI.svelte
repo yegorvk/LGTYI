@@ -18,7 +18,8 @@
 
     export let is2D: boolean = false;
     export let generate: (options: GeneratorOptions) => void = null;
-    let visible: boolean = false;
+    let main_visible: boolean = false;
+    let help_visible: boolean = false;
     let currPanel: Panels = Panels.MAIN;
 
     let dispatcher = createEventDispatcher();
@@ -27,9 +28,13 @@
         currPanel = panel;
     }
 
-    function menuSwitch() {
-        visible = !visible;
+    function main_switch() {
+        main_visible = !main_visible;
         currPanel = Panels.MAIN;
+    }
+
+    function help_switch() {
+        help_visible = !help_visible;
     }
 
     function backButton() {
@@ -38,13 +43,15 @@
     }
 </script>
 
-<div class="main_panel" class:opened_panel={visible}>
-    <button title="Menu"
-            class="closeup"
-            class:burger_or={!visible}
-            on:click={menuSwitch}>
-        <div class="burger"></div>
-    </button>
+<button title="Menu"
+        id="menu-main"
+        class="main-but"
+        class:burger_or={!main_visible}
+        on:click={main_switch}>
+    <div class="burger"></div>
+</button>
+
+<div class="main_panel" class:opened_main_panel={main_visible}>
     <button title="Back"
             class="back-but"
             class:hidden={currPanel === Panels.MAIN}
@@ -65,4 +72,38 @@
             <ImageImport {eventHandler}></ImageImport>
         {/if}
     </div>
+</div>
+
+<button title="Help"
+        id="help-main"
+        class="main-but"
+        on:click={help_switch}>
+    {#if !help_visible}
+        <img src="help.png" alt="help"/>
+    {:else}
+        <img src="close.png" alt="help"/>
+    {/if}
+</button>
+
+<div class:opened_help_panel={help_visible}>
+    <button title="Tips"
+            id="tips"
+            class="main-but"
+            disabled={!help_visible}>
+        <img src="tips.png" alt="tips"/>
+    </button>
+
+    <button title="Help"
+            id="help"
+            class="main-but"
+            disabled={!help_visible}>
+        <img src="help.png" alt="help"/>
+    </button>
+
+    <button title="Info"
+            id="info"
+            class="main-but"
+            disabled={!help_visible}>
+        <img src="info.png" alt="info"/>
+    </button>
 </div>

@@ -1,3 +1,72 @@
+.main-but {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    padding: 6px;
+    outline: inherit;
+    align-items: center;
+    background: #999999;
+    border: 1px solid #cecece;
+    border-radius: 10px;
+}
+.main-but:not([disabled]):hover {
+    outline: none;
+    background: #18656e;
+    cursor: pointer;
+}
+.main-but:not([disabled]):focus {
+    outline: none;
+    border: 1px dashed #cecece;
+}
+.main-but:not([disabled]):active {
+    outline: none;
+    background: #999999;
+    cursor: pointer;
+}
+.main-but:disabled {
+    cursor: default;
+    color: #666666;
+}
+
+#menu-main {
+    top: 20px;
+    left: 20px;
+    z-index: 10000;
+}
+#help-main {
+    top: 20px;
+    right: 20px;
+    transition: all 320ms;
+    z-index: 10000;
+}
+#tips {
+    top: 20px;
+    right: 20px;
+    transition: all 320ms;
+    z-index: 9998;
+}
+.opened_help_panel > #tips {
+    right: 194px;
+}
+#help {
+    top: 20px;
+    right: 20px;
+    transition: all 320ms;
+    z-index: 9998;
+}
+.opened_help_panel > #help {
+    right: 136px;
+}
+#info {
+    top: 20px;
+    right: 20px;
+    transition: all 320ms;
+    z-index: 9998;
+}
+.opened_help_panel > #info {
+    right: 78px;
+}
+
 .menu-but {
     width: 100%;
     height: 60px;
@@ -34,46 +103,13 @@
     color: #666666;
 }
 
-.closeup {
-    position: absolute;
-    top: 10px;
-    left: 280px;
-    width: 38px;
-    height: 38px;
-    outline: inherit;
-    transition: left 400ms;
-    background: #999999;
-    border: 1px solid #cecece;
-    border-radius: 10px;
-}
-.closeup:not([disabled]):hover {
-    outline: none;
-    background: #18656e;
-    cursor: pointer;
-}
-.closeup:not([disabled]):focus {
-    outline: none;
-    border: 1px dashed #cecece;
-}
-.closeup:not([disabled]):active {
-    outline: none;
-    background: #999999;
-    cursor: pointer;
-}
-.closeup:disabled {
-    cursor: default;
-    color: #666666;
-}
-.opened_panel > .closeup {
-    left: 10px;
-}
-
 .back-but {
     position: absolute;
     top: 10px;
     right: 280px;
     width: 38px;
     height: 38px;
+    padding: 6px;
     opacity: 0;
     transition: opacity 400ms;
     background: #999999;

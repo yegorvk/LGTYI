@@ -11,9 +11,8 @@
     border-radius: 6px;
 }
 
-.opened_panel {
+.opened_main_panel {
     left: 10px;
-    max-height: 90vh;
     background: #666666;
 }
 
@@ -31,7 +30,7 @@
     scrollbar-color: #999999 #666666;
     scrollbar-width: thin;
 }
-.opened_panel > .content {
+.opened_main_panel > .content {
     opacity: 1;
 }
 
