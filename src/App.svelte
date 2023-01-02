@@ -1,7 +1,7 @@
 <script lang="ts">
     import LandScapeViewer3d from './Components/LandscapeViewer3d.svelte'
     import UI from "./Components/UI/UI.svelte";
-    import type {GeneratorOptions} from './Terrain/GeneratorOptions';
+    import type {GeneratorOptions} from './Generator/GeneratorOptions';
     import Renderer2D from "./Components/Renderer2D.svelte";
     import {Heightmap} from "./Terrain/Heightmap";
     import {exportMap} from "./Files/Exporter";

@@ -1,4 +1,4 @@
-import type { GeneratorOptions } from "../Terrain/GeneratorOptions";
+import type { GeneratorOptions } from "./GeneratorOptions";
 
 export function distance2(x1: number, y1: number, x2: number, y2: number) {
     const dx = x1 - x2, dy = y1 - y2;
@@ -28,6 +28,27 @@ export function map_pow(
 
     for (let i = 0; i < heightmap.length; i++) {
         heightmap[i] = outMinAlt + outAltRange * Math.pow((heightmap[i] - minAlt) / altRange, pow);
+        heightmap[i] = Math.max(outMinAlt, Math.min(outMaxAlt, heightmap[i]));
+    }
+}
+
+export function map_array(
+    heightmap: Float32Array,
+    outMinAlt: number,
+    outMaxAlt: number
+) {
+    let minAlt = Infinity, maxAlt = -Infinity;
+
+    for (let i = 0; i < heightmap.length; i++) {
+        minAlt = Math.min(minAlt, heightmap[i]);
+        maxAlt = Math.max(maxAlt, heightmap[i]);
+    }
+
+    const altRange = maxAlt - minAlt;
+    const outAltRange = outMaxAlt - outMinAlt;
+
+    for (let i = 0; i < heightmap.length; i++) {
+        heightmap[i] = outMinAlt + outAltRange * ((heightmap[i] - minAlt) / altRange);
         heightmap[i] = Math.max(outMinAlt, Math.min(outMaxAlt, heightmap[i]));
     }
 }

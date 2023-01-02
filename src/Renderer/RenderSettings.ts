@@ -4,6 +4,7 @@ export interface RenderSettings {
     lighting: boolean;
     wireframeOpacity: number;
     wireframeLineWidth: number;
+    dynamicScene?: boolean;
 }
 
 export const DefaultRenderSettings: RenderSettings = {
@@ -11,5 +12,6 @@ export const DefaultRenderSettings: RenderSettings = {
     gradient: true,
     lighting: true,
     wireframeOpacity: 0.1,
-    wireframeLineWidth: 2
+    wireframeLineWidth: 2,
+    dynamicScene: true
 }

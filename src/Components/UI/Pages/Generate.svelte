@@ -1,6 +1,6 @@
 <script lang="ts">
     import Param from "../Param/Param.svelte";
-    import {DefaultGeneratorOptions, type GeneratorOptions} from "../../../Terrain/GeneratorOptions";
+    import {DefaultGeneratorOptions, type GeneratorOptions} from "../../../Generator/GeneratorOptions";
     import {UIEventsHandler} from "../UIEventsHandler";
 
     export let generate: (options: GeneratorOptions) => void = null;

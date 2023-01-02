@@ -5,12 +5,16 @@
 
     export let is2D: boolean = false;
     export let eventHandler: UIEventsHandler;
-    let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
-    let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
-    let mode = ["1", "2", "3"];
+
+    export let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
+    export let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
+
+    export let mode = ["1", "3"];
+
     function dimSwitch() {
         is2D = !is2D;
     }
+
     let save = () => {eventHandler.settingsSave(mode, wireframeLineWidth, wireframeOpacity);}
 </script>
 

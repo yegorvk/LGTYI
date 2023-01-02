@@ -1,5 +1,5 @@
 import { lerp } from "../math";
-import { MAX_ALT, MIN_ALT } from "./GeneratorOptions";
+import { MAX_ALT, MIN_ALT } from "../Generator/GeneratorOptions";
 
 export function colorRGBFromAltitude(
     alt: number,
@@ -9,6 +9,7 @@ export function colorRGBFromAltitude(
     minAlt: number = MIN_ALT
 ): number {
     // get rid of negative values
+
     maxAlt -= minAlt;
     alt -= minAlt;
     waterLevel -= minAlt;
@@ -36,10 +37,10 @@ export function colorRGBFromAltitude(
     ]
 
     const waterColors = [
-        0x0A1172,
-        0x016064,
-        0x13388E,
-        0x3944BC
+        0x04124f,
+        0x061c7d,
+        0x09259e,
+        0x0c2fc7
     ]
 
     const waterColor = 0x3944BC

@@ -10,7 +10,7 @@
     import Settings from "./Pages/Settings.svelte";
     import Main from "./Pages/Main.svelte";
     //classes
-    import type {GeneratorOptions} from "../../Terrain/GeneratorOptions";
+    import type {GeneratorOptions} from "../../Generator/GeneratorOptions";
     import {createEventDispatcher} from "svelte";
     import {Panels} from "./Pages";
     import {UIEventsHandler} from "./UIEventsHandler";

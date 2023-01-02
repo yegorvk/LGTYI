@@ -1,6 +1,6 @@
 import type {Panels} from "./Pages";
 import type {RenderSettings} from "../../Renderer/RenderSettings";
-import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Terrain/GeneratorOptions";
+import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Generator/GeneratorOptions";
 import type {Color} from "../../types/Color";
 import type {GrayscaleColor} from "../../types/GrayscaleColor";
 

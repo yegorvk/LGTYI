@@ -10,6 +10,8 @@
         type RenderSettings,
     } from "../Renderer/RenderSettings";
     import { RenderTerrainTest } from "../Renderer/RenderTerrainTest";
+    import * as water from '../shaders/water.glsl';
+    import { applyDefaults } from "../Defaults";
 
     let root: Element;
 
@@ -20,6 +22,10 @@
 
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
+
+    $: {
+        applyDefaults(renderSettings, DefaultRenderSettings);
+    }
 
     const SCALE = 1;
 
@@ -39,24 +45,65 @@
     let chunk = new Chunk(1, heightmap, renderSettings.gradient);
     //let chunk = null;
 
+    let waterLayerMat: THREE.ShaderMaterial = null;
+
     let waterLayerNorm: THREE.Texture = null;
+    let waterLayerNorm1: THREE.Texture = null;
 
     if (renderSettings.lighting) {
         const waterLayerGeometry = new THREE.PlaneGeometry(
             (heightmap.width - 1) * SCALE,
-            (heightmap.height - 1) * SCALE
+            (heightmap.height - 1) * SCALE,
+            1,
+            1
         );
 
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);
 
-        const waterLayerMat = new THREE.MeshBasicMaterial({
-            transparent: true,
-            opacity: 0.6,
-            reflectivity: 0.9,
-            color: 0x064273
-        });
+        waterLayerNorm = new THREE.TextureLoader().load('./assets/textures/water_norm.jpg');
+        waterLayerNorm1 = new THREE.TextureLoader().load('./assets/textures/water_norm1.jpg');
 
-        const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat);
+        waterLayerNorm.wrapS = THREE.RepeatWrapping;
+        waterLayerNorm.wrapT = THREE.RepeatWrapping;
+
+        waterLayerNorm1.wrapS = THREE.RepeatWrapping;
+        waterLayerNorm1.wrapT = THREE.RepeatWrapping;
+
+        const uniforms = THREE.UniformsUtils.merge([
+            THREE.ShaderLib.phong.uniforms,
+            {
+                diffuse: { value: new THREE.Color(0x064273) },
+                opacity: { value: 0.45 },
+                normalMap: { value: waterLayerNorm },
+                normalMap1: { value: waterLayerNorm1 },
+                time: { value: 0.0 }
+            }
+        ]);
+
+        let mat: THREE.Material;
+
+        if (renderSettings.dynamicScene) {
+            waterLayerMat = new THREE.ShaderMaterial(
+                {
+                    vertexShader: water.vertex,
+                    fragmentShader: water.fragment,
+                    lights: true,
+                    uniforms: uniforms,
+                    transparent: true,
+                }
+            );
+
+            mat = waterLayerMat;
+        } else {
+            mat = new THREE.MeshPhongMaterial({
+                transparent: true,
+                opacity: 0.45,
+                color: 0x064273,
+                normalMap: waterLayerNorm,
+            });
+        }
+
+        const waterLayer = new THREE.Mesh(waterLayerGeometry, mat);
         scene.add(waterLayer);
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
@@ -76,6 +123,15 @@
     function update() {
         if (camControls === null) return;
         camControls.update(clock.getDelta());
+
+        if (renderSettings.dynamicScene) {
+            waterLayerMat.uniforms.time.value = clock.getElapsedTime() * 1000;
+            waterLayerMat.uniformsNeedUpdate = true;
+        }
+
+        if (renderSettings.dynamicScene) 
+            animate();
+
         requestAnimationFrame(update);
     }
 
@@ -116,7 +172,7 @@
             );
         }
 
-        camera.position.set(heightmap.width / 2, heightmap.height / 2, 240);
+        camera.position.set(0, 0, 240);
         camera.lookAt(0, 0, 0);
 
         if (renderer !== null) renderer.dispose();
@@ -154,8 +210,8 @@
         camControls = new FlyControls(camera, renderer.domElement);
         camControls.dragToLook = true;
 
-        camControls.movementSpeed *= 80;
-        camControls.rollSpeed *= 100;
+        camControls.movementSpeed *= 160;
+        camControls.rollSpeed *= 120;
 
         let speedModifier = false;
         let speedBoost = 1;
@@ -204,7 +260,8 @@
             animate();
         };
 
-        camControls.addEventListener("change", camControlsChangeEventListener);
+        if (!renderSettings.dynamicScene) 
+            camControls.addEventListener("change", camControlsChangeEventListener);
     }
 
     onMount(async () => {
@@ -239,7 +296,10 @@
 
         clock.stop();
 
-        waterLayerNorm = clock = scene = camera = chunk = null;
+        if (waterLayerMat !== null) waterLayerMat.dispose();
+        if (waterLayerNorm1 !== null) waterLayerNorm1.dispose();
+
+        waterLayerNorm = waterLayerNorm1 = clock = scene = camera = chunk = null;
     });
 </script>
 

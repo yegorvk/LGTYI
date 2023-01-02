@@ -49,10 +49,11 @@ export class Chunk {
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 const base = this.mIndex(i, j)
+                const hBase = this.mIndex(this.height - i - 1, j);
 
                 this.vertices[3 * base] = this.scale * j - offsetX
                 this.vertices[3 * base + 1] = this.scale * i - offsetY
-                this.vertices[3 * base + 2] = this.heightmap.data[base]
+                this.vertices[3 * base + 2] = this.heightmap.data[hBase]
             }
         }
     }
@@ -62,10 +63,11 @@ export class Chunk {
 
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
-                const base = this.mIndex(i, j)
+                const base = this.mIndex(i, j);
+                const hBase = this.mIndex(this.height - i - 1, j);
 
                 const colorRGB = colorRGBFromAltitude(
-                    this.heightmap.data[base],
+                    this.heightmap.data[hBase],
                     this.heightmap.waterLevel,
                     false
                 )
