@@ -46,7 +46,9 @@
     //let chunk = null;
 
     let waterLayerMat: THREE.ShaderMaterial = null;
+
     let waterLayerNorm: THREE.Texture = null;
+    let waterLayerNorm1: THREE.Texture = null;
 
     if (renderSettings.lighting) {
         const waterLayerGeometry = new THREE.PlaneGeometry(
@@ -59,9 +61,13 @@
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);
 
         waterLayerNorm = new THREE.TextureLoader().load('./assets/textures/water_norm.jpg');
+        waterLayerNorm1 = new THREE.TextureLoader().load('./assets/textures/water_norm1.jpg');
 
         waterLayerNorm.wrapS = THREE.RepeatWrapping;
         waterLayerNorm.wrapT = THREE.RepeatWrapping;
+
+        waterLayerNorm1.wrapS = THREE.RepeatWrapping;
+        waterLayerNorm1.wrapT = THREE.RepeatWrapping;
 
         const uniforms = THREE.UniformsUtils.merge([
             THREE.ShaderLib.phong.uniforms,
@@ -69,6 +75,7 @@
                 diffuse: { value: new THREE.Color(0x064273) },
                 opacity: { value: 0.45 },
                 normalMap: { value: waterLayerNorm },
+                normalMap1: { value: waterLayerNorm1 },
                 time: { value: 0.0 }
             }
         ]);
@@ -290,8 +297,9 @@
         clock.stop();
 
         if (waterLayerMat !== null) waterLayerMat.dispose();
+        if (waterLayerNorm1 !== null) waterLayerNorm1.dispose();
 
-        waterLayerNorm = clock = scene = camera = chunk = null;
+        waterLayerNorm = waterLayerNorm1 = clock = scene = camera = chunk = null;
     });
 </script>
 

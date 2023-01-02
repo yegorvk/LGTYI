@@ -126,7 +126,10 @@ void main() {
 
     // Dirty hack
 
-    normal = texture2D( normalMap, vUv + vec2(time / 8000.0) ).xyz * 2.0 - 1.0; // overrides both flatShading and attribute normals
+    normal = texture2D( normalMap, 5.0 * vUv + vec2(0.0, time / 8000.0) ).xyz * 2.0 - 1.0; // overrides both flatShading and attribute normals
+    vec3 normal1 = texture2D( normalMap, 5.0 * vUv + vec2(time / 7000.0, 0.0) ).xyz * 2.0 - 1.0; // overrides both flatShading and attribute normals
+
+	normal = (normal + normal1) / 2.0;
 
 	#ifdef FLIP_SIDED
 
