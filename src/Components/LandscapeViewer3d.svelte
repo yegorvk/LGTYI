@@ -23,9 +23,7 @@
     export let heightmap: Heightmap;
     export let renderSettings: RenderSettings = DefaultRenderSettings;
 
-    $: {
-        applyDefaults(renderSettings, DefaultRenderSettings);
-    }
+    applyDefaults(renderSettings, DefaultRenderSettings);
 
     const SCALE = 1;
 
