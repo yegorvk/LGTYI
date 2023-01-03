@@ -8,7 +8,6 @@
     transition: opacity 400ms, max-height 900ms, max-width 900ms;
     z-index: 10001;
     background: #999999;
-    font-family: Comfortaa, cursive;
     font-size: 21px;
     overflow-y: auto;
     overflow-x: hidden;

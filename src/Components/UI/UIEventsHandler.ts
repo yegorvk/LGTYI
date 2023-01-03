@@ -60,6 +60,9 @@ export class UIEventsHandler {
     public Import() {
         this.dispatcher('import_map');
     }
+    public FontSwitch(){
+        this.dispatcher('font_switch');
+    }
 
     public Add() {
         this.dispatcher('add_map');
