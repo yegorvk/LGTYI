@@ -1,19 +1,22 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 import type {GeneratorOptions} from "../Generator/GeneratorOptions";
 import type {SaveData} from "../types/SaveData";
+import type {UIEventsHandler} from "../Components/UI/UIEventsHandler";
 
 const remote = require('@electron/remote');
 
-export async function exportMap(heightMap: Heightmap, genOptions: GeneratorOptions, is2d: boolean) {
+export async function exportMap(heightMap: Heightmap, eventHandler: UIEventsHandler, is2d: boolean) {
     const fs = window.require('fs');
     const data: SaveData = {
+        renderSettings: eventHandler.renderTrueSettings,
+        genOptions: eventHandler.generatorOptions,
+        viewMode: is2d,
         heightMap: {
             width: heightMap.width,
             height: heightMap.height,
             data: heightMap.data,
         },
-        genOptions: genOptions,
-        viewMode: is2d,
+
     };
 
     // Use the electron dialog module to prompt the user for a file path

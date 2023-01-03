@@ -10,25 +10,36 @@ export class UIEventsHandler {
     public setPanel: (panel: Panels) => void;
     private _generatorOptions: GeneratorOptions;
     private _renderSettings: RenderSettings = DefaultRenderSettings;
-    get renderSettings(){
+
+    get renderTrueSettings(): RenderSettings {
+        return this._renderSettings;
+    }
+    set renderTrueSettings(value: RenderSettings)
+    {
+        this._renderSettings = value;
+        this.dispatcher('settings_save', {render: this._renderSettings});
+    }
+
+    get renderSettings() {
         const mode: string[] = [];
-        if(this._renderSettings.wireframe){
+        if (this._renderSettings.wireframe) {
             mode.push("2");
         }
-        if(this._renderSettings.gradient){
+        if (this._renderSettings.gradient) {
             mode.push("3");
         }
-        if(this._renderSettings.lighting){
+        if (this._renderSettings.lighting) {
             mode.push("1");
         }
         return [mode, this._renderSettings.wireframeOpacity, this._renderSettings.wireframeLineWidth, this._renderSettings.dynamicScene]
-
     }
+
     set generatorOptions(value: GeneratorOptions) {
         this._generatorOptions = value;
         this._generatorOptions.seed = (value.seed === null) ? 0 : value.seed;
         this._generatorOptions.roughness = value.roughness / 100;
     }
+
     get generatorOptions(): GeneratorOptions {
         return this._generatorOptions;
     }
@@ -37,6 +48,7 @@ export class UIEventsHandler {
         this.dispatcher = dispatcher;
         this._generatorOptions = DefaultGeneratorOptions;
     }
+
     public setGeneratorOptions(generatorOptions: GeneratorOptions) {
         this._generatorOptions = generatorOptions;
     }

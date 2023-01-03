@@ -1,4 +1,4 @@
-export interface RenderSettings {
+ export interface RenderSettings {
     wireframe: boolean;
     gradient: boolean;
     lighting: boolean;

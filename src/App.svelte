@@ -51,6 +51,7 @@
             is2DView = data.viewMode;
             is2DView = is2DView;
             eventHandler.generatorOptions = data.genOptions;
+            eventHandler.renderTrueSettings = data.renderSettings;
             heightmap = data.heightMap as Heightmap;
             notify("Successfully opened!", false);
             heightmap = heightmap;
@@ -98,7 +99,7 @@
     }
 
     function ExportMap(e) {
-        exportMap(heightmap, e.detail.genOpt, is2DView).then(() => {
+        exportMap(heightmap, eventHandler, is2DView).then(() => {
             notify("Successfully saved!", false);
         }).catch(err => {
             notify(err, true)

@@ -33,7 +33,13 @@ export async function importMap(): Promise<SaveData> {
             Data.genOptions.minAltitude === undefined ||
             Data.genOptions.waterLevel === undefined ||
             Data.genOptions.width === undefined ||
-            Data.genOptions.height === undefined)) {
+            Data.genOptions.height === undefined ||
+            Data.renderSettings.wireframeOpacity === undefined ||
+            Data.renderSettings.wireframeLineWidth === undefined ||
+            Data.renderSettings.wireframe === undefined ||
+            Data.renderSettings.dynamicScene === undefined ||
+            Data.renderSettings.lighting === undefined ||
+            Data.renderSettings.gradient === undefined )) {
             let arr = new Float32Array(Data.heightMap.width * Data.heightMap.height);
             let i = 0;
             for (let key of Object.values(Data.heightMap.data)) {
