@@ -10,7 +10,6 @@ export interface BiomesDistribution {
     hillsChance: number;
     plateuChance: number;
     lakeChance: number;
-    mediumPeaksChance: number;
     highPeaksChance: number;
 }
 
@@ -22,7 +21,6 @@ export const DefaultBiomesDistribution: BiomesDistribution = {
     plainsChance: 0.5,
     hillsChance: 0.5,
     plateuChance: 0.5,
-    mediumPeaksChance: 0.5,
     highPeaksChance: 0.5
 };
 
@@ -35,7 +33,6 @@ export function normalizeBiomesDistribution(dist: BiomesDistribution): Array<num
         dist.plainsChance,
         dist.hillsChance,
         dist.plateuChance,
-        dist.mediumPeaksChance,
         dist.highPeaksChance
     ];
 
@@ -84,7 +81,7 @@ export class Biome {
 
     strength(x: number, y: number, width: number, height: number) {
         const d = distance2(x, y, this.centerX, this.centerY);
-        return sigmoid_prime(d / 8000 * Math.pow(this.weight, 0.5));
+        return sigmoid_prime(d / 20000 * Math.pow(this.weight, 0.5));
     }
 }
 
@@ -96,7 +93,6 @@ const MIN_ALT = [
     0.1,
     0.12,
     0.5,
-    0.1,
     0.5
 ];
 
@@ -108,7 +104,6 @@ const MAX_ALT = [
     0.2,
     0.3,
     0.6,
-    0.25,
     0.7
 ];
 
@@ -121,7 +116,6 @@ const WEIGHT = [
     1.0,
     1.0,
     1.0,
-    1.0
 ];
 
 export const OCEAN = 0;
@@ -131,10 +125,9 @@ export const SWAMP = 3;
 export const PLAINS = 4;
 export const HILLS = 5;
 export const PLATEU = 6;
-export const MEDIUM_PEAKS = 7;
-export const HIGH_PEAKS = 8;
+export const HIGH_PEAKS = 7;
 
-export const MAX_BIOME_ID = 8;
+export const MAX_BIOME_ID = 7;
 
 export function biome(id: number, x: number, y: number, options: GeneratorOptions) {
     return new Biome(id, x, y, alt(MIN_ALT[id], options), alt(MAX_ALT[id], options), WEIGHT[id]);

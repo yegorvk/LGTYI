@@ -3,7 +3,7 @@ import { PerlinNoise } from '../PerlinNoise/PerlinNoise';
 import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions, MAX_ALT } from './GeneratorOptions';
 import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
-import { distance, map_array, map_pow, sigmoid_prime } from './Util';
+import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
 import { Biome, HIGH_PEAKS, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
 
 export function generateTerrain(
@@ -71,20 +71,41 @@ export function generateTerrain(
         const cx = biomes[i].centerX, cy = biomes[i].centerY;
         const alt = heightmap.data[cy*options.width+cx];
 
+        const maxH = MAX_ALT - alt;
+        const minH = Math.max(0, (MAX_ALT-MIN_ALT)*0.9 + MIN_ALT - alt);
+
         const h = Math.min(
             (MAX_ALT - alt) * 4,
-            rng()*(MAX_ALT - alt)*4*0.5 + Math.max(0, (MAX_ALT*0.75 - alt))
+            (rng() * (maxH - minH) + minH) * 4
         );
 
         if (h !== 0 && biomes[i].id === HIGH_PEAKS) {
             generateSmoothHill(
                 heightmap,
                 cx,
-                cx,
+                cy,
                 h,
                 rng() * 20 + 40
             );
         }
+    }
+
+    let maxHeight = MIN_ALT;
+    let minHeight = MAX_ALT;
+
+    for (let i = 0; i < heightmap.data.length; i++) {
+        minHeight = Math.min(heightmap.data[i], minHeight);
+        maxHeight = Math.max(heightmap.data[i], maxHeight);
+    }
+
+    for (let i = 0; i < heightmap.data.length; i++) {
+        heightmap.data[i] = map(
+            heightmap.data[i],
+            minHeight,
+            maxHeight, 
+            Math.max(minHeight, MIN_ALT),
+            Math.min(maxHeight, MAX_ALT),
+        );
     }
 }
 
