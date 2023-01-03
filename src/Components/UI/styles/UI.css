@@ -36,10 +36,12 @@
 
 .win {
     position: fixed;
-    top: 78px;
-    bottom: 78px;
-    left: 78px;
-    right: 78px;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    height: 100px;
+    width: 100px;
     max-height: 90vh;
     padding: 50px 10px 10px;
     transition: all 400ms;
