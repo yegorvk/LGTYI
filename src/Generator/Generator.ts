@@ -5,6 +5,7 @@ import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
 import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
 import { Biome, HIGH_PEAKS, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
+import { handle_promise } from 'svelte/internal';
 
 export function generateTerrain(
     heightmap: Heightmap,
@@ -13,11 +14,10 @@ export function generateTerrain(
     applyDefaults(options, DefaultGeneratorOptions);
     heightmap.waterLevel = options.waterLevel;
 
-    const temp = new Float32Array(heightmap.data.length);
     const rng = seedrandom(options.seed);
 
     generateDetails(
-        temp,
+        heightmap.data,
         heightmap.width,
         heightmap.height,
         options.seed,
@@ -26,7 +26,7 @@ export function generateTerrain(
         1.0
     );
 
-    map_array(temp, -1.0, 1.0);
+    map_array(heightmap.data, -1.0, 1.0);
 
     const biomes = new Array<Biome>();
     const normDist = normalizeBiomesDistribution(options.biomes);
@@ -55,7 +55,7 @@ export function generateTerrain(
                 const strength = biomes[t].strength(j, i, options.width, options.height);
                 totalStrength += strength;
 
-                const height = strength * biomes[t].height(temp[k]);
+                const height = strength * biomes[t].height(heightmap.data[k]);
                 totalHeight += height;
             }
 
@@ -68,7 +68,7 @@ export function generateTerrain(
         const alt = heightmap.data[cy*options.width+cx];
 
         const maxH = MAX_ALT - alt;
-        const minH = Math.max(0, (MAX_ALT-MIN_ALT)*0.9 + MIN_ALT - alt);
+        const minH = Math.max(0, (MAX_ALT-MIN_ALT)*0.8 + MIN_ALT - alt);
 
         const h = Math.min(
             (MAX_ALT - alt) * 4,
