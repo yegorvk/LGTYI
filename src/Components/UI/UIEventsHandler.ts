@@ -1,5 +1,5 @@
 import type {Panels} from "./Pages";
-import type {RenderSettings} from "../../Renderer/RenderSettings";
+import {DefaultRenderSettings, type RenderSettings} from "../../Renderer/RenderSettings";
 import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Generator/GeneratorOptions";
 import type {Color} from "../../types/Color";
 import type {GrayscaleColor} from "../../types/GrayscaleColor";
@@ -9,6 +9,21 @@ export class UIEventsHandler {
     private useColorFor2D: boolean = false;
     public setPanel: (panel: Panels) => void;
     private _generatorOptions: GeneratorOptions;
+    private _renderSettings: RenderSettings = DefaultRenderSettings;
+    get renderSettings(){
+        const mode: string[] = [];
+        if(this._renderSettings.wireframe){
+            mode.push("2");
+        }
+        if(this._renderSettings.gradient){
+            mode.push("3");
+        }
+        if(this._renderSettings.lighting){
+            mode.push("1");
+        }
+        return [mode, this._renderSettings.wireframeOpacity, this._renderSettings.wireframeLineWidth, this._renderSettings.dynamicScene]
+
+    }
     set generatorOptions(value: GeneratorOptions) {
         this._generatorOptions = value;
         this._generatorOptions.seed = (value.seed === null) ? 0 : value.seed;
@@ -61,14 +76,16 @@ export class UIEventsHandler {
         });
     }
 
-    public settingsSave(mode: string[], wireframeLineWidth: number, wireframeOpacity: number) {
+    public settingsSave(mode: string[], wireframeLineWidth: number, wireframeOpacity: number, dynamicScene: boolean) {
         const renderSettings: RenderSettings = {
             wireframe: mode.includes("2"),
             gradient: mode.includes("3"),
             lighting: mode.includes("1") && mode.includes("3"),
             wireframeOpacity: wireframeOpacity,
-            wireframeLineWidth: wireframeLineWidth
+            wireframeLineWidth: wireframeLineWidth,
+            dynamicScene: dynamicScene
         }
+        this._renderSettings = renderSettings;
         this.dispatcher('settings_save', {render: renderSettings});
     }
 

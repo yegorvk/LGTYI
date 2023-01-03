@@ -6,16 +6,17 @@
     export let is2D: boolean = false;
     export let eventHandler: UIEventsHandler;
 
-    export let wireframeOpacity = DefaultRenderSettings.wireframeOpacity;
-    export let wireframeLineWidth = DefaultRenderSettings.wireframeLineWidth;
-
-    export let mode = ["1", "3"];
+    let wireframeOpacity = eventHandler.renderSettings[1];
+    let wireframeLineWidth = eventHandler.renderSettings[2];
+    let dynamicScene: boolean = eventHandler.renderSettings[3];
+    let mode = eventHandler.renderSettings[0];
 
     function dimSwitch() {
         is2D = !is2D;
     }
 
-    let save = () => {eventHandler.settingsSave(mode, wireframeLineWidth, wireframeOpacity);}
+    let save = () => {eventHandler.settingsSave(mode, wireframeLineWidth, wireframeOpacity, dynamicScene);}
+    let dynSwitch = () => {dynamicScene = !dynamicScene};
 </script>
 
 <div>
@@ -57,7 +58,14 @@
                    min="1"
             />
         </Param>
+        <Param>
+            <label>Dynamic Scene</label>
+            <input
+                   type="checkbox"
+                   on:click={dynSwitch}
 
+            />
+        </Param>
         <Param>
             <div class="check-label">
                 <label for="modeLightning">Lighting:</label>
