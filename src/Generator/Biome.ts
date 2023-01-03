@@ -1,10 +1,9 @@
 import { HtmlTagHydration } from "svelte/internal";
 import type { GeneratorOptions } from "./GeneratorOptions";
-import { alt, distance, distance2 } from "./Util";
+import { alt, distance, distance2, sigmoid_prime } from "./Util";
 
 export interface BiomesDistribution {
     oceanChance: number;
-    oceanMountainsChance: number;
     seaChance: number;
     swampChance: number;
     plainsChance: number;
@@ -17,21 +16,19 @@ export interface BiomesDistribution {
 
 export const DefaultBiomesDistribution: BiomesDistribution = {
     oceanChance: 0.5,
-    oceanMountainsChance: 0.5,
     seaChance: 0.5,
     lakeChance: 0.5,
     swampChance: 0.5,
     plainsChance: 0.5,
     hillsChance: 0.5,
     plateuChance: 0.5,
-    mediumPeaksChance: 0.7,
-    highPeaksChance: 0.7
+    mediumPeaksChance: 0.5,
+    highPeaksChance: 0.5
 };
 
 export function normalizeBiomesDistribution(dist: BiomesDistribution): Array<number> {
     const chances = [
         dist.oceanChance,
-        dist.oceanMountainsChance,
         dist.seaChance,
         dist.lakeChance,
         dist.swampChance,
@@ -47,21 +44,26 @@ export function normalizeBiomesDistribution(dist: BiomesDistribution): Array<num
 }
 
 export class Biome {
-    private centerX: number;
-    private centerY: number;
+    centerX: number;
+    centerY: number;
     
     private minAltitude: number;
     private maxAltitude: number;
 
     private weight: number;
 
+    id: number;
+
     constructor(
+        id: number,
         centerX: number,
         centerY: number,
         minAltitude: number,
         maxAltitude: number,
         weight: number
     ) {
+        this.id = id;
+
         this.minAltitude = minAltitude;
         this.maxAltitude = maxAltitude;
 
@@ -76,65 +78,66 @@ export class Biome {
         return this.minAltitude + normalizedNoise * (this.maxAltitude - this.minAltitude);
     }
 
+    /*strength(x: number, y: number, width: number, height: number) {
+        return Math.pow(distance2(x, y, this.centerX, this.centerY) / (width*height) * this.weight, 2.0);
+    }*/
+
     strength(x: number, y: number, width: number, height: number) {
-        return Math.pow(distance2(x, y, this.centerX, this.centerY) / (width*height) * this.weight, 5.0);
+        const d = distance2(x, y, this.centerX, this.centerY);
+        return sigmoid_prime(d / 8000 * Math.pow(this.weight, 0.5));
     }
 }
 
 const MIN_ALT = [
     -1.0,
-    -0.8,
     -0.6,
     -0.2,
-    -0.04,
+    -0.05,
     0.1,
     0.12,
     0.5,
-    0.6,
-    0.9
+    0.1,
+    0.5
 ];
 
 const MAX_ALT = [
     -0.7,
     -0.5,
-    -0.3,
     -0.01,
-    0.02,
+    -0.01,
+    0.2,
     0.3,
-    0.4,
-    0.7,
-    0.8,
-    1.0
+    0.6,
+    0.25,
+    0.7
 ];
 
 const WEIGHT = [
-    0.5,
-    0.6,
+    1.15,
+    1.15,
+    1.15,
+    1.1,
     1.0,
     1.0,
     1.0,
     1.0,
-    1.0,
-    1.0,
-    0.6,
-    0.5
+    1.0
 ];
 
 export const OCEAN = 0;
-export const OCEAN_MOUNTAINS = 1;
-export const SEA = 2;
-export const LAKE = 3;
-export const SWAMP = 4;
-export const PLAINS = 5;
-export const HILLS = 6;
-export const PLATEU = 7;
-export const MEDIUM_PEAKS = 8;
-export const HIGH_PEAKS = 9;
+export const SEA = 1;
+export const LAKE = 2;
+export const SWAMP = 3;
+export const PLAINS = 4;
+export const HILLS = 5;
+export const PLATEU = 6;
+export const MEDIUM_PEAKS = 7;
+export const HIGH_PEAKS = 8;
 
-export const MAX_BIOME_ID = 9;
+export const MAX_BIOME_ID = 8;
 
 export function biome(id: number, x: number, y: number, options: GeneratorOptions) {
-    return new Biome(x, y, alt(MIN_ALT[id], options), alt(MAX_ALT[id], options), WEIGHT[id]);
+    return new Biome(id, x, y, alt(MIN_ALT[id], options), alt(MAX_ALT[id], options), WEIGHT[id]);
 }
 
 export function randomBiomeId(dist: Array<number>, randomValue: number): number {
@@ -147,5 +150,5 @@ export function randomBiomeId(dist: Array<number>, randomValue: number): number 
             return i;
     }
 
-    throw new Error();
+    return dist.length-1;
 }

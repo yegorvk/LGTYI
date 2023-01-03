@@ -1,10 +1,10 @@
 import { applyDefaults } from '../Defaults';
 import { PerlinNoise } from '../PerlinNoise/PerlinNoise';
-import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions } from './GeneratorOptions';
+import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions, MAX_ALT } from './GeneratorOptions';
 import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
-import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
-import { Biome, HIGH_PEAKS, LAKE, MAX_BIOME_ID, MEDIUM_PEAKS, OCEAN, PLAINS, SEA, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
+import { distance, map_array, map_pow, sigmoid_prime } from './Util';
+import { Biome, HIGH_PEAKS, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
 
 export function generateTerrain(
     heightmap: Heightmap,
@@ -39,14 +39,14 @@ export function generateTerrain(
         biomes.push(
             biome(
                 biomeId, 
-                rng() * options.width,
-                rng() * options.height,
+                Math.floor(rng() * (options.width - 1)),
+                Math.floor(rng() * (options.height - 1)),
                 options
             )
         )
     }
 
-    //console.log(biomes);
+    console.log(biomes);
 
     for (let i = 0; i < options.height; i++) {
         for (let j = 0; j < options.width; j++) {
@@ -64,6 +64,26 @@ export function generateTerrain(
             }
 
             heightmap.data[k] = totalHeight / totalStrength;
+        }
+    }
+
+    for (let i = 0; i < biomes.length; i++) {
+        const cx = biomes[i].centerX, cy = biomes[i].centerY;
+        const alt = heightmap.data[cy*options.width+cx];
+
+        const h = Math.min(
+            (MAX_ALT - alt) * 4,
+            rng()*(MAX_ALT - alt)*4*0.5 + Math.max(0, (MAX_ALT*0.75 - alt))
+        );
+
+        if (h !== 0 && biomes[i].id === HIGH_PEAKS) {
+            generateSmoothHill(
+                heightmap,
+                cx,
+                cx,
+                h,
+                rng() * 20 + 40
+            );
         }
     }
 }
@@ -96,8 +116,8 @@ function generateDetails(
     roughness: number,
     numSteps: number,
     scale: number = 1.0,
-    roughnessStep: number = 3,
-    altStep: number = 0.3,
+    roughnessStep: number = 2,
+    altStep: number = 0.5,
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 

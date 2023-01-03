@@ -26,5 +26,5 @@ export const DefaultGeneratorOptions: GeneratorOptions = {
     seed: 0,
     waterLevel: 0,
     biomes: DefaultBiomesDistribution,
-    numberOfBiomes: 8
+    numberOfBiomes: 15
 }
