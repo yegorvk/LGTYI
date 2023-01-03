@@ -1,5 +1,5 @@
 .main_panel {
-    position: absolute;
+    position: fixed;
     top: 10px;
     left: -260px;
     width: 300px;
@@ -32,6 +32,32 @@
 }
 .opened_main_panel > .content {
     opacity: 1;
+}
+
+.win {
+    position: fixed;
+    top: 78px;
+    bottom: 78px;
+    left: 78px;
+    right: 78px;
+    max-height: 90vh;
+    padding: 50px 10px 10px;
+    transition: all 400ms;
+    z-index: 10001;
+    background: #666666;
+    font-family: Comfortaa, cursive;
+    font-size: 21px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: #999999 #666666;
+    scrollbar-width: thin;
+    box-sizing: content-box;
+}
+
+.win-title {
+    text-align: center;
+    font-size: 23px;
+    margin-top: 0;
 }
 
 ::-webkit-scrollbar {

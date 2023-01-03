@@ -1,5 +1,4 @@
-.main-but {
-    position: absolute;
+.func-but {
     width: 38px;
     height: 38px;
     padding: 6px;
@@ -9,62 +8,88 @@
     border: 1px solid #cecece;
     border-radius: 10px;
 }
-.main-but:not([disabled]):hover {
+.func-but:not([disabled]):hover {
     outline: none;
     background: #18656e;
     cursor: pointer;
 }
-.main-but:not([disabled]):focus {
+.func-but:not([disabled]):focus {
     outline: none;
     border: 1px dashed #cecece;
 }
-.main-but:not([disabled]):active {
+.func-but:not([disabled]):active {
     outline: none;
     background: #999999;
     cursor: pointer;
 }
-.main-but:disabled {
+.func-but:disabled {
     cursor: default;
     color: #666666;
 }
 
 #menu-main {
+    position: fixed;
     top: 20px;
     left: 20px;
     z-index: 10000;
 }
+
+#back-menu-main {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#back-menu-main > img {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+
 #help-main {
+    position: absolute;
     top: 20px;
     right: 20px;
-    transition: all 320ms;
+    transition: all 400ms;
     z-index: 10000;
 }
+
 #tips {
+    position: absolute;
     top: 20px;
     right: 20px;
-    transition: all 320ms;
+    transition: all 400ms;
     z-index: 9998;
 }
 .opened_help_panel > #tips {
     right: 194px;
 }
+
 #help {
+    position: absolute;
     top: 20px;
     right: 20px;
-    transition: all 320ms;
+    transition: all 400ms;
     z-index: 9998;
 }
 .opened_help_panel > #help {
     right: 136px;
 }
+
 #info {
+    position: absolute;
     top: 20px;
     right: 20px;
-    transition: all 320ms;
+    transition: all 400ms;
     z-index: 9998;
 }
 .opened_help_panel > #info {
     right: 78px;
+}
+
+.close-win-but {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .menu-but {
@@ -101,47 +126,6 @@
 .menu-but:disabled {
     cursor: default;
     color: #666666;
-}
-
-.back-but {
-    position: absolute;
-    top: 10px;
-    right: 280px;
-    width: 38px;
-    height: 38px;
-    padding: 6px;
-    opacity: 0;
-    transition: opacity 400ms;
-    background: #999999;
-    border: 1px solid #cecece;
-    border-radius: 10px;
-}
-.back-but:not([disabled]):hover {
-    outline: none;
-    background: #18656e;
-    cursor: pointer;
-}
-.back-but:not([disabled]):focus {
-    outline: none;
-    border: 1px dashed #cecece;
-}
-.back-but:not([disabled]):active {
-    outline: none;
-    background: #999999;
-    cursor: pointer;
-}
-.back-but:disabled {
-    cursor: default;
-    color: #666666;
-}
-.back-but > img{
-    width: 100%;
-    height: 100%;
-    object-fit: scale-down;
-}
-.opened_panel > .back-but {
-    right: 10px;
-    opacity: 1;
 }
 
 .center-text {
