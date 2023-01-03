@@ -18,10 +18,10 @@
     let numberOfBiomes = eventHandler.generatorOptions.numberOfBiomes;
     let oceanChance = eventHandler.generatorOptions.biomes.oceanChance;
     let seaChance = eventHandler.generatorOptions.biomes.seaChance;
-    let swampChance = eventHandler.generatorOptions.biomes.plateuChance;
+    let swampChance = eventHandler.generatorOptions.biomes.plateauChance;
     let plainsChance = eventHandler.generatorOptions.biomes.lakeChance;
     let hillsChance = eventHandler.generatorOptions.biomes.highPeaksChance;
-    let plateuChance = eventHandler.generatorOptions.biomes.hillsChance;
+    let plateauChance = eventHandler.generatorOptions.biomes.hillsChance;
     let lakeChance = eventHandler.generatorOptions.biomes.swampChance;
     let highPeaksChance = eventHandler.generatorOptions.biomes.plainsChance;
 
@@ -42,7 +42,7 @@
                     swampChance,
                     plainsChance,
                     hillsChance,
-                    plateuChance,
+                    plateauChance,
                     lakeChance,
                     highPeaksChance
                 },
@@ -64,7 +64,7 @@
                 swampChance,
                 plainsChance,
                 hillsChance,
-                plateuChance,
+                plateauChance,
                 lakeChance,
                 highPeaksChance
             },
@@ -160,9 +160,10 @@
                bind:value={seed}
         />
     </Param>
+
     <Param>
-        <label >Number Of Biomes: {numberOfBiomes}</label>
-        <input
+        <label for="generateNumberOfBiomes">Number of biomes: {numberOfBiomes}</label>
+        <input id="generateNumberOfBiomes"
                class="basic-range"
                type="range"
                bind:value={numberOfBiomes}
@@ -170,11 +171,12 @@
                min="1"
         />
     </Param>
+
     <Param>
         <h3>Biomes Distribution</h3>
         <hr/>
-        <label>OceanChance: {oceanChance}</label>
-        <input
+        <label for="generateOceanChance">Ocean chance: {oceanChance}</label>
+        <input id="generateOceanChance"
                class="basic-range"
                type="range"
                bind:value={oceanChance}
@@ -182,17 +184,19 @@
                max="1"
                min="0"
         />
-        <label>SeaChance: {seaChance}</label>
-        <input
-                class="basic-range"
-                type="range"
-                bind:value={seaChance}
-                step="0.01"
-                max="1"
-                min="0"
+
+        <label for="generateSeaChance">Sea chance: {seaChance}</label>
+        <input id="generateSeaChance"
+               class="basic-range"
+               type="range"
+               bind:value={seaChance}
+               step="0.01"
+               max="1"
+               min="0"
         />
-        <label>SwampChance: {swampChance}</label>
-        <input
+
+        <label for="generateSwampChance">Swamp chance: {swampChance}</label>
+        <input id="generateSwampChance"
                 class="basic-range"
                 type="range"
                 bind:value={swampChance}
@@ -200,8 +204,9 @@
                 max="1"
                 min="0"
         />
-        <label>LakeChance: {lakeChance}</label>
-        <input
+
+        <label for="generateLakeChance">Lake chance: {lakeChance}</label>
+        <input id="generateLakeChance"
                 class="basic-range"
                 type="range"
                 bind:value={lakeChance}
@@ -209,41 +214,45 @@
                 max="1"
                 min="0"
         />
-        <label>PlainsChance: {plainsChance}</label>
-        <input
-                class="basic-range"
-                type="range"
-                bind:value={plainsChance}
-                step="0.01"
-                max="1"
-                min="0"
+
+        <label for="generatePlainsChance">Plains chance: {plainsChance}</label>
+        <input id="generatePlainsChance"
+               class="basic-range"
+               type="range"
+               bind:value={plainsChance}
+               step="0.01"
+               max="1"
+               min="0"
         />
-        <label>HillsChance: {hillsChance}</label>
-        <input
-                class="basic-range"
-                type="range"
-                bind:value={hillsChance}
-                step="0.01"
-                max="1"
-                min="0"
+
+        <label for="generateHillsChance">Hills chance: {hillsChance}</label>
+        <input id="generateHillsChance"
+               class="basic-range"
+               type="range"
+               bind:value={hillsChance}
+               step="0.01"
+               max="1"
+               min="0"
         />
-        <label>PlateuChance: {plateuChance}</label>
-        <input
-                class="basic-range"
-                type="range"
-                bind:value={plateuChance}
-                step="0.01"
-                max="1"
-                min="0"
+
+        <label for="generatePlateauChance">Plateau chance: {plateauChance}</label>
+        <input id="generatePlateauChance"
+               class="basic-range"
+               type="range"
+               bind:value={plateauChance}
+               step="0.01"
+               max="1"
+               min="0"
         />
-        <label>HighPeaksChance: {highPeaksChance}</label>
-        <input
-                class="basic-range"
-                type="range"
-                bind:value={highPeaksChance}
-                step="0.01"
-                max="1"
-                min="0"
+
+        <label for="generateHighPeaksChance">High peaks chance: {highPeaksChance}</label>
+        <input id="generateHighPeaksChance"
+               class="basic-range"
+               type="range"
+               bind:value={highPeaksChance}
+               step="0.01"
+               max="1"
+               min="0"
         />
     </Param>
 

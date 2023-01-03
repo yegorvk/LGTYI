@@ -8,7 +8,7 @@ export interface BiomesDistribution {
     swampChance: number;
     plainsChance: number;
     hillsChance: number;
-    plateuChance: number;
+    plateauChance: number;
     lakeChance: number;
     highPeaksChance: number;
 }
@@ -20,7 +20,7 @@ export const DefaultBiomesDistribution: BiomesDistribution = {
     swampChance: 0.5,
     plainsChance: 0.5,
     hillsChance: 0.5,
-    plateuChance: 0.5,
+    plateauChance: 0.5,
     highPeaksChance: 0.5
 };
 
@@ -32,7 +32,7 @@ export function normalizeBiomesDistribution(dist: BiomesDistribution): Array<num
         dist.swampChance,
         dist.plainsChance,
         dist.hillsChance,
-        dist.plateuChance,
+        dist.plateauChance,
         dist.highPeaksChance
     ];
 

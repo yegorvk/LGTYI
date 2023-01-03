@@ -10,12 +10,10 @@
     background: none;
     border-radius: 6px;
 }
-
 .opened_main_panel {
     left: 10px;
     background: #666666;
 }
-
 
 .content {
     display: flex;
@@ -34,8 +32,6 @@
 .opened_main_panel > .content {
     opacity: 1;
 }
-
-
 
 ::-webkit-scrollbar {
     width: 3px;
