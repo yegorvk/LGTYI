@@ -23,9 +23,7 @@ export function generateTerrain(
         options.seed,
         options.roughness,
         options.levelOfDetail,
-        1.0,
-        3.0,
-        0.2
+        1.0
     );
 
     map_array(temp, -1.0, 1.0);
@@ -45,8 +43,6 @@ export function generateTerrain(
             )
         )
     }
-
-    console.log(biomes);
 
     for (let i = 0; i < options.height; i++) {
         for (let j = 0; j < options.width; j++) {
@@ -137,12 +133,12 @@ function generateDetails(
     roughness: number,
     numSteps: number,
     scale: number = 1.0,
-    roughnessStep: number = 2,
-    altStep: number = 0.5,
+    roughnessStep: number = 3,
+    altStep: number = 0.3,
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 
-    roughness /= 40;
+    roughness /= 80;
     let altCoef = scale;
 
     for (let step = 0; step < numSteps; step++) {
@@ -152,7 +148,7 @@ function generateDetails(
             let noiseX = 0
 
             for (let j = 0; j < width; j++) {
-                heightmap[i*width+j] += altCoef * noiseGenerator.perlin2(noiseX, noiseY);
+                heightmap[i*width+j] += altCoef * noiseGenerator.simplex2(noiseX, noiseY);
                 noiseX += roughness
             }
 
