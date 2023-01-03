@@ -15,7 +15,7 @@ export async function importMap(): Promise<SaveData> {
         properties: ['openFile']
     });
     // Exit the function if the user cancels the save dialog
-    if (!filePaths) return;
+    if (filePaths.length === 0) throw new Error("File was not selected!");
     // Use the electron fs module to write an empty string to the specified file
     try {
         let file = await fs.promises.readFile(filePaths[0], 'utf8');
