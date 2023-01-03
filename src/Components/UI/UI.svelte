@@ -4,6 +4,7 @@
     import "./styles/Range.css";
     import "./styles/Buttons.css";
     import "./styles/Burger.css";
+    import './InfoPages/Panel.css';
     //components
     import Generate from "./Pages/Generate.svelte";
     import Operations from "./Pages/Operations.svelte";

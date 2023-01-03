@@ -16,6 +16,7 @@
     background: #666666;
 }
 
+
 .content {
     display: flex;
     flex-direction: column;
@@ -34,33 +35,7 @@
     opacity: 1;
 }
 
-.win {
-    position: fixed;
-    top: 10px;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    height: 100px;
-    width: 100px;
-    max-height: 90vh;
-    padding: 50px 10px 10px;
-    transition: all 400ms;
-    z-index: 10001;
-    background: #666666;
-    font-family: Comfortaa, cursive;
-    font-size: 21px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-color: #999999 #666666;
-    scrollbar-width: thin;
-    box-sizing: content-box;
-}
 
-.win-title {
-    text-align: center;
-    font-size: 23px;
-    margin-top: 0;
-}
 
 ::-webkit-scrollbar {
     width: 3px;
@@ -110,5 +85,6 @@ input[type=checkbox] {
 }
 
 .hidden {
+    opacity: 0;
     display: none;
 }

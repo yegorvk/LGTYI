@@ -1,0 +1,35 @@
+.win {
+    position: absolute;
+    top: 78px;
+    right: 10px;
+    max-height: 80vh;
+    max-width: 80vh;
+    padding: 30px 30px;
+    transition: opacity 400ms, max-height 900ms, max-width 900ms;
+    z-index: 10001;
+    background: #999999;
+    font-family: Comfortaa, cursive;
+    font-size: 21px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: #999999 #666666;
+    scrollbar-width: thin;
+    box-sizing: content-box;
+    opacity: 1;
+    border-radius: 30px;
+}
+
+.win-title {
+    text-align: center;
+    font-size: 23px;
+    margin-top: 0;
+}
+.win-hidden{
+    opacity: 0;
+    max-height: 1vh;
+    max-width: 1vh;
+}
+.win > div{
+    width: 100%;
+    height: 100%;
+}

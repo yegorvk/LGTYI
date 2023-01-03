@@ -4,7 +4,7 @@
 </script>
 
 <div class="win"
-     class:hidden={currInfoPanel === InfoPanels.NONE}
+     class:win-hidden={currInfoPanel === InfoPanels.NONE}
 >
     <slot>
     </slot>
