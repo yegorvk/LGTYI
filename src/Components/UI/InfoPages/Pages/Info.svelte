@@ -6,7 +6,7 @@
     </p>
     <ul>
         <li>Yegor Vaskonyan</li>
-        <li>Anton Matiash</li>
+        <li><a target="_blank" href="https://github.com/Pazzann">Anton Matiash</a></li>
         <li>Denys Honcharov</li>
         <li>Oleksandr Belinskyi</li>
         <li>Yurii Chernenko</li>
