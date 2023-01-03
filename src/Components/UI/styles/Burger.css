@@ -17,7 +17,7 @@
 .burger::after, .burger::before {
     display: block !important;
     height: 4px;
-    background: #fff;
+    background: #333333;
 }
 
 .burger::after {

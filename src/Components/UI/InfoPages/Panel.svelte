@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {InfoPanels} from "../InfoPanels";
+    import {InfoPanels} from "./InfoPanels";
     export let currInfoPanel: InfoPanels;
 </script>
 

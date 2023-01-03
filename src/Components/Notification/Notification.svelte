@@ -18,9 +18,9 @@
 
 <div class="notify-wind" class:visible={visible}>
     {#if err}
-        <img src="cross.png" alt="not ok"/>
+        <img src="./assets/cross.png" alt="not ok"/>
     {:else}
-        <img src="checkmark.png" alt="ok"/>
+        <img src="./assets/checkmark.png" alt="ok"/>
     {/if}
     <span class:red={err}>{spanText}</span>
 </div>
