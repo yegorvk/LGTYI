@@ -86,6 +86,8 @@ export function generateTerrain(
         }
     }
 
+    //generateRiver(heightmap, rng() * (heightmap.width-1), rng() * (heightmap.height-1));
+
     let maxHeight = MIN_ALT;
     let minHeight = MAX_ALT;
 
@@ -157,6 +159,70 @@ function generateDetails(
 
         roughness *= roughnessStep;
         altCoef *= altStep;
+    }
+}
+
+function generateRiver(
+    heightmap: Heightmap,
+    startX: number,
+    startY: number
+) {
+    const routeX = new Array<number>();
+    const routeY = new Array<number>();
+
+    while (true) {
+        const cur = startY*heightmap.width+startX;
+
+        if (heightmap.data[cur] <= 0)
+            break;
+
+        routeX.push(startX);
+        routeY.push(startY);
+
+        const candidateX = [
+            startX - 1,
+            startX + 1,
+            startX,
+            startX,
+            startX - 1,
+            startX - 1,
+            startX + 1,
+            startX + 1
+        ];
+
+        const candidateY = [
+            startY,
+            startY,
+            startY + 1,
+            startY - 1,
+            startY + 1,
+            startY - 1,
+            startY + 1,
+            startY - 1
+        ];
+
+        let best = cur;
+
+        for (let i = 0; i < candidateX.length; i++) {
+            if (candidateX[i] >= 0 && candidateX[i] < heightmap.width) {
+                if (candidateY[i] >= 0 && candidateY[i] < heightmap.height) {
+                    const k = candidateY[i] * heightmap.width + candidateX[i];
+
+                    if (best === -1 || heightmap.data[best] > heightmap.data[k])
+                        best = i;
+                }
+            }
+        }
+
+        if (best === cur)
+            break;
+
+        startX = candidateX[best];
+        startY = candidateY[best];
+    }
+
+    for (let i = 0; i < routeX.length; i++) {
+        generateSmoothHill(heightmap, routeX[i], routeY[i], -3.0, 4.0);
     }
 }
 

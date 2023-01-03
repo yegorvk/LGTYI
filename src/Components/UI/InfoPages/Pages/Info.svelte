@@ -5,7 +5,7 @@
         A landscape generator made for TYI-2023. Authors:
     </p>
     <ul>
-        <li>Yehor Vaskonian</li>
+        <li>Yegor Vaskonyan</li>
         <li>Anton Matiash</li>
         <li>Denys Honcharov</li>
         <li>Oleksandr Belinskyi</li>
