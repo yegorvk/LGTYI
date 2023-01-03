@@ -8,7 +8,7 @@ export class UIEventsHandler {
     private readonly dispatcher: Function;
     private useColorFor2D: boolean = false;
     public setPanel: (panel: Panels) => void;
-    private _generatorOptions: GeneratorOptions;
+    private _generatorOptions: GeneratorOptions = DefaultGeneratorOptions;
     private _renderSettings: RenderSettings = DefaultRenderSettings;
 
     get renderTrueSettings(): RenderSettings {

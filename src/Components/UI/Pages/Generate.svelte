@@ -17,13 +17,13 @@
 
     let numberOfBiomes = eventHandler.generatorOptions.numberOfBiomes;
     let oceanChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let seaChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let swampChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let plainsChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let hillsChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let plateuChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let lakeChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let highPeaksChance = eventHandler.generatorOptions.biomes.oceanChance;
+    let seaChance = eventHandler.generatorOptions.biomes.seaChance;
+    let swampChance = eventHandler.generatorOptions.biomes.plateuChance;
+    let plainsChance = eventHandler.generatorOptions.biomes.lakeChance;
+    let hillsChance = eventHandler.generatorOptions.biomes.highPeaksChance;
+    let plateuChance = eventHandler.generatorOptions.biomes.hillsChance;
+    let lakeChance = eventHandler.generatorOptions.biomes.swampChance;
+    let highPeaksChance = eventHandler.generatorOptions.biomes.plainsChance;
 
     function Generate(){
         generate(
