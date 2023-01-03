@@ -5,11 +5,20 @@ import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
 
 export class RenderChunk extends THREE.Object3D {
     private terrainScale: number;
+    private grassNormal: THREE.Texture;
 
     constructor(offset: THREE.Vector3, scale: number, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
         super()
 
-        applyDefaults(options, DefaultRenderOptions)
+        applyDefaults(options, DefaultRenderOptions);
+
+        this.grassNormal = new THREE.TextureLoader().load('assets/textures/terrain_norm.jpg');
+
+        this.grassNormal.wrapS = THREE.RepeatWrapping;
+        this.grassNormal.wrapT = THREE.RepeatWrapping;
+
+        this.grassNormal.generateMipmaps = true;
+        this.grassNormal.needsUpdate = true;
 
         this.terrainScale = scale;
 
@@ -22,6 +31,9 @@ export class RenderChunk extends THREE.Object3D {
 
         const posAttr = new THREE.Float32BufferAttribute(chunk.vertices, 3)
         geometry.setAttribute('position', posAttr)
+
+        const uvAttr = new THREE.Float32BufferAttribute(chunk.uv, 2);
+        geometry.setAttribute('uv', uvAttr);
 
         if (chunk.useVertexColors) {
             const colorAttr = new THREE.Float32BufferAttribute(chunk.vertexColors, 3)
@@ -61,11 +73,13 @@ export class RenderChunk extends THREE.Object3D {
 
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
         const mat = options.prepareForLighting ?
-            new THREE.MeshPhongMaterial() :
+            new THREE.MeshPhongMaterial({
+                normalMap: this.grassNormal
+            }) :
             new THREE.MeshBasicMaterial()
 
         if (options.prepareForLighting) {
-            (mat as THREE.MeshPhongMaterial).shininess = 0.1
+            (mat as THREE.MeshPhongMaterial).shininess = 0.1;
         }
 
         if (options.vertexColors)
@@ -74,5 +88,9 @@ export class RenderChunk extends THREE.Object3D {
             mat.color.set(0x000000)
 
         return mat
+    }
+
+    dispose() {
+        this.grassNormal.dispose();
     }
 }

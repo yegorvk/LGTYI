@@ -23,6 +23,8 @@ export class Chunk {
     // suitable for rendering with GL_TRIANGLES (Mesh in three.js)
     indices: Uint32Array;
 
+    uv: Float32Array;
+
     // terrain heightmap
     heightmap: Heightmap;
 
@@ -33,11 +35,12 @@ export class Chunk {
         this.heightmap = heightmap;
         this.useVertexColors = useVertexColors;
 
-        this.generateVertices()
-        this.generateIndices()
+        this.generateVertices();
+        this.generateUvs();
+        this.generateIndices();
 
         if (useVertexColors)
-            this.generateVertexColors()
+            this.generateVertexColors();
     }
 
     private generateVertices() {
@@ -54,6 +57,19 @@ export class Chunk {
                 this.vertices[3 * base] = this.scale * j - offsetX
                 this.vertices[3 * base + 1] = this.scale * i - offsetY
                 this.vertices[3 * base + 2] = this.heightmap.data[hBase]
+            }
+        }
+    }
+
+    private generateUvs() {
+        this.uv = new Float32Array(2 * this.width * this.height);
+
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < this.width; j++) {
+                const base = this.mIndex(i, j);
+
+                this.uv[2 * base] = i / 20.0;
+                this.uv[2 * base + 1] = j / 20.0;
             }
         }
     }
@@ -80,20 +96,20 @@ export class Chunk {
     }
 
     private generateIndices() {
-        const triangleCount = 2 * this.width * this.height
-        this.indices = new Uint32Array(3 * triangleCount)
+        const triangleCount = 2 * this.width * this.height;
+        this.indices = new Uint32Array(3 * triangleCount);
 
         for (let i = 0; i < this.height - 1; i++) {
             for (let j = 0; j < this.width - 1; j++) {
                 const base = this.mIndex(i, j)
 
-                this.indices[3 * (2 * base)] = base
-                this.indices[3 * (2 * base) + 1] = base + 1
-                this.indices[3 * (2 * base) + 2] = base + this.width
+                this.indices[3 * (2 * base)] = base;
+                this.indices[3 * (2 * base) + 1] = base + 1;
+                this.indices[3 * (2 * base) + 2] = base + this.width;
 
-                this.indices[3 * (2 * base + 1)] = base + this.width
+                this.indices[3 * (2 * base + 1)] = base + this.width;
                 this.indices[3 * (2 * base + 1) + 1] = base + 1;
-                this.indices[3 * (2 * base + 1) + 2] = base + this.width + 1
+                this.indices[3 * (2 * base + 1) + 2] = base + this.width + 1;
             }
         }
     }
