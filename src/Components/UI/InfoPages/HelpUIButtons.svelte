@@ -37,7 +37,7 @@
     <a id="help"
        class="func-but"
        target="_blank"
-       href="instruction/index.htm">
+       href="instruction/index.html">
         <img src="./assets/help.png" alt="help"/>
     </a>
 
