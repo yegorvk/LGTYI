@@ -3,6 +3,7 @@ import {DefaultRenderSettings, type RenderSettings} from "../../Renderer/RenderS
 import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Generator/GeneratorOptions";
 import type {Color} from "../../Types/Color";
 import type {GrayscaleColor} from "../../Types/GrayscaleColor";
+import {DefaultGradientSettings} from "../../Terrain/PointColor";
 
 
 /**
@@ -37,7 +38,7 @@ export class UIEventsHandler {
         if (this._renderSettings.lighting) {
             mode.push("1");
         }
-        return [mode, this._renderSettings.wireframeOpacity, this._renderSettings.wireframeLineWidth, this._renderSettings.dynamicScene, this._renderSettings.landColors]
+        return [mode, this._renderSettings.wireframeOpacity, this._renderSettings.wireframeLineWidth, this._renderSettings.dynamicScene, this._renderSettings.gradientSettings.landColors]
     }
 
     set generatorOptions(value: GeneratorOptions) {
@@ -132,8 +133,9 @@ export class UIEventsHandler {
             wireframeOpacity: wireframeOpacity,
             wireframeLineWidth: wireframeLineWidth,
             dynamicScene: dynamicScene,
-            landColors: colors16
+            gradientSettings: DefaultGradientSettings
         }
+        renderSettings.gradientSettings.landColors = colors16;
         this._renderSettings = renderSettings;
         this.dispatcher('settings_save', {render: renderSettings});
     }
