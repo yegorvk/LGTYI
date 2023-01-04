@@ -1,4 +1,4 @@
-import { lerp } from "../math";
+import { INF, lerp } from "../math";
 import { MAX_ALT, MIN_ALT } from "../Generator/GeneratorOptions";
 
 const DEFAULT_LAND_COLORS = [
@@ -76,6 +76,11 @@ export function colorRGBFromAltitude(
     minAlt: number = MIN_ALT
 ): number {
     let gradientSettings: GradientSettings = structuredClone(gradientSettings1);
+
+    if (waterLevel < MIN_ALT) {
+        waterLevel = 0;
+        useWaterColors = false;
+    }
 
     // get rid of negative values
     maxAlt -= minAlt;

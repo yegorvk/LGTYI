@@ -1,7 +1,8 @@
 <script lang="ts">
     import Param from "../Param/Param.svelte";
-    import type { GeneratorOptions} from "../../../Generator/GeneratorOptions";
+    import { MAX_ALT, MIN_ALT, type GeneratorOptions} from "../../../Generator/GeneratorOptions";
     import type { UIEventsHandler } from "../UIEventsHandler";
+    import { INF } from "../../../math";
 
     export let generate: (options: GeneratorOptions) => void = null;
     export let eventHandler: UIEventsHandler;
@@ -36,7 +37,7 @@
                 roughness: roughness / 100,
                 levelOfDetail: levelOfDetail,
                 seed: ((seed === null) ? 0 : seed),
-                waterLevel: waterLevel,
+                waterLevel: waterLevel - (!hasWaterLevel ? INF : 0),
                 biomes: {
                     oceanChance,
                     seaChance,
@@ -58,7 +59,7 @@
             roughness: roughness,
             levelOfDetail: levelOfDetail,
             seed: seed,
-            waterLevel: waterLevel,
+            waterLevel: waterLevel - (!hasWaterLevel ? INF : 0),
             biomes: {
                 oceanChance,
                 seaChance,
@@ -72,6 +73,9 @@
             numberOfBiomes: numberOfBiomes
         };
     }
+
+    let hasWaterLevel = (waterLevel >= MIN_ALT);
+    if (!hasWaterLevel) waterLevel += INF;
 </script>
 
 <div>
@@ -152,6 +156,16 @@
     </Param>
 
     <Param>
+        <label for="generateHasWaterLevel">Has water level: </label>
+        <input id="hasWaterLevel"
+               type="checkbox"
+               bind:checked={hasWaterLevel}
+        />
+    </Param>
+
+    {#if hasWaterLevel}
+
+    <Param>
         <label for="generateWaterLevel">Water level: {waterLevel}</label>
         <input id="generateWaterLevel"
                class="basic-range"
@@ -161,6 +175,8 @@
                min="-120"
         />
     </Param>
+
+    {/if}
 
     <Param>
         <label for="generateSeed">Seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>

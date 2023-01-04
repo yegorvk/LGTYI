@@ -5,6 +5,7 @@ import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
 import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
 import { Biome, HIGH_PEAKS, MAX_BIOME_ID, MAX_WATER_BIOME_ID, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
+import { INF } from '../math';
 
 const SCALE_INV = 2;
 
@@ -14,6 +15,17 @@ export function generateTerrain(
 ) {
     applyDefaults(options, DefaultGeneratorOptions);
     heightmap.waterLevel = options.waterLevel;
+
+    let hasWater = heightmap.waterLevel >= MIN_ALT;
+
+    if (!hasWater)
+        heightmap.waterLevel += INF;
+
+    options.waterLevel = heightmap.waterLevel;
+
+    if (options.waterLevel !== heightmap.waterLevel) throw new Error();
+
+    console.log(heightmap.waterLevel);
 
     const rng = seedrandom(options.seed);
 
@@ -177,6 +189,11 @@ export function generateTerrain(
     heightmap.data = temp;
     heightmap.width /= SCALE_INV;
     heightmap.height /= SCALE_INV;
+
+    if (!hasWater)
+        heightmap.waterLevel -= INF;
+
+    options.waterLevel = heightmap.waterLevel;
 }
 
 export function generateSimpleTerrain(heightmap: Heightmap, options: GeneratorOptions) {
@@ -207,8 +224,8 @@ function generateDetails(
     roughness: number,
     numSteps: number,
     scale: number = 1.0,
-    roughnessStep: number = 3,
-    altStep: number = 0.3,
+    roughnessStep: number = 4,
+    altStep: number = 0.15,
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 

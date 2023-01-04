@@ -101,8 +101,10 @@
             });
         }
 
-        const waterLayer = new THREE.Mesh(waterLayerGeometry, mat);
-        scene.add(waterLayer);
+        if (heightmap.waterLevel >= -240) {
+            const waterLayer = new THREE.Mesh(waterLayerGeometry, mat);
+            scene.add(waterLayer);
+        } 
 
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
         scene.add(ambientLight);
