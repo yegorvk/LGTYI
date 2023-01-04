@@ -63,7 +63,8 @@
             <input
                    type="checkbox"
                    on:click={dynSwitch}
-                   value={true}
+                   checked={dynamicScene}
+                   value={dynamicScene}
             />
         </Param>
         <Param>

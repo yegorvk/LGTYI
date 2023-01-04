@@ -37,14 +37,14 @@
                 seed: ((seed === null) ? 0 : seed),
                 waterLevel: waterLevel,
                 biomes: {
-                    oceanChance,
-                    seaChance,
-                    swampChance,
-                    plainsChance,
-                    hillsChance,
-                    plateuChance,
-                    lakeChance,
-                    highPeaksChance
+                    oceanChance: oceanChance,
+                    seaChance: seaChance,
+                    swampChance: swampChance,
+                    plainsChance: plainsChance,
+                    hillsChance: hillsChance,
+                    plateuChance: plateuChance,
+                    lakeChance: lakeChance,
+                    highPeaksChance: highPeaksChance
                 },
                 numberOfBiomes: numberOfBiomes
             }
@@ -161,19 +161,19 @@
         />
     </Param>
     <Param>
-        <label >Number Of Biomes: {numberOfBiomes}</label>
+        <label >Number Of biomes: {numberOfBiomes}</label>
         <input
                class="basic-range"
                type="range"
                bind:value={numberOfBiomes}
-               max="30"
+               max="50"
                min="1"
         />
     </Param>
     <Param>
         <h3>Biomes Distribution</h3>
         <hr/>
-        <label>OceanChance: {oceanChance}</label>
+        <label>Ocean chance: {oceanChance}</label>
         <input
                class="basic-range"
                type="range"
@@ -182,7 +182,7 @@
                max="1"
                min="0"
         />
-        <label>SeaChance: {seaChance}</label>
+        <label>Sea chance: {seaChance}</label>
         <input
                 class="basic-range"
                 type="range"
@@ -191,7 +191,7 @@
                 max="1"
                 min="0"
         />
-        <label>SwampChance: {swampChance}</label>
+        <label>Swamp chance: {swampChance}</label>
         <input
                 class="basic-range"
                 type="range"
@@ -200,7 +200,7 @@
                 max="1"
                 min="0"
         />
-        <label>LakeChance: {lakeChance}</label>
+        <label>Lake chance: {lakeChance}</label>
         <input
                 class="basic-range"
                 type="range"
@@ -209,7 +209,7 @@
                 max="1"
                 min="0"
         />
-        <label>PlainsChance: {plainsChance}</label>
+        <label>Plains chance: {plainsChance}</label>
         <input
                 class="basic-range"
                 type="range"
@@ -218,7 +218,7 @@
                 max="1"
                 min="0"
         />
-        <label>HillsChance: {hillsChance}</label>
+        <label>Hills chance: {hillsChance}</label>
         <input
                 class="basic-range"
                 type="range"
@@ -227,7 +227,7 @@
                 max="1"
                 min="0"
         />
-        <label>PlateuChance: {plateuChance}</label>
+        <label>Plateu chance: {plateuChance}</label>
         <input
                 class="basic-range"
                 type="range"
@@ -236,7 +236,7 @@
                 max="1"
                 min="0"
         />
-        <label>HighPeaksChance: {highPeaksChance}</label>
+        <label>High peaks chance: {highPeaksChance}</label>
         <input
                 class="basic-range"
                 type="range"
