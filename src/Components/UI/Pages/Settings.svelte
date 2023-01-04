@@ -82,8 +82,7 @@
                 <input id="dynamicScene"
                        type="checkbox"
                        on:click={dynSwitch}
-                       checked={dynamicScene}
-                       value={dynamicScene}
+                       checked={true}
                 />
             </div>
         </Param>
@@ -115,6 +114,14 @@
                        bind:group={mode}
                 />
             </div>
+
+            <div class="check-label">
+                <label for="modeTextures">Textures:</label>
+                <input id="modeTextures"
+                       type="checkbox"
+                       value={"4"}
+                       bind:group={mode}
+            />
         </Param>
     </div>
 

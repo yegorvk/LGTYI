@@ -5,6 +5,7 @@ export interface RenderOptions {
     wireframeLineWidth?: number;
     prepareForLighting?: boolean;
     vertexColors?: boolean;
+    textures: boolean;
 }
 
 export const DefaultRenderOptions: RenderOptions = {
@@ -13,5 +14,6 @@ export const DefaultRenderOptions: RenderOptions = {
     wireframeColor: 0xFFFFFF,
     wireframeLineWidth: 1.3,
     prepareForLighting: true,
-    vertexColors: true
+    vertexColors: true,
+    textures: false
 }
