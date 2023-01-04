@@ -47,7 +47,7 @@
        class="func-but"
        disabled={!help_visible}
        target="_blank"
-       href="instruction/dovidka.htm">
+       href="instruction/dovidka.html">
         <!--            on:click={tips}>-->
         <img src="./assets/tips.png" alt="tips"/>
     </a>
