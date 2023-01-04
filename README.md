@@ -6,20 +6,29 @@ The project is a landscape generator, created in accordance with the task of the
 
 The project is written in TypeScript, Svelte (both are converted to JavaScript, HTML and CSS at the compilation stage), actually JavaScript, HTML and CSS. It is also using Electron.js. Rendering in 2D is implemented on HTML5 Canvas without external libraries. The 3D renderer uses Three.js (WebGL renderer) for GPU acceleration. Random generation is carried out using an algorithm based on Perlin noise.
 
-## Installation and running
+## System Requirements
+
+For the best experience your device is recommended to meet the following requierements:
+
+- **Processor**: > 1 GHz
+- **Processor cores number**: > 1
+- **RAM**: > 500 MB
+- **Free disk space**: > 350 MB
+
+## Installation and Running
 
 To install LGTYI, you may use the executable file, or you may assemble the project yourself.
 
-If using an executable file, just download it, run it as an administrator and follow the on-screen instructions.
+If using an **executable file**, just download it, run it as an administrator and follow the on-screen instructions.
 
-To assemble and run the project yourself:
+To assemble and run the project **manually**:
 
-1. Install Node.js:
+1. Install **Node.js**:
 	- Download the file from the [link](https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi);
 	- Run the downloaded file as administrator;
 	- Follow the on-screen instructions.
-2. Install TypeScript by executing `npm i -g typescript` as an administrator.
-3. Install Yarn by executing `npm i -g yarn` as an administrator.
+2. Install **TypeScript** by executing `npm i -g typescript` as an administrator.
+3. Install **Yarn** by executing `npm i -g yarn` as an administrator.
 4. Open the project folder in the console/terminal.
 5. In the project folder execute `yarn` as an administrator.
 6. To run LGTYI run `yarn electron-dev`.

@@ -148,8 +148,8 @@
     </Param>
 
     <Param>
-        <label for="generateHasWaterLevel">Has water level: </label>
-        <input id="hasWaterLevel"
+        <label for="generateWater">Water: </label>
+        <input id="generateWater"
                type="checkbox"
                bind:checked={hasWaterLevel}
         />
@@ -192,8 +192,7 @@
     </Param>
 
     <Param>
-        <h3>Biomes</h3>
-        <hr/>
+        <p class="param-title">Biomes</p>
         <label for="generateOceanChance">Ocean: {oceanChance}</label>
         <input id="generateOceanChance"
                class="basic-range"
