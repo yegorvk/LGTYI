@@ -8,7 +8,7 @@
     import {importMap} from "./Files/Importer";
     import Notification from "./Components/Notification/Notification.svelte";
     import AddMap from "./Files/Adder";
-    import SubtructMap from "./Files/Subtructer";
+    import SubtructMap from "./Files/Subtracter";
     import ExcelExport from "./Files/ExcelExporter";
     import {DefaultRenderSettings} from "./Renderer/RenderSettings";
     import type {RenderSettings} from "./Renderer/RenderSettings"
