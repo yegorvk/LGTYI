@@ -120,15 +120,15 @@
     </div>
     <Param>
         <h3>Gradient colors:
-            <button on:click={colorAdd}>Add</button>
+            <button class="colors-button" on:click={colorAdd}>Add</button>
         </h3>
         {#each colors as color}
-               <span>{color} <button on:click={()=>{
+               <span class="colors-span"><input type="color" bind:value={color}/> <button class="colors-button" on:click={()=>{
                    let index = colors.indexOf(color);
                    colors.splice(index, 1);
                    colors = colors;
                }}>Remove</button></span>
-               <input type="color" bind:value={color}/>
+
         {/each}
     </Param>
 
