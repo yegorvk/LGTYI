@@ -1,7 +1,7 @@
 <script lang="ts">
     import Param from "../Param/Param.svelte";
-    import {DefaultGeneratorOptions, type GeneratorOptions} from "../../../Generator/GeneratorOptions";
-    import {UIEventsHandler} from "../UIEventsHandler";
+    import type { GeneratorOptions} from "../../../Generator/GeneratorOptions";
+    import type { UIEventsHandler } from "../UIEventsHandler";
 
     export let generate: (options: GeneratorOptions) => void = null;
     export let eventHandler: UIEventsHandler;
@@ -22,7 +22,7 @@
     let swampChance = eventHandler.generatorOptions.biomes.swampChance;
     let plainsChance = eventHandler.generatorOptions.biomes.plainsChance;
     let hillsChance = eventHandler.generatorOptions.biomes.hillsChance;
-    let plateuChance = eventHandler.generatorOptions.biomes.plateuChance;
+    let plateauChance = eventHandler.generatorOptions.biomes.plateauChance;
     let lakeChance = eventHandler.generatorOptions.biomes.lakeChance;
     let highPeaksChance = eventHandler.generatorOptions.biomes.highPeaksChance;
 

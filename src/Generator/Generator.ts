@@ -191,12 +191,12 @@ function generateDetails(
     roughness: number,
     numSteps: number,
     scale: number = 1.0,
-    roughnessStep: number = 2,
-    altStep: number = 0.5,
+    roughnessStep: number = 3,
+    altStep: number = 0.2,
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 
-    roughness /= 120;
+    roughness /= 80;
     let altCoef = scale;
 
     for (let step = 0; step < numSteps; step++) {

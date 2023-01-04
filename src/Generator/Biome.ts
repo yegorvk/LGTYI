@@ -107,7 +107,7 @@ const MIN_ALT = [
     0.1,
     0.2,
     0.45,
-    0.5
+    0.4
 ];
 
 const MAX_ALT = [
@@ -115,10 +115,10 @@ const MAX_ALT = [
     -0.5,
     -0.01,
     -0.01,
-    0.17,
+    0.2,
     0.4,
-    0.5,
-    0.7
+    0.65,
+    0.5
 ];
 
 const WEIGHT = [
@@ -129,7 +129,7 @@ const WEIGHT = [
     1.0,
     1.0,
     1.0,
-    1.0,
+    1.5,
 ];
 
 export const OCEAN = 0;
@@ -138,7 +138,7 @@ export const LAKE = 2;
 export const SWAMP = 3;
 export const PLAINS = 4;
 export const HILLS = 5;
-export const PLATEU = 6;
+export const PLATEAU = 6;
 export const HIGH_PEAKS = 7;
 
 export const MAX_WATER_BIOME_ID = 2;
