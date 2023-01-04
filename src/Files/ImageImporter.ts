@@ -7,7 +7,8 @@ import {DefaultGeneratorOptions} from "../Generator/GeneratorOptions";
 const remote = require('@electron/remote');
 
 export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean): Promise<Heightmap> {
-    const Jimp = window.require('jimp');
+    // @ts-ignore
+    const Jimp = window.jimp;
 
     // Use the electron dialog module to prompt the user for a file path
     const {filePaths} = await remote.dialog.showOpenDialog({

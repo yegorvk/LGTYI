@@ -10,8 +10,10 @@ export async function ExcelExport(heightMap: Heightmap) {
             throw new Error('No file selected');
         }
 
-        const fs = window.require('fs');
-        const ExcelJS = window.require('exceljs');
+        // @ts-ignore
+        const fs = window.fs;
+        // @ts-ignore
+        const ExcelJS = window.exceljs;
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Coords');
         let columnArr: any[] = [];
