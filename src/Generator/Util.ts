@@ -1,15 +1,35 @@
 import type { GeneratorOptions } from "./GeneratorOptions";
 
+/**
+ * Calc Distance between 2d Vectors
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ */
 export function distance2(x1: number, y1: number, x2: number, y2: number) {
     const dx = x1 - x2, dy = y1 - y2;
     return dx*dx + dy*dy;
 }
 
+/**
+ * Calculate distance between 2d Vectors.
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ */
 export function distance(x1: number, y1: number, x2: number, y2: number) {
     const dx = x1 - x2, dy = y1 - y2;
     return Math.sqrt(dx*dx + dy*dy);
 }
 
+/**
+ * @param heightmap
+ * @param outMinAlt
+ * @param outMaxAlt
+ * @param pow
+ */
 export function map_pow(
     heightmap: Float32Array,
     outMinAlt: number,
@@ -32,6 +52,11 @@ export function map_pow(
     }
 }
 
+/**
+ * @param heightmap
+ * @param outMinAlt
+ * @param outMaxAlt
+ */
 export function map_array(
     heightmap: Float32Array,
     outMinAlt: number,

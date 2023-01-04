@@ -7,7 +7,7 @@
     <p>
         The source code is available on <a target="_blank" href="https://github.com/egor-vaskon/LGTYI">GitHub</a>.
     </p>
-    <p><a target="_blank" href="instruction/index.html">Help</a>Im
+    <p><a target="_blank" href="instruction/index.html">Help</a>
     <p><a target="_blank" href="docs/index.html">Documentation</a></p>
     <p>Version: 2.2.3</p>
     <p>License: <a target="_blank" href="https://github.com/egor-vaskon/LGTYI/blob/main/LICENSE">MIT</a></p>
