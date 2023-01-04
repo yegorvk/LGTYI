@@ -1,5 +1,5 @@
 /**
- * Specify this is a module comment without renaming it:
+ * Types that are used in many namespaces of project files and help in many places.
  * @module
  */
 export * from '../Types/SaveData'

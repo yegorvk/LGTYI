@@ -356,8 +356,17 @@ span.de_2B94C39861
 	color:#0000ff;
 	text-decoration:underline;
 }
+span.de_34F0647984
+{
+	color:#7f7f7f;
+}
 span.de_51752156DC
 {
+	color:#000000;
+}
+span.de_653C973463
+{
+	font-size: 24pt;
 	color:#000000;
 }
 span.de_6D2D8B1FD4
@@ -370,11 +379,10 @@ span.de_7384113621
 	color:#0000ff;
 	text-decoration:underline;
 }
-span.de_75F6C3F379
+span.de_7F06B9E883
 {
-	font-family: "ui-monospace";
-	font-size: 9pt;
-	color:#24292f;
+	color:#7f7f7f;
+	text-decoration:underline;
 }
 span.de_8188E2D497
 {
@@ -395,6 +403,17 @@ span.de_BE5248E84C
 span.de_CE8F7858DA
 {
 	font-size: 18pt;
+}
+span.de_CF84B9CF87
+{
+	font-size: 12pt;
+	color:#7f7f7f;
+}
+span.de_F46B109B6C
+{
+	font-size: 12pt;
+	color:#7f7f7f;
+	text-decoration:underline;
 }
 .list-element {
 	list-style-type: none;

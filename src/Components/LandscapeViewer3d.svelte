@@ -40,7 +40,7 @@
     let scene = new THREE.Scene();
     let camera: THREE.Camera = null;
 
-    let chunk = new Chunk(1, heightmap, renderSettings.gradient);
+    let chunk = new Chunk(2, heightmap, renderSettings.gradient, renderSettings.gradientSettings);
     //let chunk = null;
 
     let waterLayerMat: THREE.ShaderMaterial = null;
@@ -50,8 +50,8 @@
 
     if (renderSettings.lighting) {
         const waterLayerGeometry = new THREE.PlaneGeometry(
-            (heightmap.width - 1) * SCALE,
-            (heightmap.height - 1) * SCALE,
+            (heightmap.width - 1) * SCALE * 2,
+            (heightmap.height - 1) * SCALE * 2,
             1,
             1
         );

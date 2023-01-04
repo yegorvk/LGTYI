@@ -1,5 +1,5 @@
 /**
- * Specify this is a module comment without renaming it:
+ * Working with files.
  * @module
  */
 export *  from "../Files/Adder";

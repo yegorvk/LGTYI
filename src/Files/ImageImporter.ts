@@ -7,7 +7,8 @@ import {DefaultGeneratorOptions} from "../Generator/GeneratorOptions";
 const remote = require('@electron/remote');
 
 export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean): Promise<Heightmap> {
-    const Jimp = window.require('jimp');
+    // @ts-ignore
+    const Jimp = window.jimp;
 
     // Use the electron dialog module to prompt the user for a file path
     const {filePaths} = await remote.dialog.showOpenDialog({
@@ -17,13 +18,13 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
         properties: ['openFile']
     });
     // Exit the function if the user cancels the save dialog
-    if (!filePaths) throw new Error('No file selected');
+    if (filePaths.length === 0) throw new Error("File was not selected!");
     let promise: Promise<Heightmap>;
     try {
         promise = Jimp.read(filePaths[0]).then(img => {
-            img.flip(false, true, function (err) {
-                if (err) throw err;
-            })
+            // img.flip(false, true, function (err) {
+            //     if (err) throw err;
+            // })
             let arr = new Float32Array(img.bitmap.width * img.bitmap.height);
             const maxAltitude = DefaultGeneratorOptions.maxAltitude;
             const minAltitude = DefaultGeneratorOptions.minAltitude;

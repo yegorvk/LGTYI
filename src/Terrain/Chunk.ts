@@ -1,5 +1,5 @@
 import type { Heightmap } from './Heightmap'
-import { colorRGBFromAltitude } from './PointColor';
+import { colorRGBFromAltitude, DefaultGradientSettings, type GradientSettings } from './PointColor';
 
 const SCALE_FACTOR = 1;
 
@@ -30,7 +30,12 @@ export class Chunk {
     // terrain heightmap
     heightmap: Heightmap;
 
-    constructor(scale: number, heightmap: Heightmap, useVertexColors: boolean) {
+    constructor(
+        scale: number,
+        heightmap: Heightmap,
+        useVertexColors: boolean,
+        gradientSettings: GradientSettings = DefaultGradientSettings 
+    ) {
         this.scale = scale
         this.width = heightmap.width;
         this.height = heightmap.height;
@@ -50,7 +55,7 @@ export class Chunk {
         this.generateIndices();
 
         if (useVertexColors)
-            this.generateVertexColors();
+            this.generateVertexColors(gradientSettings);
     }
 
     private generateVertices() {
@@ -86,7 +91,7 @@ export class Chunk {
         }
     }
 
-    private generateVertexColors() {
+    private generateVertexColors(gradientSettings: GradientSettings) {
         this.vertexColors = new Float32Array(3 * this.width * this.height)
 
         for (let i = 0; i < this.height; i++) {
@@ -97,7 +102,8 @@ export class Chunk {
                 const colorRGB = colorRGBFromAltitude(
                     this.heightmap.data[hBase],
                     this.heightmap.waterLevel,
-                    false
+                    false,
+                    gradientSettings
                 )
 
                 this.vertexColors[3 * base] = ((colorRGB >> 16) & 0xFF) / 255
