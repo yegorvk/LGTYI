@@ -4,8 +4,6 @@ The task of generating landscapes remains extremely relevant. It is found not on
 
 The project is a landscape generator, created in accordance with the task of the Tournament of Young Informatics 2022-2023. It implements detailed generation parameters (such as the size of the generated area, the range of altitudes, the roughness coefficient, the sea level, the number of biomes, the probability of the presence of certain types of landscape etc.), 2D and 3D visualization (and a control panel for their parameters), exporting, importing and other operations with  maps, saving and opening for projects and other features.
 
-The project is written in TypeScript (converted to JavaScript at the compilation stage), Svelte (converted to JavaScript, HTML and CSS at the compilation stage), actually JavaScript, HTML and CSS. It is also using Electron.js. Rendering in 2D is implemented on HTML5 Canvas without external libraries. The 3D renderer uses Three.js (WebGL renderer) for GPU acceleration. Random generation is carried out using an algorithm based on Perlin noise.
-
 ## System Requirements
 
 For the best experience your device is recommended to meet the following requierements:
