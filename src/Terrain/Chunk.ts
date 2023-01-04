@@ -1,6 +1,8 @@
 import type { Heightmap } from './Heightmap'
 import { colorRGBFromAltitude } from './PointColor';
 
+const SCALE_FACTOR = 1;
+
 export class Chunk {
     // space between vertices
     readonly scale: number;
@@ -35,6 +37,14 @@ export class Chunk {
         this.heightmap = heightmap;
         this.useVertexColors = useVertexColors;
 
+        this.width /= SCALE_FACTOR;
+        this.height /= SCALE_FACTOR;
+
+        this.scale *= SCALE_FACTOR;
+
+        this.width = Math.floor(this.width);
+        this.height = Math.floor(this.height);
+
         this.generateVertices();
         this.generateUvs();
         this.generateIndices();
@@ -49,10 +59,12 @@ export class Chunk {
         const offsetX = this.scale * (this.width - 1) / 2;
         const offsetY = this.scale * (this.height - 1) / 2;
 
+        console.log(this);
+
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 const base = this.mIndex(i, j)
-                const hBase = this.mIndex(this.height - i - 1, j);
+                const hBase = this.mIndex(SCALE_FACTOR*SCALE_FACTOR*(this.height - i - 1), SCALE_FACTOR * j);
 
                 this.vertices[3 * base] = this.scale * j - offsetX
                 this.vertices[3 * base + 1] = this.scale * i - offsetY
@@ -80,7 +92,7 @@ export class Chunk {
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
                 const base = this.mIndex(i, j);
-                const hBase = this.mIndex(this.height - i - 1, j);
+                const hBase = this.mIndex(SCALE_FACTOR*SCALE_FACTOR*(this.height - i - 1), SCALE_FACTOR * j);
 
                 const colorRGB = colorRGBFromAltitude(
                     this.heightmap.data[hBase],

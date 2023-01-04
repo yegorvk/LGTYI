@@ -4,7 +4,7 @@ import { DefaultGeneratorOptions, MIN_ALT, type GeneratorOptions, MAX_ALT } from
 import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
 import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
-import { Biome, HIGH_PEAKS, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
+import { Biome, HIGH_PEAKS, MAX_BIOME_ID, MAX_WATER_BIOME_ID, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
 import { handle_promise } from 'svelte/internal';
 
 export function generateTerrain(
@@ -31,17 +31,67 @@ export function generateTerrain(
     const biomes = new Array<Biome>();
     const normDist = normalizeBiomesDistribution(options.biomes);
 
+    let waterBiomes = false;
+    let landBiomes = false;
+
+    for (let i = 0; i <= MAX_WATER_BIOME_ID; i++) {
+        if (normDist[i] > 0.0) {
+            waterBiomes = true;
+            break;
+        }
+    }
+
+    for (let i = MAX_WATER_BIOME_ID; i <= MAX_BIOME_ID; i++) {
+        if (normDist[i] > 0.0) {
+            landBiomes = true;
+            break;
+        }
+    }
+
+    let hasWaterBiome = false;
+    let hasLandBiome = false;
+
     for (let i = 0; i < options.numberOfBiomes; i++) {
         const biomeId = randomBiomeId(normDist, rng());
 
-        biomes.push(
-            biome(
-                biomeId, 
-                Math.floor(rng() * (options.width - 1)),
-                Math.floor(rng() * (options.height - 1)),
-                options
-            )
-        )
+        const curBiome = biome(
+            biomeId, 
+            Math.floor(rng() * (options.width - 1)),
+            Math.floor(rng() * (options.height - 1)),
+            options
+        );
+
+        if (curBiome.id > MAX_WATER_BIOME_ID)
+            hasLandBiome = true;
+        else
+            hasWaterBiome = true;
+
+        biomes.push(curBiome);
+    }
+
+    if (!hasWaterBiome && waterBiomes) {
+        const curBiome = biome(
+            Math.round(rng() * MAX_WATER_BIOME_ID),
+            biomes[0].centerX,
+            biomes[0].centerY,
+            options
+        );
+
+        biomes[0] = curBiome;
+    }
+
+    if (!hasLandBiome && landBiomes) {
+        let id = Math.round(rng() * (MAX_BIOME_ID - MAX_WATER_BIOME_ID) + MAX_WATER_BIOME_ID);
+        id = Math.min(MAX_BIOME_ID, id);
+        
+        const curBiome = biome(
+            Math.round(id),
+            biomes[0].centerX,
+            biomes[0].centerY,
+            options
+        );
+
+        biomes[0] = curBiome;
     }
 
     for (let i = 0; i < options.height; i++) {
@@ -83,10 +133,10 @@ export function generateTerrain(
                 h,
                 rng() * 20 + 40
             );
+
+            //generateRiver(heightmap, cx, cy);
         }
     }
-
-    //generateRiver(heightmap, rng() * (heightmap.width-1), rng() * (heightmap.height-1));
 
     let maxHeight = MIN_ALT;
     let minHeight = MAX_ALT;
@@ -135,12 +185,12 @@ function generateDetails(
     roughness: number,
     numSteps: number,
     scale: number = 1.0,
-    roughnessStep: number = 3,
-    altStep: number = 0.3,
+    roughnessStep: number = 2,
+    altStep: number = 0.5,
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 
-    roughness /= 80;
+    roughness /= 120;
     let altCoef = scale;
 
     for (let step = 0; step < numSteps; step++) {
@@ -165,7 +215,8 @@ function generateDetails(
 function generateRiver(
     heightmap: Heightmap,
     startX: number,
-    startY: number
+    startY: number,
+    step: number = 1,
 ) {
     const routeX = new Array<number>();
     const routeY = new Array<number>();
@@ -180,25 +231,25 @@ function generateRiver(
         routeY.push(startY);
 
         const candidateX = [
-            startX - 1,
-            startX + 1,
+            startX - step,
+            startX + step,
             startX,
             startX,
-            startX - 1,
-            startX - 1,
-            startX + 1,
-            startX + 1
+            startX - step,
+            startX - step,
+            startX + step,
+            startX + step
         ];
 
         const candidateY = [
             startY,
             startY,
-            startY + 1,
-            startY - 1,
-            startY + 1,
-            startY - 1,
-            startY + 1,
-            startY - 1
+            startY - step,
+            startY + step,
+            startY + step,
+            startY - step,
+            startY + step,
+            startY - step
         ];
 
         let best = cur;

@@ -1,4 +1,3 @@
-import { HtmlTagHydration } from "svelte/internal";
 import type { GeneratorOptions } from "./GeneratorOptions";
 import { alt, distance, distance2, sigmoid_prime } from "./Util";
 
@@ -80,9 +79,24 @@ export class Biome {
     }*/
 
     strength(x: number, y: number, width: number, height: number) {
-        const d = distance2(x, y, this.centerX, this.centerY);
-        return sigmoid_prime(d / 20000 * Math.pow(this.weight, 0.5));
+        const d = distance(x, y, this.centerX, this.centerY);
+        return sigmoid_prime(d / 50 * Math.pow(this.weight, 0.5));
     }
+
+    /*strength(x: number, y: number, width: number, height: number) {
+        const d = Math.pow(distance(x, y, this.centerX, this.centerY), 0.7);
+        return sigmoid_prime(d / 120 * Math.pow(this.weight, 0.5));
+    }*/
+
+    /*strength(x: number, y: number, width: number, height: number, biomeCount: number) {
+        const impact = Math.sqrt(width*height/biomeCount);
+        const val = Math.max(0, (impact - distance(x, y, this.centerX, this.centerY)) / impact);
+
+        if (val === 0)
+            return sigmoid_prime(distance(x, y, this.centerX, this.centerY) / 120);
+        else
+            return val;
+    }*/
 }
 
 const MIN_ALT = [
@@ -91,8 +105,8 @@ const MIN_ALT = [
     -0.2,
     -0.05,
     0.1,
-    0.12,
-    0.5,
+    0.2,
+    0.45,
     0.5
 ];
 
@@ -101,16 +115,16 @@ const MAX_ALT = [
     -0.5,
     -0.01,
     -0.01,
-    0.2,
-    0.3,
-    0.6,
+    0.17,
+    0.4,
+    0.5,
     0.7
 ];
 
 const WEIGHT = [
-    1.15,
-    1.15,
-    1.15,
+    0.8,
+    0.8,
+    1.0,
     1.1,
     1.0,
     1.0,
@@ -127,6 +141,7 @@ export const HILLS = 5;
 export const PLATEU = 6;
 export const HIGH_PEAKS = 7;
 
+export const MAX_WATER_BIOME_ID = 2;
 export const MAX_BIOME_ID = 7;
 
 export function biome(id: number, x: number, y: number, options: GeneratorOptions) {
