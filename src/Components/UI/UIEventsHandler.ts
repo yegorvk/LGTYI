@@ -72,11 +72,18 @@ export class UIEventsHandler {
     public Import() {
         this.dispatcher('import_map');
     }
-
+    /**
+     * @event
+     */
     public FontSwitch() {
         this.dispatcher('font_switch');
     }
-
+    /**
+     * @event
+     */
+    public ImportFile(){
+        this.dispatcher('import_file');
+    }
     /**
      * @event
      */

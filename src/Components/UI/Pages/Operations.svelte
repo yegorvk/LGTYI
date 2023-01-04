@@ -9,6 +9,7 @@
     let tableExp = ()=>{eventHandler.ExcelExport()};
     let imExp = ()=>{eventHandler.ImageExport()};
     let imImp = ()=>{eventHandler.setPanel(Panels.IMAGE_IMPORT)};
+    let fileImp = ()=>{eventHandler.ImportFile()}
 </script>
 
 <div>
@@ -36,5 +37,10 @@
     <button class="menu-but"
             on:click={imImp}>
         <span>Import from Image...</span>
+    </button>
+
+    <button class="menu-but"
+            on:click={fileImp}>
+        <span>Import from File</span>
     </button>
 </div>

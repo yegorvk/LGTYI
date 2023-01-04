@@ -17,6 +17,7 @@
     import type {UIEventsHandler} from "./Components/UI/UIEventsHandler";
     import "./LoadScreen.css";
     import { tick } from 'svelte';
+    import {importFromFile} from "./Files/TextFileImport";
 
 
     let trigger: boolean;
@@ -45,7 +46,15 @@
     let invisible = false;
     let isLoadingView = true;
 
-
+    async function ImportFromFile(){
+        try {
+            let genOpt = await importFromFile();
+            generate(genOpt);
+            notify("Successfully opened!", false);
+        }catch (e){
+            notify(e, true);
+        }
+    }
     async function ImportMap() {
         invisible = true;
         try {
@@ -165,7 +174,8 @@
         on:settings_save={SettingsChange}
         on:image_export_map={ImageExportMap}
         on:image_import_map={ImportImageMap}
-        on:font_switch={FontSwitch}/>
+        on:font_switch={FontSwitch}
+        on:import_file={ImportFromFile}/>
 
     
     {/if}
