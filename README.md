@@ -33,7 +33,11 @@ To assemble and run the project **manually**:
 
 ## Implementation details
 
-The project is written in TypeScript (converted to JavaScript at the compilation stage), Svelte (converted to JavaScript, HTML and CSS at the compilation stage), actually JavaScript, HTML and CSS. It is also using Electron.js. Rendering in 2D is implemented on HTML5 Canvas without external libraries. The 3D renderer uses Three.js (WebGL renderer) for GPU acceleration. Random generation is carried out using an algorithm based on Perlin noise.
+The project is written in TypeScript (converted to JavaScript at the compilation stage), Svelte (converted to JavaScript, HTML and CSS at the compilation stage), actually JavaScript, HTML and CSS. It is also using Electron.js.
+
+TypeScript was chosen as it's more convenient for writing complex apps. Svelte is just simpler than HTML with JavaScript (or TypeScript). Electron is used for creating an app.
+
+Rendering in 2D is implemented on HTML5 Canvas without external libraries. The 3D renderer uses Three.js (WebGL renderer) for GPU acceleration. Random generation is carried out using an algorithm based on [Simplex noise](https://en.wikipedia.org/wiki/Simplex_noise).
 
 ## Contents
 
