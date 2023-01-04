@@ -1,5 +1,5 @@
 <script lang="ts">
-    import LandScapeViewer3d from './Components/LandscapeViewer3d.svelte'
+    import LandScapeViewer3d from './Components/LandscapeViewer3D.svelte'
     import UI from "./Components/UI/UI.svelte";
     import type {GeneratorOptions} from './Generator/GeneratorOptions';
     import Renderer2D from "./Components/Renderer2D.svelte";
