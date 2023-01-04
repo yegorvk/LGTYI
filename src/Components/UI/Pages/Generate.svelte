@@ -81,8 +81,8 @@
                class="basic-range"
                type="range"
                bind:value={width}
-               max="1000"
-               min="10"
+               max="2000"
+               min="100"
         />
     </Param>
 
@@ -92,8 +92,8 @@
                class="basic-range"
                type="range"
                bind:value={height}
-               max="1000"
-               min="10"
+               max="2000"
+               min="100"
         />
     </Param>
 

@@ -5,14 +5,9 @@ import type { Heightmap } from '../Terrain/Heightmap'
 import seedrandom from 'seedrandom';
 import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
 import { Biome, HIGH_PEAKS, MAX_BIOME_ID, MAX_WATER_BIOME_ID, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
-import { handle_promise } from 'svelte/internal';
-/**
- * Calculates the square root of a number.
- *
- * @param heightmap the number to calculate the root of.
- * @param options the number to calculate the root of.
- * @returns the square root if `x` is non-negative or `NaN` if `x` is negative.
- */
+
+const SCALE_INV = 2;
+
 export function generateTerrain(
     heightmap: Heightmap,
     options: GeneratorOptions = DefaultGeneratorOptions
@@ -137,7 +132,7 @@ export function generateTerrain(
                 cx,
                 cy,
                 h,
-                rng() * 20 + 40
+                rng() * 30 + 55
             );
 
             //generateRiver(heightmap, cx, cy);
@@ -161,6 +156,27 @@ export function generateTerrain(
             Math.min(maxHeight, MAX_ALT),
         );
     }
+
+    const temp = new Float32Array(heightmap.data.length/(SCALE_INV*SCALE_INV));
+
+    /*for (let i = 0; i < Math.floor(heightmap.height/SCALE_INV); i++) {
+        for (let j = 0; j < Math.floor(heightmap.width/SCALE_INV); j++) {
+            temp[i*heightmap.width/SCALE_INV+j] = heightmap.data[i*SCALE_INV*heightmap.width+j*SCALE_INV];
+        }
+    }*/
+
+    for (let i = 0; i < heightmap.height; i += SCALE_INV) {
+        for (let j = 0; j < heightmap.width; j += SCALE_INV) {
+            const i1 = Math.floor(i/SCALE_INV);
+            const j1 = Math.floor(j/SCALE_INV);
+
+            temp[i1*Math.floor(heightmap.width/SCALE_INV)+j1] = heightmap.data[i*heightmap.width+j];
+        }
+    }
+
+    heightmap.data = temp;
+    heightmap.width /= SCALE_INV;
+    heightmap.height /= SCALE_INV;
 }
 
 export function generateSimpleTerrain(heightmap: Heightmap, options: GeneratorOptions) {
@@ -192,11 +208,11 @@ function generateDetails(
     numSteps: number,
     scale: number = 1.0,
     roughnessStep: number = 3,
-    altStep: number = 0.2,
+    altStep: number = 0.3,
 ) {
     const noiseGenerator = new PerlinNoise(seed)
 
-    roughness /= 80;
+    roughness /= 70;
     let altCoef = scale;
 
     for (let step = 0; step < numSteps; step++) {

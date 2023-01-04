@@ -80,7 +80,7 @@ export class Biome {
 
     strength(x: number, y: number, width: number, height: number) {
         const d = distance(x, y, this.centerX, this.centerY);
-        return sigmoid_prime(d / 50 * Math.pow(this.weight, 0.5));
+        return sigmoid_prime(d / 70 * this.weight);
     }
 
     /*strength(x: number, y: number, width: number, height: number) {
@@ -107,7 +107,7 @@ const MIN_ALT = [
     0.1,
     0.2,
     0.45,
-    0.4
+    0.2
 ];
 
 const MAX_ALT = [
@@ -118,7 +118,7 @@ const MAX_ALT = [
     0.2,
     0.4,
     0.65,
-    0.5
+    0.3
 ];
 
 const WEIGHT = [
@@ -129,7 +129,7 @@ const WEIGHT = [
     1.0,
     1.0,
     1.0,
-    1.5,
+    2.0,
 ];
 
 export const OCEAN = 0;
