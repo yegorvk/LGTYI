@@ -5,18 +5,18 @@
         A landscape generator made for TYI-2023. Authors:
     </p>
     <ul>
-        <li>Yegor Vaskonyan</li>
+        <li><a target="_blank" href="https://github.com/egor-vaskon">Yegor Vaskonyan</a></li>
         <li><a target="_blank" href="https://github.com/Pazzann">Anton Matiash</a></li>
-        <li>Denys Honcharov</li>
-        <li>Oleksandr Belinskyi</li>
+        <li><a target="_blank" href="https://github.com/denyshon">Denys Honcharov</a></li>
+        <li><a target="_blank" href="https://github.com/farlo0nn">Oleksandr Belinskyi</a></li>
         <li>Yurii Chernenko</li>
     </ul>
 
     <p>
-        The source code are available on <a target="_blank" href="https://github.com/egor-vaskon/LGTYI">GitHub</a>.
+        The source code is available on <a target="_blank" href="https://github.com/egor-vaskon/LGTYI">GitHub</a>.
     </p>
     <p>Version: 2.0.5</p>
-    <p>License: MIT</p>
+    <p>License: <a target="_blank" href="https://github.com/egor-vaskon/LGTYI/blob/main/LICENSE">MIT</a></p>
 
     <p class="win-title">Copyright</p>
     <p>
