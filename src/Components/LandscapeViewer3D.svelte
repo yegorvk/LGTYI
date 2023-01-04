@@ -181,6 +181,7 @@
             canvas: root,
             antialias: true,
             alpha: true,
+            logarithmicDepthBuffer: true
         });
 
         renderer.setSize(rootWidth, rootHeight);
