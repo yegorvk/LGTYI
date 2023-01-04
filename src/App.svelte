@@ -1,5 +1,5 @@
 <script lang="ts">
-    import LandScapeViewer3d from './Components/LandscapeViewer3d.svelte'
+    import LandScapeViewer3d from './Components/LandscapeViewer3D.svelte'
     import UI from "./Components/UI/UI.svelte";
     import type {GeneratorOptions} from './Generator/GeneratorOptions';
     import Renderer2D from "./Components/Renderer2D.svelte";
@@ -17,6 +17,7 @@
     import type {UIEventsHandler} from "./Components/UI/UIEventsHandler";
     import "./LoadScreen.css";
     import { tick } from 'svelte';
+    import {importFromFile} from "./Files/TextFileImport";
 
 
     let trigger: boolean;
@@ -45,14 +46,22 @@
     let invisible = false;
     let isLoadingView = true;
 
-
+    async function ImportFromFile(){
+        try {
+            let genOpt = await importFromFile();
+            generate(genOpt);
+            notify("Successfully opened!", false);
+        }catch (e){
+            notify(e, true);
+        }
+    }
     async function ImportMap() {
         invisible = true;
         try {
             let data = await importMap();
             is2DView = data.viewMode;
             is2DView = is2DView;
-            eventHandler.generatorOptions = data.genOptions;
+            eventHandler.trueGenOptions = data.genOptions;
             eventHandler.renderTrueSettings = data.renderSettings;
             heightmap = data.heightMap as Heightmap;
             notify("Successfully opened!", false);
@@ -165,7 +174,8 @@
         on:settings_save={SettingsChange}
         on:image_export_map={ImageExportMap}
         on:image_import_map={ImportImageMap}
-        on:font_switch={FontSwitch}/>
+        on:font_switch={FontSwitch}
+        on:import_file={ImportFromFile}/>
 
     
     {/if}

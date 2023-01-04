@@ -2,6 +2,7 @@ import type {Heightmap} from "../Terrain/Heightmap";
 import type {GeneratorOptions} from "../Generator/GeneratorOptions";
 import type {SaveData} from "../Types/SaveData";
 import type {UIEventsHandler} from "../Components/UI/UIEventsHandler";
+import CryptoJS from 'crypto-js';
 
 const remote = require('@electron/remote');
 
@@ -20,6 +21,9 @@ export async function exportMap(heightMap: Heightmap, eventHandler: UIEventsHand
 
     };
 
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data, null, 2), "LGTYI_KEY").toString();
+
+
     // Use the electron dialog module to prompt the user for a file path
     const {filePath} = await remote.dialog.showSaveDialog({
         filters: [
@@ -32,7 +36,7 @@ export async function exportMap(heightMap: Heightmap, eventHandler: UIEventsHand
     if (!filePath) throw new Error('No file selected');
 
     // Use the electron fs module to write an empty string to the specified file
-    fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8', (error) => {
+    fs.writeFile(filePath, encrypted, 'utf8', (error) => {
         if (error) {
             // Handle the error
             throw new Error(error);

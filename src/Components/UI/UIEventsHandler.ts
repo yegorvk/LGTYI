@@ -10,6 +10,9 @@ import {DefaultGradientSettings} from "../../Terrain/PointColor";
  * This class is used for handling UI elements.
  * It is responsible for saving render settings, generator options and sending all events from the UI buttons to the generator.
  *
+ *
+ * __True settings in code commonly mean that they are compatible with the generator.
+ * It uses `get` and `set` to convert between them.__
  * */
 export class UIEventsHandler {
     private readonly dispatcher: Function;
@@ -18,6 +21,11 @@ export class UIEventsHandler {
     private _generatorOptions: GeneratorOptions = DefaultGeneratorOptions;
     private _renderSettings: RenderSettings = DefaultRenderSettings;
 
+
+    public constructor(dispatcher: Function) {
+        this.dispatcher = dispatcher;
+        this._generatorOptions = DefaultGeneratorOptions;
+    }
     get renderTrueSettings(): RenderSettings {
         return this._renderSettings;
     }
@@ -26,7 +34,9 @@ export class UIEventsHandler {
         this._renderSettings = value;
         this.dispatcher('settings_save', {render: this._renderSettings});
     }
-
+    /**
+     * `Converts RenderSettings to a UI settings Array`
+     */
     get renderSettings(): any[] {
         const mode: string[] = [];
         if (this._renderSettings.wireframe) {
@@ -40,7 +50,12 @@ export class UIEventsHandler {
         }
         return [mode, this._renderSettings.wireframeOpacity, this._renderSettings.wireframeLineWidth, this._renderSettings.dynamicScene, this._renderSettings.gradientSettings.landColors]
     }
-
+    set trueGenOptions(value: GeneratorOptions){
+        this._generatorOptions = value;
+    }
+    /**
+     * `Converts UI genOptions to a Generator Option settings`
+     */
     set generatorOptions(value: GeneratorOptions) {
         this._generatorOptions = value;
         this._generatorOptions.seed = (value.seed === null) ? 0 : value.seed;
@@ -51,10 +66,7 @@ export class UIEventsHandler {
         return this._generatorOptions;
     }
 
-    public constructor(dispatcher: Function) {
-        this.dispatcher = dispatcher;
-        this._generatorOptions = DefaultGeneratorOptions;
-    }
+
 
     public setGeneratorOptions(generatorOptions: GeneratorOptions) {
         this._generatorOptions = generatorOptions;
@@ -70,11 +82,18 @@ export class UIEventsHandler {
     public Import() {
         this.dispatcher('import_map');
     }
-
+    /**
+     * @event
+     */
     public FontSwitch() {
         this.dispatcher('font_switch');
     }
-
+    /**
+     * @event
+     */
+    public ImportFile(){
+        this.dispatcher('import_file');
+    }
     /**
      * @event
      */
@@ -104,6 +123,7 @@ export class UIEventsHandler {
     }
 
     /**
+     * `Starts importing image data using the specified format`
      * @event
      */
     public ImageImport(isAlphaMode: boolean, isColorMode: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean) {
@@ -118,6 +138,7 @@ export class UIEventsHandler {
     }
 
     /**
+     * `Send UI settings to the Renderer`
      * @event
      */
     public settingsSave(mode: string[], wireframeLineWidth: number, wireframeOpacity: number, dynamicScene: boolean, colors: string[]) {

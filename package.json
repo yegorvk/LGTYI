@@ -1,6 +1,6 @@
 {
   "name": "lgtyi",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Landscape Generator for TYI",
   "private": false,
   "license": "MIT",
@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@electron/remote": "^2.0.9",
+    "crypto-js": "^4.1.1",
     "electron-serve": "^1.1.0",
     "exceljs": "^4.3.0",
     "jimp": "^0.16.2",

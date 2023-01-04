@@ -4,7 +4,7 @@
     import "./styles/Range.css";
     import "./styles/Buttons.css";
     import "./styles/Burger.css";
-    import './InfoPages/Panel.css';
+    import './styles/Panel.css';
     //components
     import Generate from "./Pages/Generate.svelte";
     import Operations from "./Pages/Operations.svelte";
@@ -12,9 +12,7 @@
     import Main from "./Pages/Main.svelte";
     import ImageImport from "./Pages/ImageImport.svelte";
     import HelpUIButtons from "./InfoPages/HelpUIButtons.svelte";
-    import Help from "./InfoPages/Pages/Help.svelte";
-    import Info from "./InfoPages/Pages/Info.svelte";
-    import Tips from "./InfoPages/Pages/Tips.svelte";
+    import Info from "./InfoPages/Info.svelte";
     import Panel from "./InfoPages/Panel.svelte";
     //classes
     import type {GeneratorOptions} from "../../Generator/GeneratorOptions";
@@ -79,11 +77,7 @@
 
 <HelpUIButtons bind:currInfoPanel></HelpUIButtons>
 <Panel {currInfoPanel}>
-    {#if currInfoPanel === InfoPanels.HELP}
-        <Help></Help>
-    {:else if currInfoPanel === InfoPanels.INFO}
+    {#if currInfoPanel === InfoPanels.INFO}
         <Info></Info>
-    {:else if currInfoPanel === InfoPanels.TIPS}
-        <Tips></Tips>
     {/if}
 </Panel>
