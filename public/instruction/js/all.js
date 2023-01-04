@@ -1184,10 +1184,10 @@ InputSync.prototype ={
 DR_EXPLAIN.namespace( 'DR_EXPLAIN.data_menu' );
 DR_EXPLAIN.data_menu = {
     // menu
-    DREX_NODE_NAMES: ["Початкова сторінка","Про додаток","Початок роботи","Інтерфейс користувача","Системні вимоги","Установка","Запуск","Головне вікно програми","Робота з головним меню","Робота з допоміжним меню","Перегляд карт","Генерація","Збереження та експорт карт","Відкриття та імпорт карт","Операції з картами","Налаштування","Інструкція","Документація","Довідка","Складання карт","Віднімання карт","Налаштування 3D режиму","Налаштування 2D режиму","Налаштування кольорів"],
-    DREX_NODE_LINKS: ["index.html","overview.html","getting_started.html","user_interface.html","system_requirements.html","setup.html","launch.html","main_window.html","robota_z_golovnim_menyu.html","robota_z_dopomizhnim_menyu.html","pereglyad_kart.html","generatsiya.html","zberezhennya_ta_eksport_kart.html","vidkrittya_ta_import_kart.html","operatsii_z_kartami.html","nalashtuvannya.html","instruktsiya_2.html","documentation.html","dovidka.html","skladannya_kart.html","vidnimannya_kart.html","nalashtuvannya_3d_rezhimu.html","nalashtuvannya_2d_rezhimu.html","nalashtuvannya_koloriv.html"],
-    DREX_NODE_CHILD_START: [1,4,5,7,11,11,11,11,11,16,19,19,19,19,19,21,24,24,24,24,24,24,24,24],
-    DREX_NODE_CHILD_END: [4,5,7,11,11,11,11,11,16,19,19,19,19,19,21,24,24,24,24,24,24,24,24,24],
+    DREX_NODE_NAMES: ["Початкова сторінка","Про додаток","Початок роботи","Інтерфейс користувача","Системні вимоги","Установка","Запуск","Головне вікно програми","Робота з головним меню","Робота з допоміжним меню","Перегляд карт","Генерація","Збереження та експорт карт","Відкриття та імпорт карт","Операції з картами","Налаштування","Інструкція","Допомога","Довідка","Імпорт із зображення","Складання карт","Віднімання карт","Налаштування 3D режиму","Налаштування 2D режиму","Налаштування градієнтних кольорів"],
+    DREX_NODE_LINKS: ["index.html","overview.html","getting_started.html","user_interface.html","system_requirements.html","setup.html","launch.html","main_window.html","robota_z_golovnim_menyu.html","robota_z_dopomizhnim_menyu.html","pereglyad_kart.html","generatsiya.html","zberezhennya_ta_eksport_kart.html","vidkrittya_ta_import_kart.html","operatsii_z_kartami.html","nalashtuvannya.html","instruktsiya_2.html","dopomoga.html","dovidka.html","import_iz_zobrazhennya.html","skladannya_kart.html","vidnimannya_kart.html","nalashtuvannya_3d_rezhimu.html","nalashtuvannya_2d_rezhimu.html","nalashtuvannya_gradi_ntnikh_koloriv.html"],
+    DREX_NODE_CHILD_START: [1,4,5,7,11,11,11,11,11,16,19,19,19,19,20,22,25,25,25,25,25,25,25,25,25],
+    DREX_NODE_CHILD_END: [4,5,7,11,11,11,11,11,16,19,19,19,19,20,22,25,25,25,25,25,25,25,25,25,25],
     DREX_MENU_TYPE: 2,
     DREX_HAS_ROOT_NODE: 0};
 
