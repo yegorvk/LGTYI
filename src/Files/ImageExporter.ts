@@ -2,6 +2,11 @@ import type {Heightmap} from "../Terrain/Heightmap";
 
 const remote = require('@electron/remote');
 
+
+/**
+ * Exports `.png`, `.jpg`, `.bmp` image to the selected path.
+ * Using JimpJS.
+ */
 export async function ImageExport(pixels: Uint8ClampedArray, heightMap: Heightmap) {
 
     // @ts-ignore

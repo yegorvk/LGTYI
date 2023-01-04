@@ -5,7 +5,12 @@ import type {GrayscaleColor} from "../Types/GrayscaleColor";
 import {DefaultGeneratorOptions} from "../Generator/GeneratorOptions";
 
 const remote = require('@electron/remote');
-
+/**
+ * Imports `.png`, `.jpg`, `.bmp` image from the selected path.
+ * Using JimpJS.
+ *
+ * @returns Heightmap.
+ */
 export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean): Promise<Heightmap> {
     // @ts-ignore
     const Jimp = window.jimp;

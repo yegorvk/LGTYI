@@ -6,7 +6,11 @@ import {DefaultGeneratorOptions} from "../Generator/GeneratorOptions";
 
 const remote = require('@electron/remote');
 
-
+/**
+ * Opens data from `.txt` file.
+ *
+ * @returns GeneratorOptions.
+ * */
 export async function importFromFile(): Promise<GeneratorOptions> {
     // @ts-ignore
     const fs = window.fs;

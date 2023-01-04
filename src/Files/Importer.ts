@@ -3,7 +3,13 @@ import {Heightmap} from "../Terrain/Heightmap";
 import CryptoJS from 'crypto-js';
 const remote = require('@electron/remote');
 
-
+/**
+ * Opens data from `.lgtyi` file.
+ * The filepath is selected through the window.
+ * The data is also decrypted with a secret key.
+ *
+ * @returns SaveData.
+ * */
 export async function importMap(): Promise<SaveData> {
     // @ts-ignore
     const fs = window.fs;
