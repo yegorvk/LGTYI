@@ -5,3 +5,4 @@ export enum Panels{
     SETTINGS = 3,
     IMAGE_IMPORT = 4
 }
+
