@@ -48,8 +48,7 @@
 
 </script>
 
-<button title="Menu"
-        id="menu-main"
+<button id="menu-main"
         class="func-but"
         class:burger_or={!main_visible}
         on:click={main_switch}>
@@ -57,8 +56,7 @@
 </button>
 
 <div class="main_panel" class:opened_main_panel={main_visible}>
-    <button title="Back"
-            id="back-menu-main"
+    <button id="back-menu-main"
             class="func-but"
             class:hidden={!main_visible || currPanel === Panels.MAIN}
             on:click={back}>

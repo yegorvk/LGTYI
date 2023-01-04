@@ -31,18 +31,17 @@
        class="func-but"
        target="_blank"
        href="docs/index.html">
-        <img src="./assets/tips.png" alt="tips"/>
+        <img src="./assets/docs.png" alt="docs"/>
     </a>
 
     <a id="help"
        class="func-but"
        target="_blank"
-       href="instruction/index.htm">
+       href="instruction/index.html">
         <img src="./assets/help.png" alt="help"/>
     </a>
 
-    <button title="Info"
-            id="info"
+    <button id="info"
             class="func-but"
             on:click={infoPanelSwitch}>
         <img src="./assets/info.png" alt="info"/>
