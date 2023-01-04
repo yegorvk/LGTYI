@@ -45,14 +45,14 @@ a:visited ,*/
 .b-breadCrumbs__link:visited,
 .b-controlButtons__link,
 .b-controlButtons__link:visited {
-    color: #546e7a;
-    border-bottom-color: #a7b4ba;
+    color: #757575;
+    border-bottom-color: #b7b7b7;
 }
 
 tr.topLinkRow a,
 tr.topLinkRow a:visited {
-	color: #546e7a !important;
-	border-bottom-color: #a7b4ba !important;
+	color: #757575 !important;
+	border-bottom-color: #b7b7b7 !important;
 	font-size: 8pt !important;
 }
 
@@ -63,8 +63,8 @@ h6.b-article__generatorCopyright {
 
 .b-breadCrumbs__link:hover,
 .b-controlButtons__link:hover {
-    color: #b0bec5;
-    border-bottom-color: #d5dcdf;
+    color: #eeeeee;
+    border-bottom-color: #f4f4f4;
 }
 
 .b-article__generatorCopyrightLink:link,
@@ -90,7 +90,7 @@ h6.b-article__generatorCopyright {
     text-align: center;
     cursor: default;
 
-    background-color: rgb(84,110,122);
+    background-color: rgb(117,117,117);
 
     font-size: 14px;
     font-family: Arial;
@@ -250,7 +250,7 @@ html {
 /*@import url( 'work-zone.css' );*/
 .m-pageContent__side__header
 {
-    background: #263238;
+    background: #212121;
 }
 .m-pageContent__side__header__wrapper {
     width: 100%;
@@ -268,7 +268,7 @@ html {
 
 .m-pageContent__side__footer
 {
-    background: #263238;
+    background: #212121;
 }
 .b-workZone {
     width: 100%;
@@ -358,7 +358,7 @@ html[dir="rtl"] .m-workZone_seeAlso_itemContent {
 /*@import url( 'article.css');*/
 .b-article {
     background-color: #fafafa;
-    color: #263238;
+    color: #212121;
     padding: 0;
 
     position: relative;
@@ -776,9 +776,9 @@ html[dir="rtl"] .b-search__labelPlaceholder {
     margin: 0;
     outline: none;
     min-height: 14px;
-    color: #263238;
+    color: #212121;
     background-color: #fafafa;
-    border: 1px solid #263238;
+    border: 1px solid #212121;
 }
 
 .m-search__tabs .b-search__inputText {
@@ -830,7 +830,7 @@ html[dir="rtl"] .m-search__tabs .m-search__side__submit {
 
 /*@import url( 'tree.css');*/
 .b-tree {
-    color: #263238;
+    color: #212121;
     background-color: #fafafa;
 
     position: relative;
@@ -934,7 +934,7 @@ span.m-tree__itemText__selected {
     text-decoration: none;
 
     border-bottom: none;
-    color:#263238 !important;
+    color:#212121 !important;
 
     height: 1.6em;
 
@@ -954,18 +954,18 @@ html[dir="rtl"] .b-tree__itemLink {
 
 .m-tree__itemContent__hovered__OLD,
 .m-tree__itemContent__selected__OLD {
-    background: #929292 url( '../i/blocks/tree/tree-item-bg-selector.jpg' ) 0 top repeat-x;
+    background: #929292 url( '../images/i/blocks/tree/tree-item-bg-selector.jpg' ) 0 top repeat-x;
 }
 
 
 .m-tree__itemContent__selected {
-    background-color: rgb(84,110,122);
+    background-color: rgb(117,117,117);
     color: #ffffff;
 }
 
 .b-tree__itemContent:hover {
-    background-color: rgb(176,190,197);
-    color: #263238;
+    background-color: rgb(238,238,238);
+    color: #212121;
 }
 
 .m-tree__itemContent__selected,
@@ -1050,8 +1050,8 @@ html[dir="rtl"] .b-tree__i_indexitem {
 .b-tree__i_folder_closed_inner,
 .b-tree__i_article_inner,
 .b-tree__i_indexitem_inner {
-    background: url( '../i/blocks/interface-icons/interface-icons-sprite.png' ) 0 0 no-repeat;
-    -background-image: url( '../i/blocks/interface-icons/interface-icons-sprite-8.png' );
+    background: url( '../images/i/blocks/interface-icons/interface-icons-sprite.png' ) 0 0 no-repeat;
+    -background-image: url( '../images/i/blocks/interface-icons/interface-icons-sprite-8.png' );
 
     position: absolute;
     z-index: 10;
@@ -1659,7 +1659,7 @@ html[dir="rtl"] .b-tabs__selectorItem {
 .m-tabs__selectorItem__selected .b-tabs__selectorContent,
 .b-tabs__wrapperItems {
     background-color: #fafafa;
-    color: #263238;
+    color: #212121;
 }
 
 .m-tabs__selectorItem__selected .b-tabs__selectorContent {
@@ -1672,7 +1672,7 @@ html[dir="rtl"] .b-tabs__selectorItem {
     position: relative;
     font-size: 0.8em;
     padding: 0.5em 1.5em 0.5em 2.0em;
-    color: #263238;
+    color: #212121;
     cursor: default;
     white-space: pre;
 }
@@ -1694,12 +1694,12 @@ html[dir="rtl"] .b-tabs__selectorContent {
 }
 
 .m-tabs__selectorItem__selected .b-tabs__selectorContent {
-    border-bottom: 2px #546e7a solid;
+    border-bottom: 2px #757575 solid;
 }
 
 .m-tabs__selectorItem__hovered .b-tabs__selectorContent {
-    background-color: #b0bec5;
-    color: #263238;
+    background-color: #eeeeee;
+    color: #212121;
     cursor: pointer;
 }
 
@@ -1785,15 +1785,15 @@ html[dir="rtl"] .b-tabs__wrapperItemInner div.b-tree.vscroll {
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle {
-    background-color: #263238 !important;
+    background-color: #212121 !important;
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar:hover > .os-scrollbar-track > .os-scrollbar-handle {
-    background-color: rgb(84,110,122) !important;
+    background-color: rgb(117,117,117) !important;
 }
 
 .b-tabs__wrapperItemInner .os-scrollbar > .os-scrollbar-track > .os-scrollbar-handle.active {
-    background-color: rgb(84,110,122) !important;
+    background-color: rgb(117,117,117) !important;
 }
 
 .m-pageView__state__frame .b-tabs__wrapperItemInner {
@@ -1813,8 +1813,8 @@ html[dir="rtl"] .b-tabs__wrapperItemInner div.b-tree.vscroll {
 /*@import url( 'interface-icons.css');*/
 .b-interfaceIcon {
     position: absolute;
-    background: url( '../i/blocks/interface-icons/interface-icons-sprite.png' ) 0 0 no-repeat;
-    -background-image: url( '../i/blocks/interface-icons/interface-icons-sprite-8.png' );
+    background: url( '../images/i/blocks/interface-icons/interface-icons-sprite.png' ) 0 0 no-repeat;
+    -background-image: url( '../images/i/blocks/interface-icons/interface-icons-sprite-8.png' );
 
     z-index: 10;
     overflow: hidden;
@@ -2012,7 +2012,7 @@ div.index_page_title {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 20pt;
     text-decoration: none;
-    color: #263238;
+    color: #212121;
     text-align: center;
     font-weight: bold;
     white-space: pre;
@@ -2033,7 +2033,7 @@ div.index_page {
     border-right: 0px;
     border-left: 0px;
     border-style: solid;
-    border-color: #263238;
+    border-color: #212121;
     white-space: pre;
 }
 
@@ -2081,7 +2081,7 @@ div.de_ctrl > table {
 
 
 .b-workZone.m-workZone__withoutSideNav {
-    background: #263238 0 0px repeat-x;
+    background: #212121 0 0px repeat-x;
 }
 
 .b-workZone.m-workZone__withoutSideNav .m-workZone__side__nav,
@@ -2162,7 +2162,7 @@ html[dir="rtl"] .b-pageLayout.b-pageLayout__xs .m-workZone__side__article {
     position: absolute;
     top: 0;
     left: 0;
-    color: #263238;
+    color: #212121;
     font-size: 2em;
     line-height: 1em;
     z-index: 20;
@@ -2339,7 +2339,7 @@ html[dir="rtl"] .b-pageLayout.b-pageLayout__sm .b-workZone.m-workZone__withoutSp
     position: absolute;
     top: 0;
     right: 0;
-    color: #263238;
+    color: #212121;
     font-size: 2em;
     line-height: 1em;
     z-index: 60;
@@ -2452,7 +2452,7 @@ html.os-html,html.os-html>.os-host{display:block;overflow:hidden;box-sizing:bord
 .pswp__button,
 .pswp__button--arrow--left:before,
 .pswp__button--arrow--right:before {
-  background: url(../i/photoswipe/default-skin.png) 0 0 no-repeat;
+  background: url(../images/i/photoswipe/default-skin.png) 0 0 no-repeat;
   background-size: 264px 88px;
   width: 44px;
   height: 44px; }
@@ -2462,7 +2462,7 @@ html.os-html,html.os-html>.os-host{display:block;overflow:hidden;box-sizing:bord
   .pswp--svg .pswp__button,
   .pswp--svg .pswp__button--arrow--left:before,
   .pswp--svg .pswp__button--arrow--right:before {
-    background-image: url(../i/photoswipe/default-skin.svg); }
+    background-image: url(../images/i/photoswipe/default-skin.svg); }
   .pswp--svg .pswp__button--arrow--left,
   .pswp--svg .pswp__button--arrow--right {
     background: none; } }
@@ -2716,7 +2716,7 @@ a.pswp__share--download:hover {
   opacity: 1; }
   .pswp__preloader--active .pswp__preloader__icn {
     /* We use .gif in browsers that don't support CSS animation */
-    background: url(../i/photoswipe/preloader.gif) 0 0 no-repeat; }
+    background: url(../images/i/photoswipe/preloader.gif) 0 0 no-repeat; }
 
 .pswp--css_animation .pswp__preloader--active {
   opacity: 1; }
@@ -2923,7 +2923,7 @@ a.pswp__share--download:hover {
 
 .pswp--zoom-allowed .pswp__img {
   /* autoprefixer: off */
-  cursor: url('i/photoswipe/zoom_in.cur'), default;
+  cursor: url('images/i/photoswipe/zoom_in.cur'), default;
   cursor: -webkit-zoom-in;
   cursor: -moz-zoom-in;
   cursor: zoom-in;
@@ -2931,7 +2931,7 @@ a.pswp__share--download:hover {
 
 .pswp--zoomed-in .pswp__img {
   /* autoprefixer: off */
-  cursor: url('i/photoswipe/grab.cur'), default;
+  cursor: url('images/i/photoswipe/grab.cur'), default;
   cursor: -webkit-grab;
   cursor: -moz-grab;
   cursor: grab;
@@ -2939,7 +2939,7 @@ a.pswp__share--download:hover {
 
 .pswp--dragging .pswp__img {
   /* autoprefixer: off */
-  cursor: url('i/photoswipe/grabbing.cur'), default; 
+  cursor: url('images/i/photoswipe/grabbing.cur'), default; 
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
   cursor: grabbing;
@@ -3070,7 +3070,7 @@ a.pswp__share--download:hover {
   text-decoration: underline; }
 
 img[data-full-src] {
-  cursor: url('i/photoswipe/zoom_in.cur'), default; /*For IE path to cursor must be relative to HTML document, not to CSS*/
+  cursor: url('images/i/photoswipe/zoom_in.cur'), default; /*For IE path to cursor must be relative to HTML document, not to CSS*/
   cursor: -webkit-zoom-in;
   cursor: -moz-zoom-in;
   cursor: zoom-in;
