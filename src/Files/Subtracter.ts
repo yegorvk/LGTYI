@@ -1,7 +1,7 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 import {importMap} from "./Importer";
 
-export default async function SubtructMap(heightMap: Heightmap): Promise<Heightmap> {
+export async function SubtructMap(heightMap: Heightmap): Promise<Heightmap> {
     let importedHeightmap: Heightmap;
     try {
         let data = await importMap();

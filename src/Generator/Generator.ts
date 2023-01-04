@@ -6,7 +6,13 @@ import seedrandom from 'seedrandom';
 import { distance, map, map_array, map_pow, sigmoid_prime } from './Util';
 import { Biome, HIGH_PEAKS, biome, normalizeBiomesDistribution, randomBiomeId } from './Biome';
 import { handle_promise } from 'svelte/internal';
-
+/**
+ * Calculates the square root of a number.
+ *
+ * @param heightmap the number to calculate the root of.
+ * @param options the number to calculate the root of.
+ * @returns the square root if `x` is non-negative or `NaN` if `x` is negative.
+ */
 export function generateTerrain(
     heightmap: Heightmap,
     options: GeneratorOptions = DefaultGeneratorOptions
