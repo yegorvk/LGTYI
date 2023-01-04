@@ -1,16 +1,28 @@
 # LGTYI: Landscape Generator for TYI
 
-## Вступ
-
 Задача генерації ландшафтів залишається надзвичайно актуальною. Вона зустрічається не тільки в комп’ютерних іграх, а й у сучасних професійних симуляторах для навчання спеціалістів, у кіно, графічних роботах та інших сферах життя.
 
 Проєкт створений відповідно до завдання Турніру юних інфроматиків 2022-2023 та являє собою генератор рельєфу з 2D- та 3D-візуалізацією, можливістю експорту та імпорту й іншими функціями. Він написаний на TypeScript, Svelte (на етапі компіляції перетворюються на JavaScript, HTML та CSS), власне JavaScript, HTML та CSS з використанням Electron.js. Рендеринг у 2D реалізовано на HTML5 Canvas без зовнішніх бібліотек. 3D-рендер використовує Three.js (WebGL-рендер) для GPU-прискорення. Випадкова генерація здійснюється за допомогою алгоритму, що заснований на шумі Перлина (Perlin noise).
 
-## Установлення
+## Установлення та запуск
 
+Для установлення LGTYI ви можете скористатися виконуваним файлом, а можете зібрати проєкт самостійно.
 
+У разі використання виконуваного файлу достатньо завантажити його, запустити від імені адміністратора та виконувати інструкції на екрані.
 
-## Інші розділи інструкції
+Для самостійної зборки та запуску:
+
+1. Установіть Node.js:
+	- Завантажте файл за [посиланням](https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi);
+	- Запустіть завантажений фійл від імені адміністратора;
+	- Виконуйте інструкції інсталятора.
+2. Установіть TypeScript, виконавши від імені адміністратора команду `npm i -g typescript`.
+3. Установіть Yarn, виконавши від імені адміністратора команду `npm i -g yarn`.
+4. Перейдіть у теку проєкту в консолі/терміналі.
+5. У теці проєкту виконайте від імені адміністратора команду `yarn`.
+6. Для запуску LGTYI виконайте команду `yarn electron-dev`.
+
+## Деталі реалізації
 
 ## Зміст
 
@@ -18,9 +30,10 @@
 
 <!-- UNDESCRIBED: assets, docs -->
 
-- docs
 - public
 	- assets
+	- docs
+	- instruction
 	- favicon.png
 	- global.css
 	- index.html
@@ -31,13 +44,9 @@
 			- Notification.css
 		- UI
 			- InfoPages
-				- Pages
-					- Help.svelte
-					- Info.svelte
-					- Tips.svelte 
 				- HelpUiButtons.svelte
+				- Info.svelte
 				- InfoPanels.ts
-				- Panel.css
 				- Panel.svelte
 			- Pages
 			  - Generate.svelte
@@ -49,6 +58,7 @@
 			  - Param.css
 			  - Param.svelte
 			- styles
+				- Panel.css
 			  - Burger.css
 			  - Buttons.css
 			  - Range.css
@@ -76,6 +86,7 @@
 	  - ImageImporter.ts
 	  - Importer.ts
 	  - Subtracter.ts
+		- TextFileImport.ts
 	- Fonts
 	  - Comfortaa-Bold.ttf
 	  - UbuntuCondensed-Regular.ttf
@@ -110,13 +121,14 @@
 	- index.ts
 	- LoadScreen.css
 	- math.ts
+	- preload.js
 - AUTHORS
 - LICENSE
 - main.js
 - package.json
 - package-lock.json
-- preload.js
 - README.md (***you're here!***)
 - rollup.config.js
+- rollup.config-1672844764418.cjs
 - tsconfig.json
 - typedoc.json
