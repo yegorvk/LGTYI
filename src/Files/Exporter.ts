@@ -6,7 +6,8 @@ import type {UIEventsHandler} from "../Components/UI/UIEventsHandler";
 const remote = require('@electron/remote');
 
 export async function exportMap(heightMap: Heightmap, eventHandler: UIEventsHandler, is2d: boolean) {
-    const fs = window.require('fs');
+    // @ts-ignore
+    const fs = window.fs;
     const data: SaveData = {
         renderSettings: eventHandler.renderTrueSettings,
         genOptions: eventHandler.generatorOptions,

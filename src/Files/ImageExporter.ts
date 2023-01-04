@@ -4,7 +4,8 @@ const remote = require('@electron/remote');
 
 export async function ImageExport(pixels: Uint8ClampedArray, heightMap: Heightmap) {
 
-    const Jimp = window.require('jimp');
+    // @ts-ignore
+    const Jimp = window.jimp;
 
 
     // Use the electron dialog module to prompt the user for a file path

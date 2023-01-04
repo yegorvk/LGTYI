@@ -6,7 +6,8 @@ const remote = require('@electron/remote');
 
 export async function importMap(): Promise<SaveData> {
 
-    const fs = window.require('fs');
+    // @ts-ignore
+    const fs = window.fs;
     // Use the electron dialog module to prompt the user for a file path
     const {filePaths} = await remote.dialog.showOpenDialog({
         filters: [
