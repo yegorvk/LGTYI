@@ -6,6 +6,12 @@ import CryptoJS from 'crypto-js';
 
 const remote = require('@electron/remote');
 
+
+/**
+ * Takes `HeightMap`, `UIEventsHandler` and current dimension data and save it to the `.lgtyi` file.
+ * The filepath is selected through the window.
+ * The data is also encrypted with a secret key.
+ * */
 export async function exportMap(heightMap: Heightmap, eventHandler: UIEventsHandler, is2d: boolean) {
     // @ts-ignore
     const fs = window.fs;

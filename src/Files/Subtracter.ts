@@ -1,6 +1,12 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 import {importMap} from "./Importer";
-
+/**
+ * Subtracts one map to another.
+ * The first map is the current map amd the second open from the `.lgtyi` save.
+ *
+ *
+ * @returns Heightmap.
+ */
 export async function SubtructMap(heightMap: Heightmap): Promise<Heightmap> {
     let importedHeightmap: Heightmap;
     try {

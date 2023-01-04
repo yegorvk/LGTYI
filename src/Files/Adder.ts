@@ -1,10 +1,11 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 import {importMap} from "./Importer";
 /**
- * Calculates the square root of a number.
+ * Adds one map to another.
+ * The first map is the current map amd the second open from the `.lgtyi` save.
  *
- * @param heightMap the number to calculate the root of.
- * @returns the square root if `x` is non-negative or `NaN` if `x` is negative.
+ *
+ * @returns Heightmap.
  */
 export async function AddMap(heightMap: Heightmap): Promise<Heightmap> {
     let importedHeightmap;

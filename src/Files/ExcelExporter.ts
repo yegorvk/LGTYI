@@ -1,6 +1,9 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 const remote = require('@electron/remote');
-
+/**
+ * Takes a Heightmap and exports it to a `.xlsx` file.
+ * Uses ExcelJS from preload.js
+ * */
 export async function ExcelExport(heightMap: Heightmap) {
     try {
         const {filePath} = await remote.dialog.showSaveDialog({
