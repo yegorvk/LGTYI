@@ -1,34 +1,34 @@
 # LGTYI: Landscape Generator for TYI
 
-Задача генерації ландшафтів залишається надзвичайно актуальною. Вона зустрічається не тільки в комп’ютерних іграх, а й у сучасних професійних симуляторах для навчання спеціалістів, у кіно, графічних роботах та інших сферах життя.
+The task of generating landscapes remains extremely relevant. It is found not only in computer games, but also in modern professional simulators for training specialists, in cinema, graphic works and other areas.
 
-Проєкт являє собою генератор рельєфу, створений відповідно до завдання Турніру юних інфроматиків 2022-2023. У ньому реалізовано детальні параметри генерації (такі як розміри ділянки, що генерується, діапазон висот, коефіцієнт посіченості поверхні, рівень моря, кількість біомів, імовірність наявності певних типів ландшафту тощо), 2D- та 3D-візуалізацію (та панель керування їх параметрами), можливість експорту, імпорту мап та інші операції з ними, можливість збереження та відкриття проєкту й інші функції.
+The project is a landscape generator, created in accordance with the task of the Tournament of Young Informatics 2022-2023. It implements detailed generation parameters (such as the size of the generated area, the range of altitudes, the roughness coefficient, the sea level, the number of biomes, the probability of the presence of certain types of landscape etc.), 2D and 3D visualization (and a control panel for their parameters), exporting, importing and other operations with  maps, saving and opening for projects and other features.
 
-Проєкт написаний на TypeScript, Svelte (на етапі компіляції перетворюються на JavaScript, HTML та CSS), власне JavaScript, HTML та CSS з використанням Electron.js. Рендеринг у 2D реалізовано на HTML5 Canvas без зовнішніх бібліотек. 3D-рендер використовує Three.js (WebGL-рендер) для GPU-прискорення. Випадкова генерація здійснюється за допомогою алгоритму, що заснований на шумі Перлина (Perlin noise).
+The project is written in TypeScript, Svelte (both are converted to JavaScript, HTML and CSS at the compilation stage), actually JavaScript, HTML and CSS. It is also using Electron.js. Rendering in 2D is implemented on HTML5 Canvas without external libraries. The 3D renderer uses Three.js (WebGL renderer) for GPU acceleration. Random generation is carried out using an algorithm based on Perlin noise.
 
-## Установлення та запуск
+## Installation and running
 
-Для установлення LGTYI ви можете скористатися виконуваним файлом, а можете зібрати проєкт самостійно.
+To install LGTYI, you may use the executable file, or you may assemble the project yourself.
 
-У разі використання виконуваного файлу достатньо завантажити його, запустити від імені адміністратора та дотримуватись інструкцій на екрані.
+If using an executable file, just download it, run it as an administrator and follow the on-screen instructions.
 
-Для самостійної зборки та запуску:
+To assemble and run the project yourself:
 
-1. Установіть Node.js:
-	- Завантажте файл за [посиланням](https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi);
-	- Виконайте завантажений файл від імені адміністратора;
-	- Дотримуйтесь інструкцій інсталятора.
-2. Установіть TypeScript, виконавши від імені адміністратора команду `npm i -g typescript`.
-3. Установіть Yarn, виконавши від імені адміністратора команду `npm i -g yarn`.
-4. Перейдіть у теку проєкту в консолі/терміналі.
-5. У теці проєкту виконайте від імені адміністратора команду `yarn`.
-6. Для запуску LGTYI виконайте команду `yarn electron-dev`.
+1. Install Node.js:
+	- Download the file from the [link](https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi);
+	- Run the downloaded file as administrator;
+	- Follow the on-screen instructions.
+2. Install TypeScript by executing `npm i -g typescript` as an administrator.
+3. Install Yarn by executing `npm i -g yarn` as an administrator.
+4. Open the project folder in the console/terminal.
+5. In the project folder execute `yarn` as an administrator.
+6. To run LGTYI run `yarn electron-dev`.
 
-## Деталі реалізації
+## Implementation details
 
-## Зміст
+## Contents
 
-Структура проєкту:
+The project structure:
 
 <!-- UNDESCRIBED: assets, docs -->
 
