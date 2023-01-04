@@ -1,4 +1,4 @@
-import type {SaveData} from "../types/SaveData";
+import type {SaveData} from "../Types/SaveData";
 import {Heightmap} from "../Terrain/Heightmap";
 
 const remote = require('@electron/remote');

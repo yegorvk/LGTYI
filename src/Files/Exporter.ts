@@ -1,6 +1,6 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 import type {GeneratorOptions} from "../Generator/GeneratorOptions";
-import type {SaveData} from "../types/SaveData";
+import type {SaveData} from "../Types/SaveData";
 import type {UIEventsHandler} from "../Components/UI/UIEventsHandler";
 
 const remote = require('@electron/remote');

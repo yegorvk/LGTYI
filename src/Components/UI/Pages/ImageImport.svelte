@@ -1,7 +1,7 @@
 <script lang="ts">
     import {UIEventsHandler} from "../UIEventsHandler";
     import Param from "../Param/Param.svelte";
-    import type {GrayscaleColor} from "../../../types/GrayscaleColor";
+    import type {GrayscaleColor} from "../../../Types/GrayscaleColor";
     import {DefaultGeneratorOptions} from "../../../Generator/GeneratorOptions";
 
     export let eventHandler: UIEventsHandler;

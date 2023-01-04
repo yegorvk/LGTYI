@@ -1,8 +1,8 @@
 import type {Panels} from "./Pages";
 import {DefaultRenderSettings, type RenderSettings} from "../../Renderer/RenderSettings";
 import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Generator/GeneratorOptions";
-import type {Color} from "../../types/Color";
-import type {GrayscaleColor} from "../../types/GrayscaleColor";
+import type {Color} from "../../Types/Color";
+import type {GrayscaleColor} from "../../Types/GrayscaleColor";
 
 export class UIEventsHandler {
     private readonly dispatcher: Function;

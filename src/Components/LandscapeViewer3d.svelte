@@ -10,7 +10,7 @@
         type RenderSettings,
     } from "../Renderer/RenderSettings";
     import { RenderTerrainTest } from "../Renderer/RenderTerrainTest";
-    import * as water from '../shaders/water.glsl';
+    import * as water from '../Shaders/water.glsl';
     import { applyDefaults } from "../Defaults";
 
     let root: Element;
