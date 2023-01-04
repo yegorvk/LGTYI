@@ -16,19 +16,32 @@
 <a href="#lgtyi-landscape-generator-for-tyi" id="lgtyi-landscape-generator-for-tyi" style="color: inherit; text-decoration: none;">
   <h1>LGTYI: Landscape Generator for TYI</h1>
 </a>
-
-<a href="#вступ" id="вступ" style="color: inherit; text-decoration: none;">
-  <h2>Вступ</h2>
-</a>
 <p>Задача генерації ландшафтів залишається надзвичайно актуальною. Вона зустрічається не тільки в комп’ютерних іграх, а й у сучасних професійних симуляторах для навчання спеціалістів, у кіно, графічних роботах та інших сферах життя.</p>
-<p>Проєкт створений відповідно до завдання Турніру юних інфроматиків 2022-2023 та являє собою генератор рельєфу з 2D- та 3D-візуалізацією, можливістю експорту та імпорту й іншими функціями. Він написаний на TypeScript, Svelte (на етапі компіляції перетворюються на JavaScript, HTML та CSS), власне JavaScript, HTML та CSS з використанням Electron.js. Рендеринг у 2D реалізовано на HTML5 Canvas без зовнішніх бібліотек. 3D-рендер використовує Three.js (WebGL-рендер) для GPU-прискорення. Випадкова генерація здійснюється за допомогою алгоритму, що заснований на шумі Перлина (Perlin noise).</p>
+<p>Проєкт являє собою генератор рельєфу, створений відповідно до завдання Турніру юних інфроматиків 2022-2023. У ньому реалізовано детальні параметри генерації (такі як розміри ділянки, що генерується, діапазон висот, коефіцієнт посіченості поверхні, рівень моря, кількість біомів, імовірність наявності певних типів ландшафту тощо), 2D- та 3D-візуалізацію (та панель керування їх параметрами), можливість експорту, імпорту мап та інші операції з ними, можливість збереження та відкриття проєкту й інші функції.</p>
+<p>Проєкт написаний на TypeScript, Svelte (на етапі компіляції перетворюються на JavaScript, HTML та CSS), власне JavaScript, HTML та CSS з використанням Electron.js. Рендеринг у 2D реалізовано на HTML5 Canvas без зовнішніх бібліотек. 3D-рендер використовує Three.js (WebGL-рендер) для GPU-прискорення. Випадкова генерація здійснюється за допомогою алгоритму, що заснований на шумі Перлина (Perlin noise).</p>
 
-<a href="#установлення" id="установлення" style="color: inherit; text-decoration: none;">
-  <h2>Установлення</h2>
+<a href="#установлення-та-запуск" id="установлення-та-запуск" style="color: inherit; text-decoration: none;">
+  <h2>Установлення та запуск</h2>
 </a>
+<p>Для установлення LGTYI ви можете скористатися виконуваним файлом, а можете зібрати проєкт самостійно.</p>
+<p>У разі використання виконуваного файлу достатньо завантажити його, запустити від імені адміністратора та дотримуватись інструкцій на екрані.</p>
+<p>Для самостійної зборки та запуску:</p>
+<ol>
+<li>Установіть Node.js:<ul>
+<li>Завантажте файл за <a href="https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi">посиланням</a>;</li>
+<li>Виконайте завантажений файл від імені адміністратора;</li>
+<li>Дотримуйтесь інструкцій інсталятора.</li>
+</ul>
+</li>
+<li>Установіть TypeScript, виконавши від імені адміністратора команду <code>npm i -g typescript</code>.</li>
+<li>Установіть Yarn, виконавши від імені адміністратора команду <code>npm i -g yarn</code>.</li>
+<li>Перейдіть у теку проєкту в консолі/терміналі.</li>
+<li>У теці проєкту виконайте від імені адміністратора команду <code>yarn</code>.</li>
+<li>Для запуску LGTYI виконайте команду <code>yarn electron-dev</code>.</li>
+</ol>
 
-<a href="#інші-розділи-інструкції" id="інші-розділи-інструкції" style="color: inherit; text-decoration: none;">
-  <h2>Інші розділи інструкції</h2>
+<a href="#деталі-реалізації" id="деталі-реалізації" style="color: inherit; text-decoration: none;">
+  <h2>Деталі реалізації</h2>
 </a>
 
 <a href="#зміст" id="зміст" style="color: inherit; text-decoration: none;">
@@ -38,9 +51,10 @@
 <!-- UNDESCRIBED: assets, docs -->
 
 <ul>
-<li>docs</li>
 <li>public<ul>
 <li>assets</li>
+<li>docs</li>
+<li>instruction</li>
 <li>favicon.png</li>
 <li>global.css</li>
 <li>index.html</li>
@@ -55,16 +69,9 @@
 </li>
 <li>UI<ul>
 <li>InfoPages<ul>
-<li>Pages<ul>
-<li>Help.svelte</li>
-<li>Info.svelte</li>
-<li>Tips.svelte</li>
-</ul>
-<p> </p>
-</li>
 <li>HelpUiButtons.svelte</li>
+<li>Info.svelte</li>
 <li>InfoPanels.ts</li>
-<li>Panel.css</li>
 <li>Panel.svelte</li>
 </ul>
 </li>
@@ -82,6 +89,7 @@
 </ul>
 </li>
 <li>styles<ul>
+<li>Panel.css</li>
 <li>Burger.css</li>
 <li>Buttons.css</li>
 <li>Range.css</li>
@@ -116,7 +124,10 @@
 <li>ImageExporter.ts</li>
 <li>ImageImporter.ts</li>
 <li>Importer.ts</li>
-<li>Subtracter.ts</li>
+<li>Subtracter.ts<ul>
+<li>TextFileImport.ts</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Fonts<ul>
@@ -165,6 +176,7 @@
 <li>index.ts</li>
 <li>LoadScreen.css</li>
 <li>math.ts</li>
+<li>preload.js</li>
 </ul>
 </li>
 </ul>
@@ -174,9 +186,9 @@
 <li>main.js</li>
 <li>package.json</li>
 <li>package-lock.json</li>
-<li>preload.js</li>
 <li>README.md (<em><strong>you&#39;re here!</strong></em>)</li>
 <li>rollup.config.js</li>
+<li>rollup.config-1672844764418.cjs</li>
 <li>tsconfig.json</li>
 <li>typedoc.json</li>
 </ul>
