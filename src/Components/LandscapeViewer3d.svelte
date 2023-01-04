@@ -40,7 +40,7 @@
     let scene = new THREE.Scene();
     let camera: THREE.Camera = null;
 
-    let chunk = new Chunk(2, heightmap, renderSettings.gradient, renderSettings.landColors);
+    let chunk = new Chunk(2, heightmap, renderSettings.gradient, renderSettings.gradientSettings);
     //let chunk = null;
 
     let waterLayerMat: THREE.ShaderMaterial = null;

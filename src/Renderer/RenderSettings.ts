@@ -1,4 +1,4 @@
-import { DEFAULT_LAND_COLORS } from "../Terrain/PointColor";
+import { DefaultGradientSettings, type GradientSettings } from "../Terrain/PointColor";
 
  export interface RenderSettings {
     wireframe: boolean;
@@ -7,7 +7,7 @@ import { DEFAULT_LAND_COLORS } from "../Terrain/PointColor";
     wireframeOpacity: number;
     wireframeLineWidth: number;
     dynamicScene?: boolean;
-    landColors?: Array<number>
+    gradientSettings?: GradientSettings
 }
 
 export const DefaultRenderSettings: RenderSettings = {
@@ -17,5 +17,5 @@ export const DefaultRenderSettings: RenderSettings = {
     wireframeOpacity: 0.1,
     wireframeLineWidth: 2,
     dynamicScene: true,
-    landColors: DEFAULT_LAND_COLORS
+    gradientSettings: DefaultGradientSettings
 }
