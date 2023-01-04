@@ -79,10 +79,6 @@ input[type=checkbox] {
     margin: auto;
 }
 
-.hidden {
-    opacity: 0;
-    display: none;
-}
 input[type="color"] {
     appearance: none;
     -moz-appearance: none;
@@ -94,7 +90,8 @@ input[type="color"] {
     padding: 0;
     width: 5rem;
 }
-.colors-span{
+
+.colors-span {
     height: 3rem;
     display: flex;
     flex-direction: row;
@@ -103,6 +100,7 @@ input[type="color"] {
     gap: 20px;
     margin-top: 10px;
 }
+
 .colors-button{
     box-sizing: border-box;
     margin-bottom: 10px;
@@ -115,8 +113,14 @@ input[type="color"] {
     border-radius: 10px;
     transition: background 400ms;
 }
+
 .colors-button:hover{
     outline: none;
     background: #18656e;
     cursor: pointer;
+}
+
+.hidden {
+    opacity: 0;
+    display: none;
 }

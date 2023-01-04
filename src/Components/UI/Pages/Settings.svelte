@@ -34,8 +34,6 @@
         colors.push(defaultColor);
         colors = colors;
     }
-
-
 </script>
 
 <div>
@@ -56,7 +54,7 @@
 
     <div class:hidden={is2D}>
         <Param>
-            <label for="wireframeOpacity">Wireframe Opacity: {wireframeOpacity}</label>
+            <label for="wireframeOpacity">Wireframe opacity: {wireframeOpacity}</label>
             <input id="wireframeOpacity"
                    class="basic-range"
                    type="range"
@@ -68,7 +66,7 @@
         </Param>
 
         <Param>
-            <label for="wireframeLineWidth">Wireframe Sickness: {wireframeLineWidth}</label>
+            <label for="wireframeLineWidth">Wireframe sickness: {wireframeLineWidth}</label>
             <input id="wireframeLineWidth"
                    class="basic-range"
                    type="range"
@@ -77,15 +75,19 @@
                    min="1"
             />
         </Param>
+
         <Param>
-            <label>Dynamic Scene</label>
-            <input
-                    type="checkbox"
-                    on:click={dynSwitch}
-                    checked={dynamicScene}
-                    value={dynamicScene}
-            />
+            <div class="check-label">
+                <label for="dynamicScene">Dynamic scene:</label>
+                <input id="dynamicScene"
+                       type="checkbox"
+                       on:click={dynSwitch}
+                       checked={dynamicScene}
+                       value={dynamicScene}
+                />
+            </div>
         </Param>
+
         <Param>
             <div class="check-label">
                 <label for="modeLightning">Lighting:</label>
@@ -114,14 +116,11 @@
                 />
             </div>
         </Param>
-        <button class="menu-but center-text" on:click={fontSwitch}>
-            <span>Comfortaa ⟷ Ubuntu</span>
-        </button>
     </div>
+
     <Param>
-        <h3>Gradient colors:
-            <button class="colors-button" on:click={colorAdd}>Add</button>
-        </h3>
+        <p class="param-title">Gradient colors</p>
+        <button class="colors-button" on:click={colorAdd}>Add</button>
         {#each colors as color}
                <span class="colors-span"><input type="color" bind:value={color}/> <button class="colors-button" on:click={()=>{
                    let index = colors.indexOf(color);
@@ -131,6 +130,10 @@
 
         {/each}
     </Param>
+
+    <button class="menu-but center-text" on:click={fontSwitch}>
+        <span>Comfortaa ⟷ Ubuntu</span>
+    </button>
 
     <button class="menu-but center-text" on:click={save}>
         <span>Save</span>

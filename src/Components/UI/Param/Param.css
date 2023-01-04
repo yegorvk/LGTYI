@@ -9,3 +9,9 @@
     align-items: center;
     font-size: 20px;
 }
+
+.param-title {
+    text-align: center;
+    font-size: 21px;
+    margin-top: 0;
+}
