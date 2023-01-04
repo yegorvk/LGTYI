@@ -81,7 +81,7 @@
                class="basic-range"
                type="range"
                bind:value={width}
-               max="2000"
+               max="4000"
                min="100"
         />
     </Param>
@@ -92,20 +92,12 @@
                class="basic-range"
                type="range"
                bind:value={height}
-               max="2000"
+               max="4000"
                min="100"
         />
     </Param>
 
-    <Param>
-        <label for="generateSeed">Seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
-        <input id="generateSeed"
-               class="basic-text"
-               type="number"
-               min="0"
-               bind:value={seed}
-        />
-    </Param>
+
 
     <Param>
         <label for="generateMaxAltitude">Max altitude: {maxAltitude}</label>
