@@ -42,21 +42,26 @@
 </button>
 
 <div class:opened_help_panel={help_visible}>
-    <button title="Tips"
-            id="tips"
-            class="func-but"
-            disabled={!help_visible}
-            on:click={tips}>
+    <a title="Tips"
+       id="tips"
+       class="func-but"
+       disabled={!help_visible}
+       target="_blank"
+       href="instruction/dovidka.htm">
+        <!--            on:click={tips}>-->
         <img src="./assets/tips.png" alt="tips"/>
-    </button>
+    </a>
 
-    <button title="Help"
-            id="help"
-            class="func-but"
-            disabled={!help_visible}
-            on:click={help}>
+    <a title="Help"
+       id="help"
+       class="func-but"
+       disabled={!help_visible}
+       target="_blank"
+       href="docs/index.html">
+        <!--            on:click={help}>-->
+
         <img src="./assets/help.png" alt="help"/>
-    </button>
+    </a>
 
     <button title="Info"
             id="info"
