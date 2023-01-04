@@ -1,11 +1,10 @@
 import type {SaveData} from "../Types/SaveData";
 import {Heightmap} from "../Terrain/Heightmap";
-
+import CryptoJS from 'crypto-js';
 const remote = require('@electron/remote');
 
 
 export async function importMap(): Promise<SaveData> {
-
     // @ts-ignore
     const fs = window.fs;
     // Use the electron dialog module to prompt the user for a file path
@@ -21,7 +20,10 @@ export async function importMap(): Promise<SaveData> {
     try {
         let file = await fs.promises.readFile(filePaths[0], 'utf8');
 
-        let Data: SaveData = JSON.parse(file);
+        let bytes  = CryptoJS.AES.decrypt(file, "LGTYI_KEY");
+        let originalText = bytes.toString(CryptoJS.enc.Utf8);
+        console.log(originalText);
+        let Data: SaveData = JSON.parse(originalText);
 
         if (!(Data.heightMap.width === undefined ||
             Data.heightMap.height === undefined ||

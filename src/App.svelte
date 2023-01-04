@@ -52,7 +52,7 @@
             let data = await importMap();
             is2DView = data.viewMode;
             is2DView = is2DView;
-            eventHandler.generatorOptions = data.genOptions;
+            eventHandler.trueGenOptions = data.genOptions;
             eventHandler.renderTrueSettings = data.renderSettings;
             heightmap = data.heightMap as Heightmap;
             notify("Successfully opened!", false);

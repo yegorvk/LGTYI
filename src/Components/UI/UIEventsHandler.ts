@@ -40,7 +40,9 @@ export class UIEventsHandler {
         }
         return [mode, this._renderSettings.wireframeOpacity, this._renderSettings.wireframeLineWidth, this._renderSettings.dynamicScene, this._renderSettings.gradientSettings.landColors]
     }
-
+    set trueGenOptions(value: GeneratorOptions){
+        this._generatorOptions = value;
+    }
     set generatorOptions(value: GeneratorOptions) {
         this._generatorOptions = value;
         this._generatorOptions.seed = (value.seed === null) ? 0 : value.seed;
