@@ -17,6 +17,7 @@
 
     let save = () => {eventHandler.settingsSave(mode, wireframeLineWidth, wireframeOpacity, dynamicScene);}
     let dynSwitch = () => {dynamicScene = !dynamicScene};
+    let fontSwitch = () => {eventHandler.FontSwitch()};
 </script>
 
 <div>
@@ -95,6 +96,9 @@
                 />
             </div>
         </Param>
+        <button class="menu-but center-text" on:click={fontSwitch}>
+            <span>Comfortaa ⟷ Ubuntu</span>
+        </button>
     </div>
 
     <button class="menu-but center-text" on:click={save}>

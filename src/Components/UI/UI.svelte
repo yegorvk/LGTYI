@@ -11,7 +11,7 @@
     import Settings from "./Pages/Settings.svelte";
     import Main from "./Pages/Main.svelte";
     import ImageImport from "./Pages/ImageImport.svelte";
-    import HelpUIButtons from "./HelpUIButtons.svelte";
+    import HelpUIButtons from "./InfoPages/HelpUIButtons.svelte";
     import Help from "./InfoPages/Pages/Help.svelte";
     import Info from "./InfoPages/Pages/Info.svelte";
     import Tips from "./InfoPages/Pages/Tips.svelte";
@@ -21,7 +21,7 @@
     import {createEventDispatcher} from "svelte";
     import {Panels} from "./Pages";
     import {UIEventsHandler} from "./UIEventsHandler";
-    import {InfoPanels} from "./InfoPanels";
+    import {InfoPanels} from "./InfoPages/InfoPanels";
 
 
     export let is2D: boolean = false;
@@ -62,7 +62,7 @@
             class="func-but"
             class:hidden={!main_visible || currPanel === Panels.MAIN}
             on:click={back}>
-        <img src="back_arrow.png" alt="back"/>
+        <img src="./assets/back_arrow.png" alt="back"/>
     </button>
     <div class="content">
         {#if currPanel === Panels.MAIN}

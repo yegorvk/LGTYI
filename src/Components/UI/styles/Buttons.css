@@ -106,7 +106,7 @@
     border-radius: 8px;
     color: #333333;
     text-align: left;
-    font-family: Comfortaa, cursive;
+
     font-size: 23px;
 }
 .menu-but:not([disabled]):hover {

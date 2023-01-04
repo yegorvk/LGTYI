@@ -35,9 +35,9 @@
         class="func-but"
         on:click={panel}>
     {#if !help_visible}
-        <img src="help.png" alt="help"/>
+        <img src="./assets/help.png" alt="help"/>
     {:else}
-        <img src="close.png" alt="close"/>
+        <img src="./assets/close.png" alt="close"/>
     {/if}
 </button>
 
@@ -47,7 +47,7 @@
             class="func-but"
             disabled={!help_visible}
             on:click={tips}>
-        <img src="tips.png" alt="tips"/>
+        <img src="./assets/tips.png" alt="tips"/>
     </button>
 
     <button title="Help"
@@ -55,7 +55,7 @@
             class="func-but"
             disabled={!help_visible}
             on:click={help}>
-        <img src="help.png" alt="help"/>
+        <img src="./assets/help.png" alt="help"/>
     </button>
 
     <button title="Info"
@@ -63,6 +63,6 @@
             class="func-but"
             disabled={!help_visible}
             on:click={info}>
-        <img src="info.png" alt="info"/>
+        <img src="./assets/info.png" alt="info"/>
     </button>
 </div>

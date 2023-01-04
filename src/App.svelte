@@ -7,9 +7,9 @@
     import {exportMap} from "./Files/Exporter";
     import {importMap} from "./Files/Importer";
     import Notification from "./Components/Notification/Notification.svelte";
-    import AddMap from "./Files/Adder";
-    import SubtructMap from "./Files/Subtructer";
-    import ExcelExport from "./Files/ExcelExporter";
+    import { AddMap } from "./Files/Adder";
+    import { SubtructMap } from "./Files/Subtracter";
+    import { ExcelExport } from "./Files/ExcelExporter";
     import {DefaultRenderSettings} from "./Renderer/RenderSettings";
     import type {RenderSettings} from "./Renderer/RenderSettings"
     import {ImageExport} from "./Files/ImageExporter";
@@ -17,6 +17,7 @@
     import type {UIEventsHandler} from "./Components/UI/UIEventsHandler";
     import "./LoadScreen.css";
     import { tick } from 'svelte';
+
 
     let trigger: boolean;
     let is2DView: boolean = false;
@@ -43,6 +44,7 @@
 
     let invisible = false;
     let isLoadingView = true;
+
 
     async function ImportMap() {
         invisible = true;
@@ -135,9 +137,13 @@
             notify(e, true);
         }
     }
+    let font = true;
+    function FontSwitch(){
+        font = !font;
+    }
 </script>
 
-<main id="app_content">
+<main id="app_content" class:font-comfortaa={!font} class:font-ubuntu={font}>
     <Notification bind:notify={notify}></Notification>
 
     {#if !isLoadingView && !invisible}
@@ -158,7 +164,9 @@
         on:excel_export_map={ExcelExportMap}
         on:settings_save={SettingsChange}
         on:image_export_map={ImageExportMap}
-        on:image_import_map={ImportImageMap}/>
+        on:image_import_map={ImportImageMap}
+        on:font_switch={FontSwitch}/>
+
     
     {/if}
 
@@ -214,6 +222,7 @@
 </main>
 
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Ubuntu:wght@500&display=swap');
     #app_content {
         width: 100%;
         height: 100%;
@@ -221,6 +230,13 @@
         position: absolute;
         top: 0;
         left: 0;
+
+    }
+    .font-comfortaa{
+        font-family: 'Comfortaa', cursive;
+    }
+    .font-ubuntu{
+        font-family: 'Ubuntu', sans-serif;
     }
     .load_screen{
         background: #010101;
@@ -247,6 +263,13 @@
         justify-content: center;
         overflow: auto;
     }
+
+
+    /*@font-face {*/
+    /*    font-family: "Comfortaa";*/
+    /*    font-style: normal;*/
+    /*    src: url("./Fonts/Comfortaa-Bold.ttf") format("ttf");*/
+    /*}*/
 </style>
 
 

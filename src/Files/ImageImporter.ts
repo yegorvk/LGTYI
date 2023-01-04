@@ -1,7 +1,7 @@
 import {Heightmap} from "../Terrain/Heightmap";
 import {altitudeFromGrayscale} from "../Terrain/PointColor";
-import type {Color} from "../types/Color";
-import type {GrayscaleColor} from "../types/GrayscaleColor";
+import type {Color} from "../Types/Color";
+import type {GrayscaleColor} from "../Types/GrayscaleColor";
 import {DefaultGeneratorOptions} from "../Generator/GeneratorOptions";
 
 const remote = require('@electron/remote');

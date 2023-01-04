@@ -1,7 +1,7 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 const remote = require('@electron/remote');
 
-export default async function ExcelExport(heightMap: Heightmap) {
+export async function ExcelExport(heightMap: Heightmap) {
     try {
         const {filePath} = await remote.dialog.showSaveDialog({
             filters: [{name: 'Excel Files', extensions: ['xlsx']}]

@@ -1,7 +1,12 @@
 import type {Heightmap} from "../Terrain/Heightmap";
 import {importMap} from "./Importer";
-
-export default async function AddMap(heightMap: Heightmap): Promise<Heightmap> {
+/**
+ * Calculates the square root of a number.
+ *
+ * @param heightMap the number to calculate the root of.
+ * @returns the square root if `x` is non-negative or `NaN` if `x` is negative.
+ */
+export async function AddMap(heightMap: Heightmap): Promise<Heightmap> {
     let importedHeightmap;
     try {
         let data = await importMap();

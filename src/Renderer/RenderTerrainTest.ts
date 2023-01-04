@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { Heightmap } from '../Terrain/Heightmap';
-import { vertex as terrainVertex, fragment as terrainFragment } from '../shaders/terrain.glsl';
+import { vertex as terrainVertex, fragment as terrainFragment } from '../Shaders/terrain.glsl';
 import { colorRGBFromAltitude } from '../Terrain/PointColor';
 
 export class RenderTerrainTest extends THREE.Object3D {
