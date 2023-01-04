@@ -186,7 +186,7 @@
     <Param>
         <h3>Biomes</h3>
         <hr/>
-        <label for="generateOceanChance">Ocean chance: {oceanChance}</label>
+        <label for="generateOceanChance">Ocean: {oceanChance}</label>
         <input id="generateOceanChance"
                class="basic-range"
                type="range"
@@ -196,7 +196,7 @@
                min="0"
         />
 
-        <label for="generateSeaChance">Sea chance: {seaChance}</label>
+        <label for="generateSeaChance">Sea: {seaChance}</label>
         <input id="generateSeaChance"
                class="basic-range"
                type="range"
@@ -206,7 +206,7 @@
                min="0"
         />
 
-        <label for="generateSwampChance">Swamp chance: {swampChance}</label>
+        <label for="generateSwampChance">Low land: {swampChance}</label>
         <input id="generateSwampChance"
                 class="basic-range"
                 type="range"
@@ -216,7 +216,7 @@
                 min="0"
         />
 
-        <label for="generateLakeChance">Lake chance: {lakeChance}</label>
+        <label for="generateLakeChance">Lake: {lakeChance}</label>
         <input id="generateLakeChance"
                 class="basic-range"
                 type="range"
@@ -226,7 +226,7 @@
                 min="0"
         />
 
-        <label for="generatePlainsChance">Plains chance: {plainsChance}</label>
+        <label for="generatePlainsChance">Plains: {plainsChance}</label>
         <input id="generatePlainsChance"
                class="basic-range"
                type="range"
@@ -236,7 +236,7 @@
                min="0"
         />
 
-        <label for="generateHillsChance">Hills chance: {hillsChance}</label>
+        <label for="generateHillsChance">Hills: {hillsChance}</label>
         <input id="generateHillsChance"
                class="basic-range"
                type="range"
@@ -246,7 +246,7 @@
                min="0"
         />
 
-        <label for="generatePlateauChance">Plateau chance: {plateauChance}</label>
+        <label for="generatePlateauChance">Plateau: {plateauChance}</label>
         <input id="generatePlateauChance"
                class="basic-range"
                type="range"
@@ -256,7 +256,7 @@
                min="0"
         />
 
-        <label for="generateHighPeaksChance">High peaks chance: {highPeaksChance}</label>
+        <label for="generateHighPeaksChance">Mountain: {highPeaksChance}</label>
         <input id="generateHighPeaksChance"
                class="basic-range"
                type="range"
