@@ -16,14 +16,15 @@
     let waterLevel = eventHandler.generatorOptions.waterLevel;
 
     let numberOfBiomes = eventHandler.generatorOptions.numberOfBiomes;
+
     let oceanChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let seaChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let swampChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let plainsChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let hillsChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let plateuChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let lakeChance = eventHandler.generatorOptions.biomes.oceanChance;
-    let highPeaksChance = eventHandler.generatorOptions.biomes.oceanChance;
+    let seaChance = eventHandler.generatorOptions.biomes.seaChance;
+    let swampChance = eventHandler.generatorOptions.biomes.swampChance;
+    let plainsChance = eventHandler.generatorOptions.biomes.plainsChance;
+    let hillsChance = eventHandler.generatorOptions.biomes.hillsChance;
+    let plateuChance = eventHandler.generatorOptions.biomes.plateuChance;
+    let lakeChance = eventHandler.generatorOptions.biomes.lakeChance;
+    let highPeaksChance = eventHandler.generatorOptions.biomes.highPeaksChance;
 
     function Generate(){
         generate(
@@ -39,34 +40,34 @@
                 biomes: {
                     oceanChance: oceanChance,
                     seaChance: seaChance,
+                    lakeChance: lakeChance,
                     swampChance: swampChance,
                     plainsChance: plainsChance,
                     hillsChance: hillsChance,
                     plateuChance: plateuChance,
-                    lakeChance: lakeChance,
                     highPeaksChance: highPeaksChance
                 },
                 numberOfBiomes: numberOfBiomes
             }
         );
         eventHandler.generatorOptions = {
-            width,
-            height,
-            maxAltitude,
-            minAltitude,
+            width: width,
+            height: height,
+            maxAltitude: maxAltitude,
+            minAltitude: minAltitude,
             roughness: roughness,
-            levelOfDetail,
-            seed,
-            waterLevel,
+            levelOfDetail: levelOfDetail,
+            seed: seed,
+            waterLevel: waterLevel,
             biomes: {
-                oceanChance,
-                seaChance,
-                swampChance,
-                plainsChance,
-                hillsChance,
-                plateuChance,
-                lakeChance,
-                highPeaksChance
+                oceanChance: oceanChance,
+                seaChance: seaChance,
+                lakeChance: lakeChance,
+                swampChance: swampChance,
+                plainsChance: plainsChance,
+                hillsChance: hillsChance,
+                plateuChance: plateuChance,
+                highPeaksChance: highPeaksChance
             },
             numberOfBiomes: numberOfBiomes
         };
@@ -93,6 +94,16 @@
                bind:value={height}
                max="1000"
                min="10"
+        />
+    </Param>
+
+    <Param>
+        <label for="generateSeed">Seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
+        <input id="generateSeed"
+               class="basic-text"
+               type="number"
+               min="0"
+               bind:value={seed}
         />
     </Param>
 
@@ -152,16 +163,7 @@
     </Param>
 
     <Param>
-        <label for="generateSeed">Seed: {(seed === null || seed === 0) ? "random" : seed.toString()}</label>
-        <input id="generateSeed"
-               class="basic-text"
-               type="number"
-               min="0"
-               bind:value={seed}
-        />
-    </Param>
-    <Param>
-        <label >Number Of biomes: {numberOfBiomes}</label>
+        <label>Number of biomes: {numberOfBiomes}</label>
         <input
                class="basic-range"
                type="range"
@@ -171,7 +173,7 @@
         />
     </Param>
     <Param>
-        <h3>Biomes Distribution</h3>
+        <h3>Biomes</h3>
         <hr/>
         <label>Ocean chance: {oceanChance}</label>
         <input
