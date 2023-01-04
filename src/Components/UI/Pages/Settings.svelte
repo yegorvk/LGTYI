@@ -10,14 +10,32 @@
     let wireframeLineWidth = eventHandler.renderSettings[2];
     let dynamicScene: boolean = eventHandler.renderSettings[3];
     let mode = eventHandler.renderSettings[0];
+    let colors = eventHandler.renderSettings[4].concat();
+    for (let i = 0; i < colors.length; i++){
+        colors[i] = colors[i].toString(16);
+        colors[i] = '#' + colors[i];
+    }
 
     function dimSwitch() {
         is2D = !is2D;
     }
 
-    let save = () => {eventHandler.settingsSave(mode, wireframeLineWidth, wireframeOpacity, dynamicScene);}
-    let dynSwitch = () => {dynamicScene = !dynamicScene};
-    let fontSwitch = () => {eventHandler.FontSwitch()};
+    let save = () => {
+        eventHandler.settingsSave(mode, wireframeLineWidth, wireframeOpacity, dynamicScene, colors);
+    }
+    let dynSwitch = () => {
+        dynamicScene = !dynamicScene
+    };
+    let fontSwitch = () => {
+        eventHandler.FontSwitch()
+    };
+    const defaultColor = "#000000";
+    let colorAdd = () => {
+        colors.push(defaultColor);
+        colors = colors;
+    }
+
+
 </script>
 
 <div>
@@ -62,10 +80,10 @@
         <Param>
             <label>Dynamic Scene</label>
             <input
-                   type="checkbox"
-                   on:click={dynSwitch}
-                   checked={dynamicScene}
-                   value={dynamicScene}
+                    type="checkbox"
+                    on:click={dynSwitch}
+                    checked={dynamicScene}
+                    value={dynamicScene}
             />
         </Param>
         <Param>
@@ -100,6 +118,19 @@
             <span>Comfortaa ⟷ Ubuntu</span>
         </button>
     </div>
+    <Param>
+        <h3>Render Colors:
+            <button on:click={colorAdd}>Add</button>
+        </h3>
+        {#each colors as color}
+               <span>{color} <button on:click={()=>{
+                   let index = colors.indexOf(color);
+                   colors.splice(index, 1);
+                   colors = colors;
+               }}>Remove</button></span>
+               <input type="color" bind:value={color}/>
+        {/each}
+    </Param>
 
     <button class="menu-but center-text" on:click={save}>
         <span>Save</span>
