@@ -39,11 +39,13 @@ export class UIEventsHandler {
      */
     get renderSettings(): any[] {
         const mode: string[] = [];
-        if (this._renderSettings.wireframe) {
-            mode.push("2");
-        }
+        if(this._renderSettings.textures)
+            mode.push("4");
         if (this._renderSettings.gradient) {
             mode.push("3");
+        }
+        if (this._renderSettings.wireframe) {
+            mode.push("2");
         }
         if (this._renderSettings.lighting) {
             mode.push("1");
@@ -150,12 +152,15 @@ export class UIEventsHandler {
         const renderSettings: RenderSettings = {
             wireframe: mode.includes("2"),
             gradient: mode.includes("3"),
-            lighting: mode.includes("1") && mode.includes("3"),
+            lighting: mode.includes("1") && (mode.includes("3") || mode.includes("4")),
+            textures: mode.includes("4"),
             wireframeOpacity: wireframeOpacity,
             wireframeLineWidth: wireframeLineWidth,
             dynamicScene: dynamicScene,
             gradientSettings: DefaultGradientSettings
         };
+
+        console.log(renderSettings);
         
         renderSettings.gradientSettings.landColors = colors16;
         this._renderSettings = renderSettings;

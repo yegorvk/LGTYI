@@ -42,7 +42,7 @@
     let scene = new THREE.Scene();
     let camera: THREE.Camera = null;
 
-    let chunk = new Chunk(2, heightmap, renderSettings.gradient, renderSettings.gradientSettings);
+    let chunk = new Chunk(2, heightmap, true, renderSettings.gradientSettings);
     //let chunk = null;
 
     let waterLayerMat: THREE.ShaderMaterial = null;
@@ -147,6 +147,7 @@
             wireframeOpacity: renderSettings.wireframeOpacity,
             prepareForLighting: renderSettings.lighting,
             vertexColors: renderSettings.gradient,
+            textures: renderSettings.textures
         });
 
         //let renderTerrain = new RenderTerrainTest(heightmap);

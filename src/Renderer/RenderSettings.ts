@@ -7,7 +7,8 @@ import { DefaultGradientSettings, type GradientSettings } from "../Terrain/Point
     wireframeOpacity: number;
     wireframeLineWidth: number;
     dynamicScene?: boolean;
-    gradientSettings?: GradientSettings
+    gradientSettings?: GradientSettings;
+    textures?: boolean;
 }
 
 export const DefaultRenderSettings: RenderSettings = {
@@ -17,5 +18,6 @@ export const DefaultRenderSettings: RenderSettings = {
     wireframeOpacity: 0.1,
     wireframeLineWidth: 2,
     dynamicScene: true,
+    textures: false,
     gradientSettings: DefaultGradientSettings
 }
