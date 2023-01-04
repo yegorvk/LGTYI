@@ -1,3 +1,4 @@
+import Jimp from 'jimp/*';
 import type { Heightmap } from './Heightmap'
 import { colorRGBFromAltitude, DefaultGradientSettings, type GradientSettings } from './PointColor';
 
@@ -85,8 +86,14 @@ export class Chunk {
             for (let j = 0; j < this.width; j++) {
                 const base = this.mIndex(i, j);
 
-                this.uv[2 * base] = i / 20.0;
-                this.uv[2 * base + 1] = j / 20.0;
+                const u = j / 20.0;
+                const v = i / 20.0;
+
+                this.uv[2 * base] = u;
+                this.uv[2 * base + 1] = v;
+
+                //this.uv[2 * base] = (i / 20.0 - Math.floor(i / 20.0)) + (Math.floor(i / 20) % 2);
+                //this.uv[2 * base + 1] = j / 20.0 - Math.floor(j / 20.0) + (Math.floor(j / 20) % 2);
             }
         }
     }

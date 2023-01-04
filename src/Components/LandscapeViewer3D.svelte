@@ -30,6 +30,8 @@
     let renderer: THREE.WebGLRenderer = null;
     let camControls: FlyControls = null;
 
+    let renderChunk: RenderChunk = null;
+
     let camControlsChangeEventListener: () => any = null;
     let windowResizeEventListener: () => any = null;
     let keydownEventListener: (e: KeyboardEvent) => any = null;
@@ -139,7 +141,7 @@
         const rootWidth = width;
         const rootHeight = height;
 
-        let renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), SCALE, chunk, {
+        renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), SCALE, chunk, {
             useWireframe: renderSettings.wireframe,
             wireframeLineWidth: renderSettings.wireframeLineWidth,
             wireframeOpacity: renderSettings.wireframeOpacity,
@@ -301,6 +303,7 @@
 
         clock.stop();
 
+        if (renderChunk !== null) renderChunk.dispose();
         if (waterLayerMat !== null) waterLayerMat.dispose();
         if (waterLayerNorm1 !== null) waterLayerNorm1.dispose();
 

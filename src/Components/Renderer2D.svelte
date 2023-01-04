@@ -16,6 +16,8 @@
     let offsetX = 0;
     let offsetY = 0;
 
+    console.log(data);
+
     let pixels = new Uint8ClampedArray(4 * data.width * data.height);
 
     for (let i = 0; i < data.height; i++) {

@@ -190,6 +190,9 @@ export function generateTerrain(
     heightmap.width /= SCALE_INV;
     heightmap.height /= SCALE_INV;
 
+    heightmap.width = Math.floor(heightmap.width);
+    heightmap.height = Math.floor(heightmap.height);
+
     if (!hasWater)
         heightmap.waterLevel -= INF;
 

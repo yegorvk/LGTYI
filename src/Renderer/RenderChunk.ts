@@ -6,6 +6,7 @@ import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
 export class RenderChunk extends THREE.Object3D {
     private terrainScale: number;
     private grassNormal: THREE.Texture;
+    private terrainTexture: THREE.Texture;
 
     constructor(offset: THREE.Vector3, scale: number, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
         super()
@@ -21,7 +22,16 @@ export class RenderChunk extends THREE.Object3D {
         this.grassNormal.minFilter = THREE.NearestMipMapNearestFilter;
 
         this.grassNormal.generateMipmaps = true;
-        this.grassNormal.needsUpdate = true;
+
+        this.terrainTexture = new THREE.TextureLoader().load('assets/textures/terrain_rock.jpg');
+
+        this.terrainTexture.wrapS = THREE.RepeatWrapping;
+        this.terrainTexture.wrapT = THREE.RepeatWrapping;
+        
+        this.terrainTexture.magFilter = THREE.LinearFilter;
+        this.terrainTexture.minFilter = THREE.LinearMipMapLinearFilter;
+
+        this.terrainTexture.generateMipmaps = true;
 
         this.terrainScale = scale;
 
@@ -77,7 +87,8 @@ export class RenderChunk extends THREE.Object3D {
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
         const mat = options.prepareForLighting ?
             new THREE.MeshPhongMaterial({
-                bumpMap: this.grassNormal
+                bumpMap: this.grassNormal,
+                //map: this.terrainTexture
             }) : new THREE.MeshBasicMaterial();
 
         if (options.prepareForLighting) {
@@ -94,5 +105,6 @@ export class RenderChunk extends THREE.Object3D {
 
     dispose() {
         this.grassNormal.dispose();
+        this.terrainTexture.dispose();
     }
 }
