@@ -1,3 +1,7 @@
+/**
+ *
+ * Responsible for switching menu pages.
+ * */
 export enum Panels{
     MAIN = 0,
     GENERATE = 1,
