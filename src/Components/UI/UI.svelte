@@ -4,7 +4,7 @@
     import "./styles/Range.css";
     import "./styles/Buttons.css";
     import "./styles/Burger.css";
-    import './InfoPages/Panel.css';
+    import './styles/Panel.css';
     //components
     import Generate from "./Pages/Generate.svelte";
     import Operations from "./Pages/Operations.svelte";
@@ -12,7 +12,7 @@
     import Main from "./Pages/Main.svelte";
     import ImageImport from "./Pages/ImageImport.svelte";
     import HelpUIButtons from "./InfoPages/HelpUIButtons.svelte";
-    import Info from "./InfoPages/Pages/Info.svelte";
+    import Info from "./InfoPages/Info.svelte";
     import Panel from "./InfoPages/Panel.svelte";
     //classes
     import type {GeneratorOptions} from "../../Generator/GeneratorOptions";
