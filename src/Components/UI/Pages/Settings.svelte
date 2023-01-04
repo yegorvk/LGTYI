@@ -119,7 +119,7 @@
         </button>
     </div>
     <Param>
-        <h3>Render Colors:
+        <h3>Gradient colors:
             <button on:click={colorAdd}>Add</button>
         </h3>
         {#each colors as color}

@@ -134,7 +134,8 @@ export class UIEventsHandler {
             wireframeLineWidth: wireframeLineWidth,
             dynamicScene: dynamicScene,
             gradientSettings: DefaultGradientSettings
-        }
+        };
+        
         renderSettings.gradientSettings.landColors = colors16;
         this._renderSettings = renderSettings;
         this.dispatcher('settings_save', {render: renderSettings});

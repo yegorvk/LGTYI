@@ -53,21 +53,30 @@ export interface GradientSettings {
     waterAlts: Array<number>
 }
 
-export const DefaultGradientSettings: GradientSettings = {
+const StandardGradientSettings: GradientSettings = {
     landColors: DEFAULT_LAND_COLORS,
     landAlts: DEFAULT_LAND_ALTS,
     waterColors: DEFAULT_WATER_COLORS,
     waterAlts: DEFAULT_WATER_ALTS
 }
 
+export const DefaultGradientSettings: GradientSettings = {
+    landColors: [],
+    landAlts: null,
+    waterAlts: DEFAULT_WATER_ALTS,
+    waterColors: DEFAULT_WATER_COLORS
+};
+
 export function colorRGBFromAltitude(
     alt: number,
     waterLevel: number,
     useWaterColors: boolean = true,
-    gradientSettings: GradientSettings = DefaultGradientSettings,
+    gradientSettings1: GradientSettings = DefaultGradientSettings,
     maxAlt: number = MAX_ALT,
     minAlt: number = MIN_ALT
 ): number {
+    let gradientSettings: GradientSettings = structuredClone(gradientSettings1);
+
     // get rid of negative values
     maxAlt -= minAlt;
     alt -= minAlt;
@@ -80,7 +89,43 @@ export function colorRGBFromAltitude(
     alt /= maxAlt;
     waterLevel /= maxAlt;
 
-    const waterColor = 0x3944BC
+    //console.log(DefaultGradientSettings);
+
+    if (gradientSettings.landColors.length === 0) {
+        gradientSettings.landColors = StandardGradientSettings.landColors;
+        gradientSettings.landAlts = StandardGradientSettings.landAlts;
+        //gradientSettings.landColors.push(...DefaultGradientSettings.landColors);
+    } else {
+        if (gradientSettings.waterAlts === undefined || gradientSettings.waterAlts.length !== gradientSettings.waterColors.length) {
+            gradientSettings.waterAlts = new Array<number>();
+    
+            if (gradientSettings.waterColors.length === 1) {
+                gradientSettings.waterAlts.push(0.0);
+                gradientSettings.waterAlts.push(1.0);
+                gradientSettings.waterColors.push(gradientSettings.waterColors[0]);
+            } else {
+                for (let i = 0; i < gradientSettings.waterColors.length; i++) {
+                    gradientSettings.waterAlts.push(i / (gradientSettings.waterColors.length - 1.0));
+                }
+            }
+        }
+    
+        if (gradientSettings.landAlts === null || gradientSettings.landAlts.length !== gradientSettings.landColors.length) {
+            gradientSettings.landAlts = new Array<number>();
+    
+            if (gradientSettings.landColors.length === 1) {
+                gradientSettings.landAlts.push(0.0);
+                gradientSettings.landAlts.push(1.0);
+                gradientSettings.landColors.push(gradientSettings.landColors[0]);
+            } else {
+                for (let i = 0; i < gradientSettings.landColors.length; i++) {
+                    gradientSettings.landAlts.push(i / (gradientSettings.landColors.length - 1.0));
+                }
+            }
+        }
+    }
+
+    const waterColor = 0x3944BC;
 
     let j = 0;
 
