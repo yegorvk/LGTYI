@@ -55,8 +55,6 @@
         }
     );
 
-    console.log(imgData);
-
     function draw(ctx: CanvasRenderingContext2D) {
         if (imgBmp === null || ctx === null) return;
 

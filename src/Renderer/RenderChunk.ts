@@ -12,13 +12,16 @@ export class RenderChunk extends THREE.Object3D {
 
         applyDefaults(options, DefaultRenderOptions);
 
-        /*this.grassNormal = new THREE.TextureLoader().load('assets/textures/terrain_norm.jpg');
+        this.grassNormal = new THREE.TextureLoader().load('assets/textures/terrain_bump.jpg');
 
         this.grassNormal.wrapS = THREE.RepeatWrapping;
         this.grassNormal.wrapT = THREE.RepeatWrapping;
 
+        this.grassNormal.magFilter = THREE.LinearFilter;
+        this.grassNormal.minFilter = THREE.NearestMipMapNearestFilter;
+
         this.grassNormal.generateMipmaps = true;
-        this.grassNormal.needsUpdate = true;*/
+        this.grassNormal.needsUpdate = true;
 
         this.terrainScale = scale;
 
@@ -74,9 +77,8 @@ export class RenderChunk extends THREE.Object3D {
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
         const mat = options.prepareForLighting ?
             new THREE.MeshPhongMaterial({
-                //normalMap: this.grassNormal
-            }) :
-            new THREE.MeshBasicMaterial()
+                bumpMap: this.grassNormal
+            }) : new THREE.MeshBasicMaterial();
 
         if (options.prepareForLighting) {
             (mat as THREE.MeshPhongMaterial).shininess = 0.1;

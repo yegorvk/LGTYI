@@ -60,7 +60,7 @@
             class="func-but"
             class:hidden={!main_visible || currPanel === Panels.MAIN}
             on:click={back}>
-        <img src="./assets/back_arrow.png" alt="back"/>
+        <img src="./assets/back.png" alt="back"/>
     </button>
     <div class="content">
         {#if currPanel === Panels.MAIN}
