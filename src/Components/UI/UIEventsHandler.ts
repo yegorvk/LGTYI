@@ -4,6 +4,13 @@ import {DefaultGeneratorOptions, type GeneratorOptions} from "../../Generator/Ge
 import type {Color} from "../../Types/Color";
 import type {GrayscaleColor} from "../../Types/GrayscaleColor";
 
+
+
+/**
+ * This class is used for handling UI elements.
+ * It is responsible for saving render settings, generator options and sending all events from the UI buttons to the generator.
+ *
+ * */
 export class UIEventsHandler {
     private readonly dispatcher: Function;
     private useColorFor2D: boolean = false;
@@ -56,30 +63,42 @@ export class UIEventsHandler {
     public getGenData(): GeneratorOptions {
         return this._generatorOptions;
     }
-
+    /**
+     * @event
+     */
     public Import() {
         this.dispatcher('import_map');
     }
     public FontSwitch(){
         this.dispatcher('font_switch');
     }
-
+    /**
+     * @event
+     */
     public Add() {
         this.dispatcher('add_map');
     }
-
+    /**
+     * @event
+     */
     public Substr() {
         this.dispatcher('substr_map');
     }
-
+    /**
+     * @event
+     */
     public ExcelExport() {
         this.dispatcher('excel_export_map');
     }
-
+    /**
+     * @event
+     */
     public ImageExport() {
         this.dispatcher('image_export_map');
     }
-
+    /**
+     * @event
+     */
     public ImageImport(isAlphaMode: boolean, isColorMode: boolean, color: Color, grayscaleColor: GrayscaleColor, waterLevel: number, isInverted: boolean) {
         this.dispatcher('image_import_map', {
             grayscale: grayscaleColor,
@@ -90,7 +109,9 @@ export class UIEventsHandler {
             waterLevel: waterLevel
         });
     }
-
+    /**
+     * @event
+     */
     public settingsSave(mode: string[], wireframeLineWidth: number, wireframeOpacity: number, dynamicScene: boolean) {
         const renderSettings: RenderSettings = {
             wireframe: mode.includes("2"),
@@ -103,12 +124,16 @@ export class UIEventsHandler {
         this._renderSettings = renderSettings;
         this.dispatcher('settings_save', {render: renderSettings});
     }
-
+    /**
+     * @event
+     */
     public d2SettingsSwitch() {
         this.useColorFor2D = !this.useColorFor2D;
         this.dispatcher('settings_save_2d', {useColors: this.useColorFor2D});
     }
-
+    /**
+     * @event
+     */
     public Export(seed: number, width: number, height: number, maxAltitude: number, minAltitude: number, levelOfDetail: number, roughness: number, waterLevel: number) {
         this.dispatcher('export_map', {
             genOpt: {

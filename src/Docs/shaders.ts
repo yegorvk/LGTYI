@@ -1,5 +1,5 @@
 /**
- * Specify this is a module comment without renaming it:
+ * Shaders that are used to render.
  * @module
  */
 export * as Phong from "../Shaders/phong.glsl";

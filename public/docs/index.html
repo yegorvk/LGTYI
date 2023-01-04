@@ -13,10 +13,173 @@
 <div class="tsd-page-title">
 <h2>lgtyi</h2></div>
 <div class="tsd-panel tsd-typography">
-<a href="#lgtyi" id="lgtyi" style="color: inherit; text-decoration: none;">
-  <h1>LGTYI</h1>
+<a href="#lgtyi-landscape-generator-for-tyi" id="lgtyi-landscape-generator-for-tyi" style="color: inherit; text-decoration: none;">
+  <h1>LGTYI: Landscape Generator for TYI</h1>
 </a>
-<p>Landscape Generator for TYI</p>
+
+<a href="#вступ" id="вступ" style="color: inherit; text-decoration: none;">
+  <h2>Вступ</h2>
+</a>
+<p>Задача генерації ландшафтів залишається надзвичайно актуальною. Вона зустрічається не тільки в комп’ютерних іграх, а й у сучасних професійних симуляторах для навчання спеціалістів, у кіно, графічних роботах та інших сферах життя.</p>
+<p>Проєкт створений відповідно до завдання Турніру юних інфроматиків 2022-2023 та являє собою генератор рельєфу з 2D- та 3D-візуалізацією, можливістю експорту та імпорту й іншими функціями. Він написаний на TypeScript, Svelte (на етапі компіляції перетворюються на JavaScript, HTML та CSS), власне JavaScript, HTML та CSS з використанням Electron.js. Рендеринг у 2D реалізовано на HTML5 Canvas без зовнішніх бібліотек. 3D-рендер використовує Three.js (WebGL-рендер) для GPU-прискорення. Випадкова генерація здійснюється за допомогою алгоритму, що заснований на шумі Перлина (Perlin noise).</p>
+
+<a href="#установлення" id="установлення" style="color: inherit; text-decoration: none;">
+  <h2>Установлення</h2>
+</a>
+
+<a href="#інші-розділи-інструкції" id="інші-розділи-інструкції" style="color: inherit; text-decoration: none;">
+  <h2>Інші розділи інструкції</h2>
+</a>
+
+<a href="#зміст" id="зміст" style="color: inherit; text-decoration: none;">
+  <h2>Зміст</h2>
+</a>
+<p>Структура проєкту:</p>
+<!-- UNDESCRIBED: assets, docs -->
+
+<ul>
+<li>docs</li>
+<li>public<ul>
+<li>assets</li>
+<li>favicon.png</li>
+<li>global.css</li>
+<li>index.html</li>
+</ul>
+</li>
+<li>src<ul>
+<li>Components<ul>
+<li>Notification<ul>
+<li>Notification.svelte</li>
+<li>Notification.css</li>
+</ul>
+</li>
+<li>UI<ul>
+<li>InfoPages<ul>
+<li>Pages<ul>
+<li>Help.svelte</li>
+<li>Info.svelte</li>
+<li>Tips.svelte</li>
+</ul>
+<p> </p>
+</li>
+<li>HelpUiButtons.svelte</li>
+<li>InfoPanels.ts</li>
+<li>Panel.css</li>
+<li>Panel.svelte</li>
+</ul>
+</li>
+<li>Pages<ul>
+<li>Generate.svelte</li>
+<li>ImageImport.svelte</li>
+<li>Main.svelte</li>
+<li>Operations.svelte</li>
+<li>Settings.svelte</li>
+</ul>
+</li>
+<li>Param<ul>
+<li>Param.css</li>
+<li>Param.svelte</li>
+</ul>
+</li>
+<li>styles<ul>
+<li>Burger.css</li>
+<li>Buttons.css</li>
+<li>Range.css</li>
+<li>UI.css</li>
+</ul>
+</li>
+<li>Pages.ts</li>
+<li>UI.svelte</li>
+<li>UIEventsHandler.ts</li>
+</ul>
+</li>
+<li>LandscapeViewer3d.svetle</li>
+<li>Renderer2D.svelte</li>
+</ul>
+</li>
+<li>Docs<ul>
+<li>documentation.ts</li>
+<li>files.ts</li>
+<li>generator.ts</li>
+<li>noise.ts</li>
+<li>render.ts</li>
+<li>shaders.ts</li>
+<li>terrain.ts</li>
+<li>types.ts</li>
+<li>ui.ts</li>
+</ul>
+</li>
+<li>Files<ul>
+<li>Adder.ts</li>
+<li>ExcelExporter.ts</li>
+<li>Exporter.ts</li>
+<li>ImageExporter.ts</li>
+<li>ImageImporter.ts</li>
+<li>Importer.ts</li>
+<li>Subtracter.ts</li>
+</ul>
+</li>
+<li>Fonts<ul>
+<li>Comfortaa-Bold.ttf</li>
+<li>UbuntuCondensed-Regular.ttf</li>
+</ul>
+</li>
+<li>Generator<ul>
+<li>Biome.ts</li>
+<li>Generator.ts</li>
+<li>GeneratorOptions.ts</li>
+<li>Util.ts</li>
+</ul>
+</li>
+<li>PerlinNoise<ul>
+<li>PerlinNoise.js</li>
+</ul>
+</li>
+<li>Renderer<ul>
+<li>RenderChunk.ts</li>
+<li>RenderOptions.ts</li>
+<li>RenderSettings.ts</li>
+<li>RenderTerrainTest.ts</li>
+<li>Shaders<ul>
+<li>phong.glsl.ts</li>
+<li>terrain.glsl.ts</li>
+<li>water.glsl.ts</li>
+</ul>
+</li>
+<li>Terrain<ul>
+<li>Chunk.ts</li>
+<li>Heightmap.ts</li>
+<li>PointColor.ts</li>
+</ul>
+</li>
+<li>Types<ul>
+<li>Color.ts</li>
+<li>Dimension.ts</li>
+<li>GrayscaleColor.ts</li>
+<li>SaveData.ts</li>
+</ul>
+</li>
+<li>App.svelte</li>
+<li>CustomFlyControls.ts</li>
+<li>Defaults.ts</li>
+<li>index.ts</li>
+<li>LoadScreen.css</li>
+<li>math.ts</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AUTHORS</li>
+<li>LICENSE</li>
+<li>main.js</li>
+<li>package.json</li>
+<li>package-lock.json</li>
+<li>preload.js</li>
+<li>README.md (<em><strong>you&#39;re here!</strong></em>)</li>
+<li>rollup.config.js</li>
+<li>tsconfig.json</li>
+<li>typedoc.json</li>
+</ul>
 </div></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">

@@ -1,5 +1,5 @@
 /**
- * Specify this is a module comment without renaming it:
+ * All that is responsible for UI elements to work. Excludes Svelte files.
  * @module
  */
 export * from "../Components/UI/UIEventsHandler";

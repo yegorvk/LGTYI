@@ -1,5 +1,5 @@
 /**
- * Specify this is a module comment without renaming it:
+ * This is the main generator functions and types.:
  * @module
  */
 export * from "../Generator/Generator";

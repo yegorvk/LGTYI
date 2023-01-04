@@ -1,5 +1,5 @@
 /**
- * Specify this is a module comment without renaming it:
+ * Rendering classes.
  * @module
  */
 export * from "../Renderer/RenderChunk";
