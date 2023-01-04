@@ -5,30 +5,41 @@ import { colorRGBFromAltitude, DefaultGradientSettings, type GradientSettings } 
 const SCALE_FACTOR = 1;
 
 export class Chunk {
-    // space between vertices
+    /**
+     *  space between vertices
+     * */
     readonly scale: number;
 
-    // number of vertices in each row 
+    /**
+     *  number of vertices in each row
+     *  */
     readonly width: number;
 
-    // number of vertices in each column
+    /**
+     * number of vertices in each column
+     * */
     readonly height: number;
 
     readonly useVertexColors: boolean;
 
-    // terrain vertices on xy place (row-major, rows along x-axis)
-    // all values in [-scale; scale]
+    /** terrain vertices on xy place (row-major, rows along x-axis)
+     * all values in [-scale; scale]
+     * */
     vertices: Float32Array;
 
     vertexColors: Float32Array;
 
-    // terrain indices on xy plane
-    // suitable for rendering with GL_TRIANGLES (Mesh in three.js)
+    /**
+     * terrain indices on xy plane
+    * suitable for rendering with GL_TRIANGLES (Mesh in three.js)
+     * */
     indices: Uint32Array;
 
     uv: Float32Array;
 
-    // terrain heightmap
+    /**
+     * terrain heightmap
+     * */
     heightmap: Heightmap;
 
     constructor(

@@ -1,7 +1,7 @@
 import { INF, lerp } from "../math";
 import { MAX_ALT, MIN_ALT } from "../Generator/GeneratorOptions";
 
-const DEFAULT_LAND_COLORS = [
+export const DEFAULT_LAND_COLORS = [
     0x004225,
     0x3CB043,
     0xAAFF00,
@@ -10,14 +10,14 @@ const DEFAULT_LAND_COLORS = [
     0xFFFFFF
 ];
 
-const DEFAULT_WATER_COLORS = [
+export const DEFAULT_WATER_COLORS = [
     0x04124f,
     0x061c7d,
     0x09259e,
     0x0c2fc7
 ];
 
-const DEFAULT_LAND_ALTS = [
+export const DEFAULT_LAND_ALTS = [
     0,
     0.4,
     0.7,
@@ -26,7 +26,7 @@ const DEFAULT_LAND_ALTS = [
     1.0
 ];
 
-const DEFAULT_WATER_ALTS = [
+export const DEFAULT_WATER_ALTS = [
     0.1,
     0.2,
     0.6,
@@ -53,7 +53,7 @@ export interface GradientSettings {
     waterAlts: Array<number>
 }
 
-const StandardGradientSettings: GradientSettings = {
+export const StandardGradientSettings: GradientSettings = {
     landColors: DEFAULT_LAND_COLORS,
     landAlts: DEFAULT_LAND_ALTS,
     waterColors: DEFAULT_WATER_COLORS,
@@ -67,6 +67,9 @@ export const DefaultGradientSettings: GradientSettings = {
     waterColors: DEFAULT_WATER_COLORS
 };
 
+/**Get RGB Color from altitude.
+ * Commonly for 2D.
+ * */
 export function colorRGBFromAltitude(
     alt: number,
     waterLevel: number,
@@ -167,6 +170,11 @@ export function colorRGBFromAltitude(
     }
 }
 
+/**
+ * Get the gray color from the altitude.
+ * Commonly for 2D.
+ *
+ * */
 export function colorGrayScaleFromAltitude(
     alt: number,
     maxAlt: number = MAX_ALT,
@@ -184,12 +192,16 @@ export function altitudeFromGrayscale(
     const altRel = (grayscale / 255) * (maxAlt - minAlt)
     return minAlt + altRel;
 }
-
+/**
+ * Get HEX value of the RGB Color from the GrayScale.
+ * */
 export function rgbFromGrayScale(grayScale: number): number {
     return (grayScale << 16) + (grayScale << 8) + grayScale
 }
-
-function lerp_color(y1: number, y2: number, a: number): number {
+/**
+ * Lerp the color.
+ * */
+export function lerp_color(y1: number, y2: number, a: number): number {
     const r1 = (y1 >> 16) & 0xFF;
     const g1 = (y1 >> 8) & 0xFF;
     const b1 = y1 & 0xFF;
