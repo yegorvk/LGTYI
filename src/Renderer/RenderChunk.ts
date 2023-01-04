@@ -5,7 +5,7 @@ import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
 
 export class RenderChunk extends THREE.Object3D {
     private terrainScale: number;
-    private grassNormal: THREE.Texture;
+    private grassNormal: THREE.Texture = null;
     private terrainTexture: THREE.Texture = null;
 
     constructor(offset: THREE.Vector3, scale: number, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
@@ -106,7 +106,7 @@ export class RenderChunk extends THREE.Object3D {
     }
 
     dispose() {
-        this.grassNormal.dispose();
+        if (this.grassNormal !== null) this.grassNormal.dispose();
         if (this.terrainTexture !== null) this.terrainTexture.dispose();
     }
 }

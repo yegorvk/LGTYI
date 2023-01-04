@@ -177,10 +177,9 @@
 
         const cx = Math.min(heightmap.width-1, heightmap.width / 2);
         const cy = Math.min(heightmap.height-1, heightmap.height / 2);
-        const cz = heightmap.data[cy*heightmap.width+cx]+2;
 
-        camera.position.set(0, 0, cz+100);
-        camera.lookAt(0, 0, cz);
+        camera.position.set(0, 0, 200);
+        camera.lookAt(0, 0, 0);
 
         if (renderer !== null) renderer.dispose();
 

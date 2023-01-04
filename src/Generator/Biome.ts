@@ -80,7 +80,7 @@ export class Biome {
 
     strength(x: number, y: number, width: number, height: number) {
         const d = distance(x, y, this.centerX, this.centerY);
-        return sigmoid_prime(d / 70 * this.weight);
+        return sigmoid_prime(d / 70 * this.weight) * 100;
     }
 
     /*strength(x: number, y: number, width: number, height: number) {

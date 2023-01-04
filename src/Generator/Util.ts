@@ -96,6 +96,7 @@ function altRaw(min: number, max: number, waterLevel: number, altNorm: number): 
 
 export function sigmoid_prime(x: number): number {
     const sigmoid_val = 1.0 / (1.0 + Math.exp(-x));
+    if (sigmoid_val <= 10*Number.EPSILON) return 0;
     return sigmoid_val * (1.0 - sigmoid_val);
 }
 
