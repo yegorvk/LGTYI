@@ -1,3 +1,4 @@
+import { HtmlTagHydration } from "svelte/internal";
 import type { GeneratorOptions } from "./GeneratorOptions";
 import { alt, distance, distance2, sigmoid_prime } from "./Util";
 
@@ -88,7 +89,8 @@ export class Biome {
 
     strength(x: number, y: number, width: number, height: number) {
         const d = distance(x, y, this.centerX, this.centerY);
-        return sigmoid_prime(d / 70 * this.weight) * 100;
+        if (d > 2000) return 7.8e-9 / d * this.weight;
+        else return sigmoid_prime(d / 70) * 10.0 * this.weight;
     }
 
     /*strength(x: number, y: number, width: number, height: number) {
