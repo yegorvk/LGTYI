@@ -101,25 +101,6 @@ input[type="color"] {
     margin-top: 10px;
 }
 
-.colors-button{
-    box-sizing: border-box;
-    margin-bottom: 10px;
-    padding: 6px;
-    outline: none;
-    height: calc(3rem - 6px);
-    align-items: center;
-    background: #cecece;
-    border: 1px solid #efefef;
-    border-radius: 10px;
-    transition: background 400ms;
-}
-
-.colors-button:hover{
-    outline: none;
-    background: #18656e;
-    cursor: pointer;
-}
-
 .hidden {
     opacity: 0;
     display: none;
