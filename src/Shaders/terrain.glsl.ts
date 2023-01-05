@@ -3,6 +3,11 @@ export const vertex = /* glsl */`
 
 varying vec3 vViewPosition;
 
+uniform float minZ;
+uniform float maxZ;
+
+varying float vAltRel;
+
 #include <common>
 #include <uv_pars_vertex>
 #include <uv2_pars_vertex>
@@ -18,6 +23,7 @@ varying vec3 vViewPosition;
 #include <clipping_planes_pars_vertex>
 
 void main() {
+	vAltRel = (position.z - minZ) / (maxZ - minZ);
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -58,13 +64,19 @@ uniform vec3 specular;
 uniform float shininess;
 uniform float opacity;
 
+varying float vAltRel;
+
+uniform sampler2D grassTex;
+uniform sampler2D rockTex;
+//uniform sampler2D map;
+
 #include <common>
 #include <packing>
 #include <dithering_pars_fragment>
 #include <color_pars_fragment>
 #include <uv_pars_fragment>
 #include <uv2_pars_fragment>
-#include <map_pars_fragment>
+//#include <map_pars_fragment>
 #include <alphamap_pars_fragment>
 #include <alphatest_pars_fragment>
 #include <aomap_pars_fragment>
@@ -93,7 +105,25 @@ void main() {
 	vec3 totalEmissiveRadiance = emissive;
 
 	#include <logdepthbuf_fragment>
-	#include <map_fragment>
+
+	//#include <map_fragment>
+
+	#define ROCK_LEVEL 0.99
+	#define GRASS_LEVEL 0.9
+
+	#ifdef USE_MAP
+		vec4 grassColor = texture2D(grassTex, vUv);
+		vec4 rockColor = texture2D(rockTex, vUv);
+
+		grassColor.xyz = (grassColor.xyz-vec3(0.5))*2.0+vec3(0.5);
+		grassColor.xyz = clamp(grassColor.xyz, 0.0, 1.0);
+
+		float a =  (1.0 - max(0.0, ROCK_LEVEL - vAltRel)) / (1.0 - max(0.0, vAltRel - GRASS_LEVEL));
+		vec4 texColor = mix(grassColor, rockColor, a);
+	
+		diffuseColor *= texColor;
+	#endif
+
 	#include <color_fragment>
 	#include <alphamap_fragment>
 	#include <alphatest_fragment>
