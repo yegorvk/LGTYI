@@ -2,11 +2,15 @@ import * as THREE from 'three'
 import {applyDefaults} from '../Defaults'
 import type {Chunk} from '../Terrain/Chunk'
 import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
+import { ResourceManager } from './ResourceManager';
 
 export class RenderChunk extends THREE.Object3D {
-    private terrainScale: number;
-    private grassNormal: THREE.Texture = null;
-    private terrainTexture: THREE.Texture = null;
+    private readonly terrainScale: number;
+
+    private readonly grassNormal: THREE.Texture;
+    private readonly terrainTexture: THREE.Texture;
+
+    private readonly resources: ResourceManager = new ResourceManager();
 
     constructor(offset: THREE.Vector3, scale: number, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
         super()
@@ -14,6 +18,7 @@ export class RenderChunk extends THREE.Object3D {
         applyDefaults(options, DefaultRenderOptions);
 
         this.grassNormal = new THREE.TextureLoader().load('assets/textures/terrain_bump.jpg');
+        this.resources.register(this.grassNormal);
 
         this.grassNormal.wrapS = THREE.RepeatWrapping;
         this.grassNormal.wrapT = THREE.RepeatWrapping;
@@ -25,6 +30,7 @@ export class RenderChunk extends THREE.Object3D {
 
         if (options.textures) {
             this.terrainTexture = new THREE.TextureLoader().load('assets/textures/terrain_rock.jpg');
+            this.resources.register(this.terrainTexture);
 
             this.terrainTexture.wrapS = THREE.RepeatWrapping;
             this.terrainTexture.wrapT = THREE.RepeatWrapping;
@@ -106,7 +112,6 @@ export class RenderChunk extends THREE.Object3D {
     }
 
     dispose() {
-        if (this.grassNormal !== null) this.grassNormal.dispose();
-        if (this.terrainTexture !== null) this.terrainTexture.dispose();
+        this.resources.dispose();
     }
 }

@@ -9,9 +9,10 @@
         DefaultRenderSettings,
         type RenderSettings,
     } from "../Renderer/RenderSettings";
-    import { RenderTerrainTest } from "../Renderer/RenderTerrainTest";
     import * as water from '../Shaders/water.glsl';
     import { applyDefaults } from "../Defaults";
+    import { ResourceManager } from "../Renderer/ResourceManager";
+    import { MIN_ALT } from "../Generator/GeneratorOptions";
 
     let root: Element;
 
@@ -27,10 +28,7 @@
 
     const SCALE = 1;
 
-    let renderer: THREE.WebGLRenderer = null;
-    let camControls: FlyControls = null;
-
-    let renderChunk: RenderChunk = null;
+    const resources = new ResourceManager();
 
     let camControlsChangeEventListener: () => any = null;
     let windowResizeEventListener: () => any = null;
@@ -38,17 +36,11 @@
     let keyupEventListener: (e: KeyboardEvent) => any = null;
 
     let clock = new THREE.Clock();
-
     let scene = new THREE.Scene();
-    let camera: THREE.Camera = null;
 
     let chunk = new Chunk(2, heightmap, true, renderSettings.gradientSettings);
-    //let chunk = null;
 
-    let waterLayerMat: THREE.ShaderMaterial = null;
-
-    let waterLayerNorm: THREE.Texture = null;
-    let waterLayerNorm1: THREE.Texture = null;
+    let waterLayerShaderMat: THREE.ShaderMaterial = null;
 
     if (renderSettings.lighting) {
         const waterLayerGeometry = new THREE.PlaneGeometry(
@@ -58,10 +50,15 @@
             1
         );
 
+        resources.register(waterLayerGeometry);
+
         waterLayerGeometry.translate(0, 0, heightmap.waterLevel);
 
-        waterLayerNorm = new THREE.TextureLoader().load('./assets/textures/water_norm.jpg');
-        waterLayerNorm1 = new THREE.TextureLoader().load('./assets/textures/water_norm1.jpg');
+        const waterLayerNorm = new THREE.TextureLoader().load('./assets/textures/water_norm.jpg');
+        const waterLayerNorm1 = new THREE.TextureLoader().load('./assets/textures/water_norm1.jpg');
+
+        resources.register(waterLayerNorm);
+        resources.register(waterLayerNorm1);
 
         waterLayerNorm.wrapS = THREE.RepeatWrapping;
         waterLayerNorm.wrapT = THREE.RepeatWrapping;
@@ -80,68 +77,51 @@
             }
         ]);
 
-        let mat: THREE.Material;
+        if (heightmap.waterLevel >= MIN_ALT) {
+            let waterLayerMat: THREE.Material;
 
-        if (renderSettings.dynamicScene) {
-            waterLayerMat = new THREE.ShaderMaterial(
-                {
-                    vertexShader: water.vertex,
-                    fragmentShader: water.fragment,
-                    lights: true,
-                    uniforms: uniforms,
+            if (renderSettings.dynamicScene) {
+                waterLayerMat = new THREE.ShaderMaterial(
+                    {
+                        vertexShader: water.vertex,
+                        fragmentShader: water.fragment,
+                        lights: true,
+                        uniforms: uniforms,
+                        transparent: true,
+                    }
+                );
+
+                waterLayerShaderMat = waterLayerMat as THREE.ShaderMaterial;
+            } else {
+                waterLayerMat = new THREE.MeshPhongMaterial({
                     transparent: true,
-                }
-            );
+                    opacity: 0.45,
+                    color: 0x064273,
+                    normalMap: waterLayerNorm,
+                });
+            }
 
-            mat = waterLayerMat;
-        } else {
-            mat = new THREE.MeshPhongMaterial({
-                transparent: true,
-                opacity: 0.45,
-                color: 0x064273,
-                normalMap: waterLayerNorm,
-            });
+            resources.register(waterLayerMat);
+
+            const waterLayer = new THREE.Mesh(waterLayerGeometry, waterLayerMat);
+            scene.add(waterLayer);
         }
 
-        if (heightmap.waterLevel >= -240) {
-            const waterLayer = new THREE.Mesh(waterLayerGeometry, mat);
-            scene.add(waterLayer);
-        } 
-
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+        resources.register(ambientLight);
         scene.add(ambientLight);
 
         const sunLight = new THREE.DirectionalLight(0xffffff, 0.7);
+        resources.register(sunLight);
         sunLight.position.set(0, 0, 200);
-
         scene.add(sunLight);
-    }
-
-    function animate() {
-        if (renderer === null) return;
-        renderer.render(scene, camera);
-    }
-
-    function update() {
-        if (camControls === null) return;
-        camControls.update(clock.getDelta());
-
-        if (renderSettings.dynamicScene) {
-            waterLayerMat.uniforms.time.value = clock.getElapsedTime() * 1000;
-            waterLayerMat.uniformsNeedUpdate = true;
-        }
-
-        if (renderSettings.dynamicScene) 
-            animate();
-
-        requestAnimationFrame(update);
     }
 
     function loop(width: number, height: number) {
         const rootWidth = width;
         const rootHeight = height;
 
-        renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), SCALE, chunk, {
+        const renderChunk = new RenderChunk(new THREE.Vector3(0, 0, 0), SCALE, chunk, {
             useWireframe: renderSettings.wireframe,
             wireframeLineWidth: renderSettings.wireframeLineWidth,
             wireframeOpacity: renderSettings.wireframeOpacity,
@@ -150,10 +130,10 @@
             textures: renderSettings.textures
         });
 
-        //let renderTerrain = new RenderTerrainTest(heightmap);
-
+        resources.register(renderChunk);
         scene.add(renderChunk);
-        //scene.add(renderTerrain);
+
+        let camera: THREE.Camera;
 
         if (useOrthographicCamera)
             /*camera = new THREE.OrthographicCamera(
@@ -175,15 +155,10 @@
             );
         }
 
-        const cx = Math.min(heightmap.width-1, heightmap.width / 2);
-        const cy = Math.min(heightmap.height-1, heightmap.height / 2);
-
         camera.position.set(0, 0, 200);
         camera.lookAt(0, 0, 0);
 
-        if (renderer !== null) renderer.dispose();
-
-        renderer = new THREE.WebGLRenderer({
+        const renderer = new THREE.WebGLRenderer({
             canvas: root,
             antialias: true,
             alpha: true,
@@ -191,6 +166,7 @@
         });
 
         renderer.setSize(rootWidth, rootHeight);
+        resources.register(renderer);
 
         windowResizeEventListener = () => {
             if (useOrthographicCamera) {
@@ -212,13 +188,13 @@
 
         window.addEventListener("resize", windowResizeEventListener);
 
-        if (camControls !== null) camControls.dispose();
-
-        camControls = new FlyControls(camera, renderer.domElement);
+        const camControls = new FlyControls(camera, renderer.domElement);
         camControls.dragToLook = true;
 
         camControls.movementSpeed *= 160;
         camControls.rollSpeed *= 120;
+
+        resources.register(camControls);
 
         let speedModifier = false;
         let speedBoost = 1;
@@ -260,6 +236,28 @@
         document.addEventListener('keydown', keydownEventListener);
         document.addEventListener('keyup', keyupEventListener);
 
+        function animate() {
+            if (renderer === null) return;
+            renderer.render(scene, camera);
+        }
+
+        function update() {
+            if (camControls === null) return;
+            camControls.update(clock.getDelta());
+
+            // This function might be called after onDestroy, so make sure 
+            // waterLayerShaderMat is not null.
+            if (renderSettings.dynamicScene && waterLayerShaderMat !== null) {
+                waterLayerShaderMat.uniforms.time.value = clock.getElapsedTime() * 1000;
+                waterLayerShaderMat.uniformsNeedUpdate = true;
+            }
+
+            if (renderSettings.dynamicScene) 
+                animate();
+
+            requestAnimationFrame(update);
+        }
+
         update();
         animate();
 
@@ -278,36 +276,16 @@
     });
 
     onDestroy(() => {
-        if (renderer !== null) {
-            renderer.dispose();
-            renderer = null;
-        }
-
-        if (camControls !== null) {
-            camControls.removeEventListener(
-                "change",
-                camControlsChangeEventListener
-            );
-            camControlsChangeEventListener = null;
-            camControls.dispose();
-            camControls = null;
-        }
-
         window.removeEventListener("resize", windowResizeEventListener);
-        windowResizeEventListener = null;
-
         document.removeEventListener('keydown', keydownEventListener);
         document.removeEventListener('keyup', keyupEventListener);
 
-        if (waterLayerNorm !== null) waterLayerNorm.dispose();
-
         clock.stop();
 
-        if (renderChunk !== null) renderChunk.dispose();
-        if (waterLayerMat !== null) waterLayerMat.dispose();
-        if (waterLayerNorm1 !== null) waterLayerNorm1.dispose();
+        windowResizeEventListener = null;
+        waterLayerShaderMat = null;
 
-        waterLayerNorm = waterLayerNorm1 = clock = scene = camera = chunk = null;
+        resources.dispose();
     });
 </script>
 
