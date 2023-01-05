@@ -28,7 +28,7 @@
 
     const SCALE = 1;
 
-    const resources = new ResourceManager();
+    let resources = new ResourceManager();
 
     let camControlsChangeEventListener: () => any = null;
     let windowResizeEventListener: () => any = null;
@@ -258,6 +258,8 @@
             requestAnimationFrame(update);
         }
 
+        console.log(renderer.info);
+
         update();
         animate();
 
@@ -284,8 +286,11 @@
 
         windowResizeEventListener = null;
         waterLayerShaderMat = null;
+        scene = null;
+        chunk = null;
 
         resources.dispose();
+        resources = null;
     });
 </script>
 

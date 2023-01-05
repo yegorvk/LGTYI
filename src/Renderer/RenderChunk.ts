@@ -5,10 +5,10 @@ import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
 import { ResourceManager } from './ResourceManager';
 
 export class RenderChunk extends THREE.Object3D {
-    private readonly terrainScale: number;
+    private readonly terrainScale: number = null;
 
-    private readonly grassNormal: THREE.Texture;
-    private readonly terrainTexture: THREE.Texture;
+    private readonly grassNormal: THREE.Texture = null;
+    private readonly terrainTexture: THREE.Texture = null;
 
     private readonly resources: ResourceManager = new ResourceManager();
 
@@ -17,16 +17,18 @@ export class RenderChunk extends THREE.Object3D {
 
         applyDefaults(options, DefaultRenderOptions);
 
-        this.grassNormal = new THREE.TextureLoader().load('assets/textures/terrain_bump.jpg');
-        this.resources.register(this.grassNormal);
+        if (options.vertexColors || options.textures) {
+            this.grassNormal = new THREE.TextureLoader().load('assets/textures/terrain_bump.jpg');
+            this.resources.register(this.grassNormal);
 
-        this.grassNormal.wrapS = THREE.RepeatWrapping;
-        this.grassNormal.wrapT = THREE.RepeatWrapping;
+            this.grassNormal.wrapS = THREE.RepeatWrapping;
+            this.grassNormal.wrapT = THREE.RepeatWrapping;
 
-        this.grassNormal.magFilter = THREE.LinearFilter;
-        this.grassNormal.minFilter = THREE.NearestMipMapNearestFilter;
+            this.grassNormal.magFilter = THREE.LinearFilter;
+            this.grassNormal.minFilter = THREE.NearestMipMapNearestFilter;
 
-        this.grassNormal.generateMipmaps = true;
+            this.grassNormal.generateMipmaps = true;
+        }
 
         if (options.textures) {
             this.terrainTexture = new THREE.TextureLoader().load('assets/textures/terrain_rock.jpg');
@@ -56,7 +58,7 @@ export class RenderChunk extends THREE.Object3D {
         const uvAttr = new THREE.Float32BufferAttribute(chunk.uv, 2);
         geometry.setAttribute('uv', uvAttr);
 
-        if (true) {
+        if (options.vertexColors) {
             const colorAttr = new THREE.Float32BufferAttribute(chunk.vertexColors, 3)
             geometry.setAttribute('color', colorAttr)
         }
@@ -93,22 +95,14 @@ export class RenderChunk extends THREE.Object3D {
     }
 
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
-        const mat = options.prepareForLighting ?
+        return options.prepareForLighting ?
             new THREE.MeshPhongMaterial({
                 bumpMap: this.grassNormal,
-                map: (options.textures ? this.terrainTexture : undefined)
+                map: this.terrainTexture,
+                shininess: 0.1,
+                vertexColors: options.vertexColors,
+                color: 0xFFFFFF
             }) : new THREE.MeshBasicMaterial();
-
-        if (options.prepareForLighting) {
-            (mat as THREE.MeshPhongMaterial).shininess = 0.1;
-        }
-
-        if (options.vertexColors)
-            mat.vertexColors = true
-        else
-            mat.color.set(0xFFFFFF)
-
-        return mat
     }
 
     dispose() {
