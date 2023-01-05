@@ -9,6 +9,12 @@ import { INF } from '../math';
 
 const SCALE_INV = 2;
 
+/**
+ * Generates terrain on the given heightmap
+ * 
+ * @param heightmap heightmap where the terrain is generated
+ * @param options options for tuning generated landscape
+ */
 export function generateTerrain(
     heightmap: Heightmap,
     options: GeneratorOptions = DefaultGeneratorOptions
@@ -199,6 +205,9 @@ export function generateTerrain(
     options.waterLevel = heightmap.waterLevel;
 }
 
+/**
+ * Generates terrain on the given heightmap ignoring biomes
+ */
 export function generateSimpleTerrain(heightmap: Heightmap, options: GeneratorOptions) {
     applyDefaults(options, DefaultGeneratorOptions);
 

@@ -2,37 +2,44 @@ import * as THREE from 'three'
 import {applyDefaults} from '../Defaults'
 import type {Chunk} from '../Terrain/Chunk'
 import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
+import { ResourceManager } from './ResourceManager';
+import * as terrainShaders from '../Shaders/terrain.glsl';
+import { MAX_ALT, MIN_ALT } from '../Generator/GeneratorOptions';
 
 export class RenderChunk extends THREE.Object3D {
-    private terrainScale: number;
-    private grassNormal: THREE.Texture = null;
-    private terrainTexture: THREE.Texture = null;
+    private readonly terrainScale: number = null;
+
+    private readonly terrainNormal: THREE.Texture = null;
+    private readonly rockTexture: THREE.Texture = null;
+    private readonly grassTexture: THREE.Texture = null;
+    private readonly snowTexture: THREE.Texture = null;
+
+    private readonly resources: ResourceManager = new ResourceManager();
 
     constructor(offset: THREE.Vector3, scale: number, chunk: Chunk, options: RenderOptions = DefaultRenderOptions) {
         super()
 
         applyDefaults(options, DefaultRenderOptions);
 
-        this.grassNormal = new THREE.TextureLoader().load('assets/textures/terrain_bump.jpg');
+        if (options.vertexColors || options.textures) {
+            this.terrainNormal = new THREE.TextureLoader().load('assets/textures/terrain_bump.jpg');
+            this.resources.register(this.terrainNormal);
 
-        this.grassNormal.wrapS = THREE.RepeatWrapping;
-        this.grassNormal.wrapT = THREE.RepeatWrapping;
-
-        this.grassNormal.magFilter = THREE.LinearFilter;
-        this.grassNormal.minFilter = THREE.NearestMipMapNearestFilter;
-
-        this.grassNormal.generateMipmaps = true;
+            adjustTerrainTexture(this.terrainNormal);
+        }
 
         if (options.textures) {
-            this.terrainTexture = new THREE.TextureLoader().load('assets/textures/terrain_rock.jpg');
+            this.rockTexture = new THREE.TextureLoader().load('assets/textures/terrain_rock.jpg');
+            this.resources.register(this.rockTexture);
 
-            this.terrainTexture.wrapS = THREE.RepeatWrapping;
-            this.terrainTexture.wrapT = THREE.RepeatWrapping;
-        
-            this.terrainTexture.magFilter = THREE.LinearFilter;
-            this.terrainTexture.minFilter = THREE.LinearMipMapLinearFilter;
+            this.snowTexture = new THREE.TextureLoader().load('assets/textures/terrain_snow1.jpg');
+            this.resources.register(this.snowTexture);
 
-            this.terrainTexture.generateMipmaps = true;
+            this.grassTexture = new THREE.TextureLoader().load('assets/textures/terrain_grass0.jpg');
+            this.resources.register(this.grassTexture);
+
+            adjustTerrainTexture(this.rockTexture);
+            adjustTerrainTexture(this.grassTexture);
         }
 
         this.terrainScale = scale;
@@ -50,7 +57,7 @@ export class RenderChunk extends THREE.Object3D {
         const uvAttr = new THREE.Float32BufferAttribute(chunk.uv, 2);
         geometry.setAttribute('uv', uvAttr);
 
-        if (true) {
+        if (options.vertexColors) {
             const colorAttr = new THREE.Float32BufferAttribute(chunk.vertexColors, 3)
             geometry.setAttribute('color', colorAttr)
         }
@@ -87,26 +94,53 @@ export class RenderChunk extends THREE.Object3D {
     }
 
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
-        const mat = options.prepareForLighting ?
-            new THREE.MeshPhongMaterial({
-                bumpMap: this.grassNormal,
-                map: (options.textures ? this.terrainTexture : undefined)
-            }) : new THREE.MeshBasicMaterial();
-
         if (options.prepareForLighting) {
-            (mat as THREE.MeshPhongMaterial).shininess = 0.1;
+            const uniforms = THREE.UniformsUtils.merge([
+                THREE.ShaderLib.phong.uniforms,
+                {
+                    diffuse: { value: new THREE.Color(0xFFFFFF) },
+                    bumpMap: { value: (this.terrainNormal !== null) ? this.terrainNormal : undefined },
+                    grassTex: { value: (this.grassTexture !== null) ? this.grassTexture : undefined },
+                    rockTex: { value: (this.rockTexture !== null) ? this.rockTexture : undefined },
+                    snowTex: { value: (this.snowTexture !== null) ? this.snowTexture : undefined },
+                    //map: { value: (this.rockTexture !== null) ? this.rockTexture : undefined },
+                    shininess: { value: 0.1 },
+                    maxZ: { value: MAX_ALT * this.terrainScale * 2 },
+                    minZ: { value: MIN_ALT * this.terrainScale * 2 }
+                }
+            ]);
+
+            return new THREE.ShaderMaterial({
+                vertexShader: terrainShaders.vertex,
+                fragmentShader: terrainShaders.fragment,
+                vertexColors: options.vertexColors,
+                lights: true,
+                uniforms: uniforms,
+                defines: {
+                    USE_UV: true,
+                    USE_MAP: options.textures,
+                    USE_BUMPMAP: true
+                }
+            });
+        } else {
+            return new THREE.MeshBasicMaterial({
+                vertexColors: options.vertexColors,
+                color: 0x000000
+            });
         }
-
-        if (options.vertexColors)
-            mat.vertexColors = true
-        else
-            mat.color.set(0xFFFFFF)
-
-        return mat
     }
 
     dispose() {
-        if (this.grassNormal !== null) this.grassNormal.dispose();
-        if (this.terrainTexture !== null) this.terrainTexture.dispose();
+        this.resources.dispose();
     }
+}
+
+function adjustTerrainTexture(texture: THREE.Texture) {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+
+    texture.generateMipmaps = true;
 }

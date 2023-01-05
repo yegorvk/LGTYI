@@ -1,15 +1,12 @@
 export const vertex = /* glsl */`
 #define PHONG
 
-uniform sampler2D zTexture;
-uniform vec2 offset;
-uniform vec2 scale;
-
 varying vec3 vViewPosition;
-varying vec3 vColor;
-varying vec3 vGridPos;
 
-#define UNIT_SIZE 1.0;
+uniform float minZ;
+uniform float maxZ;
+
+varying vec3 vTexDist;
 
 #include <common>
 #include <uv_pars_vertex>
@@ -25,60 +22,26 @@ varying vec3 vGridPos;
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
 
-float getHeight(vec3 gridPos) {
-	vec2 uv = vec2(gridPos.x / scale.x + 0.5, gridPos.y / scale.y + 0.5);
-	return texture2D(zTexture, uv).r + 120.0;
-}
+#define SNOW_LEVEL 0.9
+#define ROCK_LEVEL 0.8
+#define GRASS_LEVEL 0.6
 
-vec3 getNormal() {
-	float delta = scale.x * UNIT_SIZE;
-
-	vec3 dA = delta * normalize(cross(normal.yzx, normal));
-	vec3 dB = delta * normalize(cross(dA, normal));
-
-	vec3 p = vGridPos;
-	vec3 pA = vGridPos + dA;
-	vec3 pB = vGridPos + dB;
-
-	float h = getHeight(vGridPos);
-	float hA = getHeight(pA);
-	float hB = getHeight(pB);
-
-	p += normal * h;
-	pA += normal * hA;
-	pB += normal * hB;
-
-	return normalize(cross(pB - p, pA - p));
-}
-
-vec3 getColor(float h) {
-	vec3 colors[6] = vec3[6](
-		vec3(0.0, 0.258, 0.235),
-		vec3(0.235, 0.690, 0.262),
-		vec3(0.667, 1.0, 0.0),
-		vec3(1.0, 0.0, 0.0),
-		vec3(1.0, 1.0, 1.0),
-		vec3(1.0, 1.0, 1.0)
-	);
-
-	float alts[6] = float[6](
-		0.0,
-		0.4,
-		0.7,
-		0.9,
-		0.95,
-		1.0
-	);
-
-	for (int i = 1; i < 6; i++) {
-		if (h <= alts[i]) {
-			float a = (h - alts[i-1]) / (alts[i] - alts[i-1]);
-			return mix(colors[i-1], colors[i], a);
-		}
-	}
-}
+#define ROCK_ALT_REL ((ROCK_LEVEL - GRASS_LEVEL)  / (SNOW_LEVEL - GRASS_LEVEL))
 
 void main() {
+
+	float alt = clamp((position.z - minZ) / (maxZ - minZ), GRASS_LEVEL, SNOW_LEVEL);
+	alt = (alt - GRASS_LEVEL) / (SNOW_LEVEL - GRASS_LEVEL);
+
+	vTexDist = vec3(0.0);
+
+	if (alt <= ROCK_ALT_REL) {
+		vTexDist.x = 1.0 - alt / ROCK_ALT_REL;
+		vTexDist.y = 1.0 - vTexDist.x;
+	} else {
+		vTexDist.y = 1.0 - (alt - ROCK_ALT_REL) / (1.0 - ROCK_ALT_REL);
+		vTexDist.z = 1.0 - vTexDist.y;
+	}
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -92,21 +55,7 @@ void main() {
 	#include <defaultnormal_vertex>
 	#include <normal_vertex>
 
-	vGridPos = position + vec3(offset, 0.0);
-	vGridPos /= UNIT_SIZE;
-	vGridPos = floor(vGridPos) * UNIT_SIZE;
-
-	float h = getHeight(vGridPos);
-
-	vGridPos += normal * h;
-	//vNormal = getNormal();
-
 	#include <begin_vertex>
-
-	transformed.z = h - 120.0;
-
-	h /= 240.0;
-
 	#include <morphtarget_vertex>
 	#include <skinning_vertex>
 	#include <displacementmap_vertex>
@@ -121,14 +70,11 @@ void main() {
 	#include <shadowmap_vertex>
 	#include <fog_vertex>
 
-	vColor = getColor(h);
 }
 `;
 
 export const fragment = /* glsl */`
 #define PHONG
-
-varying vec3 vColor;
 
 uniform vec3 diffuse;
 uniform vec3 emissive;
@@ -136,13 +82,21 @@ uniform vec3 specular;
 uniform float shininess;
 uniform float opacity;
 
+varying vec3 vTexDist;
+
+uniform sampler2D grassTex;
+uniform sampler2D rockTex;
+uniform sampler2D snowTex;
+
+//uniform sampler2D map;
+
 #include <common>
 #include <packing>
 #include <dithering_pars_fragment>
 #include <color_pars_fragment>
 #include <uv_pars_fragment>
 #include <uv2_pars_fragment>
-#include <map_pars_fragment>
+//#include <map_pars_fragment>
 #include <alphamap_pars_fragment>
 #include <alphatest_pars_fragment>
 #include <aomap_pars_fragment>
@@ -171,12 +125,27 @@ void main() {
 	vec3 totalEmissiveRadiance = emissive;
 
 	#include <logdepthbuf_fragment>
-	#include <map_fragment>
+
+	//#include <map_fragment>
+
+	#ifdef USE_MAP
+		vec4 grassColor = texture2D(grassTex, vUv);
+		vec4 rockColor = texture2D(rockTex, vUv);
+		vec4 snowColor = texture2D(snowTex, vUv);
+
+		rockColor.xyz = (rockColor.xyz-vec3(0.5))*2.0+vec3(0.5);
+		rockColor.xyz = clamp(rockColor.xyz, 0.0, 1.0);		
+
+		grassColor.xyz = (grassColor.xyz-vec3(0.5))*2.0+vec3(0.5);
+		grassColor.xyz = clamp(grassColor.xyz, 0.0, 1.0);
+
+		snowColor.xyz = (snowColor.xyz-vec3(0.5))*2.0+vec3(0.5);
+		snowColor.xyz = clamp(snowColor.xyz, 0.0, 1.0);
+	
+		diffuseColor *= (grassColor*vTexDist.x + rockColor*vTexDist.y + snowColor*vTexDist.z);
+	#endif
 
 	#include <color_fragment>
-
-	diffuseColor.rgb *= vColor;
-
 	#include <alphamap_fragment>
 	#include <alphatest_fragment>
 	#include <specularmap_fragment>
