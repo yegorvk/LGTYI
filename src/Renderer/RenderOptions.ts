@@ -1,3 +1,4 @@
+/** Internal render settings representation used by `RenerChunk` */
 export interface RenderOptions {
     useWireframe?: boolean;
     wireframeColor?: number;

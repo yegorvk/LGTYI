@@ -3,6 +3,7 @@ import { type BiomesDistribution, DefaultBiomesDistribution } from "./Biome";
 export const MAX_ALT = 120;
 export const MIN_ALT = -120;
 
+/** Options for tuning generated landscape */
 export interface GeneratorOptions {
     width: number;
     height: number;

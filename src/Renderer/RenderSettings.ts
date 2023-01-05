@@ -1,5 +1,6 @@
 import { DefaultGradientSettings, type GradientSettings } from "../Terrain/PointColor";
 
+/** High level render settings used in the UI */
  export interface RenderSettings {
     wireframe: boolean;
     gradient: boolean;

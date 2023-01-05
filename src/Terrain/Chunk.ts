@@ -4,6 +4,8 @@ import { colorRGBFromAltitude, DefaultGradientSettings, type GradientSettings } 
 
 const SCALE_FACTOR = 1;
 
+/** Object holding all buffers used for terrain rendering 
+ */
 export class Chunk {
     /**
      *  space between vertices

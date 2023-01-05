@@ -6,6 +6,7 @@ import { ResourceManager } from './ResourceManager';
 import * as terrainShaders from '../Shaders/terrain.glsl';
 import { MAX_ALT, MIN_ALT } from '../Generator/GeneratorOptions';
 
+/** Terrain object in the three.js scene graph */
 export class RenderChunk extends THREE.Object3D {
     private readonly terrainScale: number = null;
 

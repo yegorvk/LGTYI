@@ -1,4 +1,5 @@
 
+/** Manager for disposable three.js objects */
 export class ResourceManager {
     private resources: Array<any>;
 
