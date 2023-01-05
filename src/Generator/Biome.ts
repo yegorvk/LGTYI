@@ -1,6 +1,9 @@
 import type { GeneratorOptions } from "./GeneratorOptions";
 import { alt, distance, distance2, sigmoid_prime } from "./Util";
 
+/**
+ * Controls how biomes are generated
+ */
 export interface BiomesDistribution {
     oceanChance: number;
     seaChance: number;
@@ -23,6 +26,11 @@ export const DefaultBiomesDistribution: BiomesDistribution = {
     highPeaksChance: 0.5
 };
 
+/**
+ * Converts biomes distribution into an array of frequencies
+ * @param dist biomes distribution object
+ * @returns array used internally by generator
+ */
 export function normalizeBiomesDistribution(dist: BiomesDistribution): Array<number> {
     const chances = [
         dist.oceanChance,
