@@ -12,6 +12,7 @@ export class RenderChunk extends THREE.Object3D {
     private readonly terrainNormal: THREE.Texture = null;
     private readonly rockTexture: THREE.Texture = null;
     private readonly grassTexture: THREE.Texture = null;
+    private readonly snowTexture: THREE.Texture = null;
 
     private readonly resources: ResourceManager = new ResourceManager();
 
@@ -30,6 +31,9 @@ export class RenderChunk extends THREE.Object3D {
         if (options.textures) {
             this.rockTexture = new THREE.TextureLoader().load('assets/textures/terrain_rock.jpg');
             this.resources.register(this.rockTexture);
+
+            this.snowTexture = new THREE.TextureLoader().load('assets/textures/terrain_snow1.jpg');
+            this.resources.register(this.snowTexture);
 
             this.grassTexture = new THREE.TextureLoader().load('assets/textures/terrain_grass0.jpg');
             this.resources.register(this.grassTexture);
@@ -98,6 +102,7 @@ export class RenderChunk extends THREE.Object3D {
                     bumpMap: { value: (this.terrainNormal !== null) ? this.terrainNormal : undefined },
                     grassTex: { value: (this.grassTexture !== null) ? this.grassTexture : undefined },
                     rockTex: { value: (this.rockTexture !== null) ? this.rockTexture : undefined },
+                    snowTex: { value: (this.snowTexture !== null) ? this.snowTexture : undefined },
                     //map: { value: (this.rockTexture !== null) ? this.rockTexture : undefined },
                     shininess: { value: 0.1 },
                     maxZ: { value: MAX_ALT * this.terrainScale * 2 },

@@ -6,7 +6,7 @@ varying vec3 vViewPosition;
 uniform float minZ;
 uniform float maxZ;
 
-varying float vAltRel;
+varying vec3 vTexDist;
 
 #include <common>
 #include <uv_pars_vertex>
@@ -22,8 +22,26 @@ varying float vAltRel;
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
 
+#define SNOW_LEVEL 0.9
+#define ROCK_LEVEL 0.8
+#define GRASS_LEVEL 0.6
+
+#define ROCK_ALT_REL ((ROCK_LEVEL - GRASS_LEVEL)  / (SNOW_LEVEL - GRASS_LEVEL))
+
 void main() {
-	vAltRel = (position.z - minZ) / (maxZ - minZ);
+
+	float alt = clamp((position.z - minZ) / (maxZ - minZ), GRASS_LEVEL, SNOW_LEVEL);
+	alt = (alt - GRASS_LEVEL) / (SNOW_LEVEL - GRASS_LEVEL);
+
+	vTexDist = vec3(0.0);
+
+	if (alt <= ROCK_ALT_REL) {
+		vTexDist.x = 1.0 - alt / ROCK_ALT_REL;
+		vTexDist.y = 1.0 - vTexDist.x;
+	} else {
+		vTexDist.y = 1.0 - (alt - ROCK_ALT_REL) / (1.0 - ROCK_ALT_REL);
+		vTexDist.z = 1.0 - vTexDist.y;
+	}
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -64,10 +82,12 @@ uniform vec3 specular;
 uniform float shininess;
 uniform float opacity;
 
-varying float vAltRel;
+varying vec3 vTexDist;
 
 uniform sampler2D grassTex;
 uniform sampler2D rockTex;
+uniform sampler2D snowTex;
+
 //uniform sampler2D map;
 
 #include <common>
@@ -108,20 +128,21 @@ void main() {
 
 	//#include <map_fragment>
 
-	#define ROCK_LEVEL 0.99
-	#define GRASS_LEVEL 0.9
-
 	#ifdef USE_MAP
 		vec4 grassColor = texture2D(grassTex, vUv);
 		vec4 rockColor = texture2D(rockTex, vUv);
+		vec4 snowColor = texture2D(snowTex, vUv);
+
+		rockColor.xyz = (rockColor.xyz-vec3(0.5))*2.0+vec3(0.5);
+		rockColor.xyz = clamp(rockColor.xyz, 0.0, 1.0);		
 
 		grassColor.xyz = (grassColor.xyz-vec3(0.5))*2.0+vec3(0.5);
 		grassColor.xyz = clamp(grassColor.xyz, 0.0, 1.0);
 
-		float a =  (1.0 - max(0.0, ROCK_LEVEL - vAltRel)) / (1.0 - max(0.0, vAltRel - GRASS_LEVEL));
-		vec4 texColor = mix(grassColor, rockColor, a);
+		snowColor.xyz = (snowColor.xyz-vec3(0.5))*2.0+vec3(0.5);
+		snowColor.xyz = clamp(snowColor.xyz, 0.0, 1.0);
 	
-		diffuseColor *= texColor;
+		diffuseColor *= (grassColor*vTexDist.x + rockColor*vTexDist.y + snowColor*vTexDist.z);
 	#endif
 
 	#include <color_fragment>
