@@ -168,6 +168,7 @@
     onDestroy(() => {
         pixels = imgData = null;
         imgBmp.close();
+        imgBmp = null;
     });
 
     const remote = require("@electron/remote");

@@ -3,6 +3,7 @@ import {applyDefaults} from '../Defaults'
 import type {Chunk} from '../Terrain/Chunk'
 import {type RenderOptions, DefaultRenderOptions} from './RenderOptions'
 import { ResourceManager } from './ResourceManager';
+import * as terrainShaders from '../Shaders/terrain.glsl';
 
 export class RenderChunk extends THREE.Object3D {
     private readonly terrainScale: number = null;
@@ -95,14 +96,35 @@ export class RenderChunk extends THREE.Object3D {
     }
 
     private createTerrainMaterial(options: RenderOptions): THREE.Material {
-        return options.prepareForLighting ?
-            new THREE.MeshPhongMaterial({
-                bumpMap: this.grassNormal,
-                map: this.terrainTexture,
-                shininess: 0.1,
+        if (options.prepareForLighting) {
+            const uniforms = THREE.UniformsUtils.merge([
+                THREE.ShaderLib.phong.uniforms,
+                {
+                    diffuse: { value: new THREE.Color(0xFFFFFF) },
+                    bumpMap: { value: (this.grassNormal !== null) ? this.grassNormal : undefined },
+                    map: { value: (this.terrainTexture !== null) ? this.terrainTexture : undefined },
+                    shininess: { value: 0.1 }
+                }
+            ]);
+
+            return new THREE.ShaderMaterial({
+                vertexShader: terrainShaders.vertex,
+                fragmentShader: terrainShaders.fragment,
                 vertexColors: options.vertexColors,
-                color: 0xFFFFFF
-            }) : new THREE.MeshBasicMaterial();
+                lights: true,
+                uniforms: uniforms,
+                defines: {
+                    USE_UV: true,
+                    USE_MAP: options.textures,
+                    USE_BUMPMAP: true
+                }
+            });
+        } else {
+            return new THREE.MeshBasicMaterial({
+                vertexColors: options.vertexColors,
+                color: 0x000000
+            });
+        }
     }
 
     dispose() {
