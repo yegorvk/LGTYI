@@ -14,7 +14,7 @@
     import { ResourceManager } from "../Renderer/ResourceManager";
     import { MIN_ALT } from "../Generator/GeneratorOptions";
 
-    let root: Element;
+    let root: HTMLCanvasElement;
 
     export let onPrepare: () => Promise<void>;
     export let onReady: () => Promise<void>;
@@ -162,7 +162,12 @@
             canvas: root,
             antialias: true,
             alpha: true,
-            logarithmicDepthBuffer: true
+            logarithmicDepthBuffer: true,
+            context: root.getContext('webgl2', {
+                antialias: true,
+                depth: true,
+                alpha: true
+            })
         });
 
         renderer.setSize(rootWidth, rootHeight);
@@ -237,7 +242,7 @@
         document.addEventListener('keyup', keyupEventListener);
 
         function animate() {
-            if (renderer === null) return;
+            if (renderer === null || camera === null || scene === null) return;
             renderer.render(scene, camera);
         }
 

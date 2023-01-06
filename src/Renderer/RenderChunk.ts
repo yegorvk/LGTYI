@@ -77,6 +77,8 @@ export class RenderChunk extends THREE.Object3D {
         terrain.position.add(offset)
 
         if (options.useWireframe) {
+            console.log("Using wireframe");
+            
             const wireframeGeometry = new THREE.WireframeGeometry(geometry)
 
             const wireframeMat = new THREE.LineBasicMaterial({
