@@ -3,6 +3,7 @@ import {Heightmap} from "../Terrain/Heightmap";
 import CryptoJS from 'crypto-js';
 import type {GeneratorOptions} from "../Generator/GeneratorOptions";
 import {DefaultGeneratorOptions} from "../Generator/GeneratorOptions";
+import {DefaultBiomesDistribution} from "../Generator/Biome";
 
 const remote = require('@electron/remote');
 
@@ -32,14 +33,20 @@ export async function importFromFile(): Promise<GeneratorOptions> {
 
         if (Data.length === 5) {
 
-            let genOpt: GeneratorOptions = DefaultGeneratorOptions;
-            genOpt.width = Data[0];
-            genOpt.height = Data[1];
-            genOpt.maxAltitude = Data[2];
-            genOpt.minAltitude = Data[3];
-            genOpt.roughness = Data[4] / 100;
+            let genOpt: GeneratorOptions ={
+                width: Data[0],
+                height: Data[1],
+                minAltitude: Data[2],
+                maxAltitude: Data[3],
+                roughness: Data[4] / 100,
+                levelOfDetail: DefaultGeneratorOptions.levelOfDetail,
+                waterLevel: DefaultGeneratorOptions.waterLevel,
+                seed: DefaultGeneratorOptions.seed,
+                numberOfBiomes: DefaultGeneratorOptions.numberOfBiomes,
+                biomes: DefaultBiomesDistribution
+            };
 
-            return Data;
+            return genOpt;
         } else {
             throw new Error('Invalid Data');
         }
