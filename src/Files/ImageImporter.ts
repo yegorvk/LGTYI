@@ -3,6 +3,7 @@ import {altitudeFromGrayscale} from "../Terrain/PointColor";
 import type {Color} from "../Types/Color";
 import type {GrayscaleColor} from "../Types/GrayscaleColor";
 import {DefaultGeneratorOptions} from "../Generator/GeneratorOptions";
+import {DefaultBiomesDistribution} from "../Generator/Biome";
 
 const remote = require('@electron/remote');
 /**
@@ -33,7 +34,7 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
             let arr = new Float32Array(img.bitmap.width * img.bitmap.height);
             const maxAltitude = DefaultGeneratorOptions.maxAltitude;
             const minAltitude = DefaultGeneratorOptions.minAltitude;
-            const HeightmapRandom = Heightmap.generate({
+            const HeightmapRandom = Heightmap.simpleGenerate({
                 width: img.bitmap.width,
                 height: img.bitmap.height,
                 minAltitude: minAltitude,
@@ -41,7 +42,9 @@ export async function ImageImport(isAlphaMod: boolean, isColorMod: boolean, colo
                 roughness: DefaultGeneratorOptions.roughness,
                 levelOfDetail: DefaultGeneratorOptions.levelOfDetail,
                 waterLevel: DefaultGeneratorOptions.waterLevel,
-                seed: DefaultGeneratorOptions.seed
+                seed: DefaultGeneratorOptions.seed,
+                numberOfBiomes: DefaultGeneratorOptions.numberOfBiomes,
+                biomes: DefaultBiomesDistribution
             });
             let altitude: number;
             img.scan(0, 0, img.bitmap.width, img.bitmap.height, function (x, y, idx) {
